@@ -125,62 +125,62 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PIPE-01 | TBD | Pending |
-| PIPE-02 | TBD | Pending |
-| PIPE-03 | TBD | Pending |
-| PIPE-04 | TBD | Pending |
-| PIPE-05 | TBD | Pending |
-| PIPE-06 | TBD | Pending |
-| PIPE-07 | TBD | Pending |
-| INGEST-01 | TBD | Pending |
-| INGEST-02 | TBD | Pending |
-| INGEST-03 | TBD | Pending |
-| INGEST-04 | TBD | Pending |
-| INGEST-05 | TBD | Pending |
-| LOCAL-01 | TBD | Pending |
-| LOCAL-02 | TBD | Pending |
-| LOCAL-03 | TBD | Pending |
-| LOCAL-04 | TBD | Pending |
-| LOCAL-05 | TBD | Pending |
-| CLOUD-01 | TBD | Pending |
-| CLOUD-02 | TBD | Pending |
-| CLOUD-03 | TBD | Pending |
-| CLOUD-04 | TBD | Pending |
-| CLOUD-05 | TBD | Pending |
-| CLOUD-06 | TBD | Pending |
-| CLI-01 | TBD | Pending |
-| CLI-02 | TBD | Pending |
-| CLI-03 | TBD | Pending |
-| CLI-04 | TBD | Pending |
-| CLI-05 | TBD | Pending |
-| CLIN-01 | TBD | Pending |
-| CLIN-02 | TBD | Pending |
-| CLIN-03 | TBD | Pending |
-| CLIN-04 | TBD | Pending |
-| CLIN-05 | TBD | Pending |
-| CLIN-06 | TBD | Pending |
-| CLIN-07 | TBD | Pending |
-| OPS-01 | TBD | Pending |
-| OPS-02 | TBD | Pending |
-| OPS-03 | TBD | Pending |
-| OPS-04 | TBD | Pending |
-| OPS-05 | TBD | Pending |
-| CROSS-01 | TBD | Pending |
-| CROSS-02 | TBD | Pending |
-| CROSS-03 | TBD | Pending |
-| DX-01 | TBD | Pending |
-| DX-02 | TBD | Pending |
-| DX-03 | TBD | Pending |
-| DX-04 | TBD | Pending |
-| DX-05 | TBD | Pending |
-| DX-06 | TBD | Pending |
-| DX-07 | TBD | Pending |
+| PIPE-01 | Phase 1: Schema Foundation | Pending |
+| PIPE-02 | Phase 1: Schema Foundation | Pending |
+| PIPE-03 | Phase 1: Schema Foundation | Pending |
+| PIPE-04 | Phase 1: Schema Foundation | Pending |
+| PIPE-05 | Phase 1: Schema Foundation | Pending |
+| PIPE-06 | Phase 1: Schema Foundation | Pending |
+| PIPE-07 | Phase 1: Schema Foundation | Pending |
+| INGEST-01 | Phase 2: Local Pipeline | Pending |
+| INGEST-02 | Phase 5: API Ingestion | Pending |
+| INGEST-03 | Phase 5: API Ingestion | Pending |
+| INGEST-04 | Phase 5: API Ingestion | Pending |
+| INGEST-05 | Phase 2: Local Pipeline | Pending |
+| LOCAL-01 | Phase 2: Local Pipeline | Pending |
+| LOCAL-02 | Phase 2: Local Pipeline | Pending |
+| LOCAL-03 | Phase 2: Local Pipeline | Pending |
+| LOCAL-04 | Phase 2: Local Pipeline | Pending |
+| LOCAL-05 | Phase 2: Local Pipeline | Pending |
+| CLOUD-01 | Phase 4: Cloud Mode | Pending |
+| CLOUD-02 | Phase 4: Cloud Mode | Pending |
+| CLOUD-03 | Phase 4: Cloud Mode | Pending |
+| CLOUD-04 | Phase 4: Cloud Mode | Pending |
+| CLOUD-05 | Phase 4: Cloud Mode | Pending |
+| CLOUD-06 | Phase 4: Cloud Mode | Pending |
+| CLI-01 | Phase 2: Local Pipeline | Pending |
+| CLI-02 | Phase 2: Local Pipeline | Pending |
+| CLI-03 | Phase 2: Local Pipeline | Pending |
+| CLI-04 | Phase 2: Local Pipeline | Pending |
+| CLI-05 | Phase 2: Local Pipeline | Pending |
+| CLIN-01 | Phase 3: Analytics Queries | Pending |
+| CLIN-02 | Phase 3: Analytics Queries | Pending |
+| CLIN-03 | Phase 3: Analytics Queries | Pending |
+| CLIN-04 | Phase 3: Analytics Queries | Pending |
+| CLIN-05 | Phase 3: Analytics Queries | Pending |
+| CLIN-06 | Phase 3: Analytics Queries | Pending |
+| CLIN-07 | Phase 3: Analytics Queries | Pending |
+| OPS-01 | Phase 3: Analytics Queries | Pending |
+| OPS-02 | Phase 3: Analytics Queries | Pending |
+| OPS-03 | Phase 3: Analytics Queries | Pending |
+| OPS-04 | Phase 3: Analytics Queries | Pending |
+| OPS-05 | Phase 3: Analytics Queries | Pending |
+| CROSS-01 | Phase 3: Analytics Queries | Pending |
+| CROSS-02 | Phase 3: Analytics Queries | Pending |
+| CROSS-03 | Phase 3: Analytics Queries | Pending |
+| DX-01 | Phase 2: Local Pipeline | Pending |
+| DX-02 | Phase 2: Local Pipeline | Pending |
+| DX-03 | Phase 2: Local Pipeline | Pending |
+| DX-04 | Phase 4: Cloud Mode | Pending |
+| DX-05 | Phase 1: Schema Foundation | Pending |
+| DX-06 | Phase 1: Schema Foundation | Pending |
+| DX-07 | Phase 3: Analytics Queries | Pending |
 
 **Coverage:**
-- v1 requirements: 45 total
-- Mapped to phases: 0
-- Unmapped: 45 (pending roadmap creation)
+- v1 requirements: 50 total
+- Mapped to phases: 50
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-07 after initial definition*
+*Last updated: 2026-02-07 after roadmap creation*

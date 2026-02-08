@@ -145,4 +145,11 @@ def load(
     tables_loaded = len(results)
     records_loaded = sum(results.values())
     typer.echo(f"Loaded {records_loaded} records into {tables_loaded} tables")
+
+    # --- Data quality report ---
+    from observatory.quality import analyze_quality, print_quality_report
+
+    quality_results = analyze_quality(data, schemas)
+    print_quality_report(quality_results)
+
     typer.echo("Done.")

@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-07)
 ## Current Position
 
 Phase: 4 of 5 (Cloud Mode)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-08 -- Completed 04-01-PLAN.md (Terraform BigQuery infrastructure)
+Last activity: 2026-02-08 -- Completed 04-02-PLAN.md (BigQuery loader module and CLI wiring)
 
-Progress: [#######...] 73% (11/15 plans)
+Progress: [########..] 80% (12/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 2.5min
-- Total execution time: 27min
+- Total plans completed: 12
+- Average duration: 2.7min
+- Total execution time: 32min
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [#######...] 73% (11/15 plans)
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
 | 2. Local Pipeline | 4/4 | 9min | 2.3min |
 | 3. Analytics Queries | 3/3 | 8min | 2.7min |
-| 4. Cloud Mode | 1/3 | 2min | 2.0min |
+| 4. Cloud Mode | 2/3 | 7min | 3.5min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (3min), 03-02 (2min), 03-03 (3min), 04-01 (2min)
-- Trend: stable
+- Last 5 plans: 03-02 (2min), 03-03 (3min), 04-01 (2min), 04-02 (5min)
+- Trend: stable (04-02 slightly longer due to optional dependency handling)
 
 *Updated after each plan completion*
 
@@ -87,6 +87,10 @@ Recent decisions affecting current work:
 - 04-01: 5 empty tables created with patient_id placeholder for future data
 - 04-01: deletion_protection=false and delete_contents_on_destroy=true for accelerator use
 - 04-01: dataEditor at dataset level, jobUser at project level -- minimum privilege IAM
+- 04-02: google-cloud-bigquery as optional dependency (not required for postgres-only users)
+- 04-02: try/except ImportError with bigquery=None fallback for testability without GCP package
+- 04-02: CLI import of bq_loader wrapped in try/except Exception for graceful degradation
+- 04-02: sys.modules mock approach in tests to avoid requiring google-cloud-bigquery
 
 ### Pending Todos
 
@@ -99,5 +103,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 04-01-PLAN.md (Terraform BigQuery infrastructure). Phase 4 plan 1 of 3 done.
+Stopped at: Completed 04-02-PLAN.md (BigQuery loader module and CLI wiring). Phase 4 plan 2 of 3 done.
 Resume file: None

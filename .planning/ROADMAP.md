@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Schema Foundation** - DDL generation, data normalization, and project scaffolding for all 21 Particle flat resource types
 - [x] **Phase 2: Local Pipeline** - End-to-end file-to-PostgreSQL pipeline with Docker, CLI, and developer experience
 - [x] **Phase 3: Analytics Queries** - Pre-built clinical, operational, and cross-cutting SQL queries for both database targets
-- [ ] **Phase 4: Cloud Mode** - BigQuery target with Terraform provisioning and production-ready cloud loading
+- [x] **Phase 4: Cloud Mode** - BigQuery target with Terraform provisioning and production-ready cloud loading
 - [ ] **Phase 5: API Ingestion** - Live Particle Health API integration with authentication, retries, and error handling
 
 ## Phase Details
@@ -83,9 +83,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Terraform module for BigQuery dataset, 21 tables (for_each), service account, and IAM bindings
-- [ ] 04-02-PLAN.md -- BigQuery loader module with batch load jobs, idempotent delete+insert, and CLI wiring
-- [ ] 04-03-PLAN.md -- Cloud Mode README section with Terraform setup, ADC auth, and query walkthrough
+- [x] 04-01-PLAN.md -- Terraform module for BigQuery dataset, 21 tables (for_each), service account, and IAM bindings
+- [x] 04-02-PLAN.md -- BigQuery loader module with batch load jobs, idempotent delete+insert, and CLI wiring
+- [x] 04-03-PLAN.md -- Cloud Mode README section with Terraform setup, ADC auth, and query walkthrough
 
 ### Phase 5: API Ingestion
 **Goal**: Customers can pull data directly from the Particle Health API instead of loading from files, with production-grade error handling
@@ -112,5 +112,5 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 | 1. Schema Foundation | 3/3 | Complete | 2026-02-08 |
 | 2. Local Pipeline | 4/4 | Complete | 2026-02-08 |
 | 3. Analytics Queries | 3/3 | Complete | 2026-02-08 |
-| 4. Cloud Mode | 0/3 | Not started | - |
+| 4. Cloud Mode | 3/3 | Complete | 2026-02-08 |
 | 5. API Ingestion | 0/2 | Not started | - |

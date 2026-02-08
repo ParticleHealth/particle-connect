@@ -7,10 +7,15 @@ name = "particle-flat-observatory"
 version = "0.1.0"
 description = "Data pipeline accelerator for Particle Health flat data — schema generation, normalization, and analytics"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "psycopg[binary]>=3.3.0",
+    "typer>=0.21.0",
+    "python-dotenv>=1.0.0",
+]
 
 [project.scripts]
 observatory-generate-ddl = "observatory.generate_ddl:main"
+particle-pipeline = "observatory.cli:app"
 
 [project.optional-dependencies]
 dev = [

@@ -20,6 +20,5 @@ build/
 .ruff_cache/
 .pytest_cache/
 
-# Generated DDL outputs (committed explicitly after generation)
-ddl/postgres/create_all.sql
-ddl/bigquery/create_all.sql
+# Generated DDL outputs are committed as static reviewable artifacts.
+# Do NOT add ddl/postgres/create_all.sql or ddl/bigquery/create_all.sql here.

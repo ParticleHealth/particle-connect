@@ -9,13 +9,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Pipeline Core
 
-- [ ] **PIPE-01**: DDL statements generated for all 21 Particle flat resource types (aICitations, aIOutputs, allergies, coverages, documentReferences, encounters, familyMemberHistories, immunizations, labs, locations, medications, organizations, patients, practitioners, problems, procedures, recordSources, socialHistories, sources, transitions, vitalSigns)
-- [ ] **PIPE-02**: Pipeline handles empty strings from Particle API as NULLs (normalization layer)
-- [ ] **PIPE-03**: Pipeline handles 5+ timestamp formats present in Particle flat data
-- [ ] **PIPE-04**: Pipeline handles mixed int/float numeric values and large numeric string IDs
-- [ ] **PIPE-05**: Schema-resilient loading — handles missing fields, extra fields, and empty resource arrays without crashing
+- [x] **PIPE-01**: DDL statements generated for all 21 Particle flat resource types (aICitations, aIOutputs, allergies, coverages, documentReferences, encounters, familyMemberHistories, immunizations, labs, locations, medications, organizations, patients, practitioners, problems, procedures, recordSources, socialHistories, sources, transitions, vitalSigns)
+- [x] **PIPE-02**: Pipeline handles empty strings from Particle API as NULLs (normalization layer)
+- [x] **PIPE-03**: Pipeline handles 5+ timestamp formats present in Particle flat data
+- [x] **PIPE-04**: Pipeline handles mixed int/float numeric values and large numeric string IDs
+- [x] **PIPE-05**: Schema-resilient loading — handles missing fields, extra fields, and empty resource arrays without crashing
 - [ ] **PIPE-06**: Idempotent loading via delete+insert per patient_id per resource type — safe to re-run
-- [ ] **PIPE-07**: Pipeline gracefully skips empty resource types (logs info, creates empty table, no error)
+- [x] **PIPE-07**: Pipeline gracefully skips empty resource types (logs info, creates empty table, no error)
 
 ### Ingestion
 
@@ -80,8 +80,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DX-02**: Data quality report after loading — records per table, null %, date ranges, issues flagged
 - [ ] **DX-03**: README with setup steps for local mode (Docker)
 - [ ] **DX-04**: README with setup steps for cloud mode (Terraform + BigQuery)
-- [ ] **DX-05**: .env.example with all required environment variables documented
-- [ ] **DX-06**: Sample data (flat_data.json) included in repo for immediate testing
+- [x] **DX-05**: .env.example with all required environment variables documented
+- [x] **DX-06**: Sample data (flat_data.json) included in repo for immediate testing
 - [ ] **DX-07**: SQL queries work on both PostgreSQL and BigQuery (standard SQL where possible, dialect variants where needed)
 
 ## v2 Requirements
@@ -125,13 +125,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PIPE-01 | Phase 1: Schema Foundation | Pending |
-| PIPE-02 | Phase 1: Schema Foundation | Pending |
-| PIPE-03 | Phase 1: Schema Foundation | Pending |
-| PIPE-04 | Phase 1: Schema Foundation | Pending |
-| PIPE-05 | Phase 1: Schema Foundation | Pending |
+| PIPE-01 | Phase 1: Schema Foundation | Complete |
+| PIPE-02 | Phase 1: Schema Foundation | Complete |
+| PIPE-03 | Phase 1: Schema Foundation | Complete |
+| PIPE-04 | Phase 1: Schema Foundation | Complete |
+| PIPE-05 | Phase 1: Schema Foundation | Complete |
 | PIPE-06 | Phase 1: Schema Foundation | Pending |
-| PIPE-07 | Phase 1: Schema Foundation | Pending |
+| PIPE-07 | Phase 1: Schema Foundation | Complete |
 | INGEST-01 | Phase 2: Local Pipeline | Pending |
 | INGEST-02 | Phase 5: API Ingestion | Pending |
 | INGEST-03 | Phase 5: API Ingestion | Pending |
@@ -172,8 +172,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DX-02 | Phase 2: Local Pipeline | Pending |
 | DX-03 | Phase 2: Local Pipeline | Pending |
 | DX-04 | Phase 4: Cloud Mode | Pending |
-| DX-05 | Phase 1: Schema Foundation | Pending |
-| DX-06 | Phase 1: Schema Foundation | Pending |
+| DX-05 | Phase 1: Schema Foundation | Complete |
+| DX-06 | Phase 1: Schema Foundation | Complete |
 | DX-07 | Phase 3: Analytics Queries | Pending |
 
 **Coverage:**
@@ -183,4 +183,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-07 after roadmap creation*
+*Last updated: 2026-02-08 after Phase 1 completion*

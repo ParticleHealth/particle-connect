@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-07)
 
 **Core value:** Customers go from raw Particle flat data to queryable structured tables with useful analytics queries -- working from a clean checkout with zero code changes beyond configuration.
-**Current focus:** Phase 4: Cloud Deployment (in progress)
+**Current focus:** Phase 4: Cloud Deployment (complete)
 
 ## Current Position
 
 Phase: 4 of 5 (Cloud Mode)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-08 -- Completed 04-02-PLAN.md (BigQuery loader module and CLI wiring)
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-02-08 -- Completed 04-03-PLAN.md (Cloud Mode README documentation)
 
-Progress: [########..] 80% (12/15 plans)
+Progress: [#########.] 87% (13/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 2.7min
-- Total execution time: 32min
+- Total plans completed: 13
+- Average duration: 2.6min
+- Total execution time: 34min
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [########..] 80% (12/15 plans)
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
 | 2. Local Pipeline | 4/4 | 9min | 2.3min |
 | 3. Analytics Queries | 3/3 | 8min | 2.7min |
-| 4. Cloud Mode | 2/3 | 7min | 3.5min |
+| 4. Cloud Mode | 3/3 | 9min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (2min), 03-03 (3min), 04-01 (2min), 04-02 (5min)
-- Trend: stable (04-02 slightly longer due to optional dependency handling)
+- Last 5 plans: 03-03 (3min), 04-01 (2min), 04-02 (5min), 04-03 (2min)
+- Trend: stable (documentation plans consistently fast)
 
 *Updated after each plan completion*
 
@@ -91,6 +91,10 @@ Recent decisions affecting current work:
 - 04-02: try/except ImportError with bigquery=None fallback for testability without GCP package
 - 04-02: CLI import of bq_loader wrapped in try/except Exception for graceful degradation
 - 04-02: sys.modules mock approach in tests to avoid requiring google-cloud-bigquery
+- 04-03: Cloud Mode section placed after What Gets Loaded, progressive disclosure (local-first, cloud-second)
+- 04-03: Two query execution paths documented (BigQuery Console + bq CLI) since customers use both
+- 04-03: Default dataset requirement for unqualified table names called out with bold formatting
+- 04-03: Known limitations (load quota, non-atomic, DML concurrency) co-located in Cloud Mode section
 
 ### Pending Todos
 
@@ -103,5 +107,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 04-02-PLAN.md (BigQuery loader module and CLI wiring). Phase 4 plan 2 of 3 done.
+Stopped at: Completed 04-03-PLAN.md (Cloud Mode README documentation). Phase 4 complete (3/3 plans).
 Resume file: None

@@ -12,24 +12,24 @@ Customers can go from raw Particle flat data to queryable, structured tables wit
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Python-based pipeline that parses Particle GET Flat JSON response into per-resource-type records
+- [x] Dual ingestion modes: call Particle API directly (live) or load from file/stdin
+- [x] DDL statements for all 21 flat resource types (aICitations, aIOutputs, allergies, coverages, documentReferences, encounters, familyMemberHistories, immunizations, labs, locations, medications, organizations, patients, practitioners, problems, procedures, recordSources, socialHistories, sources, transitions, vitalSigns)
+- [x] Schema resilience — handles missing/extra fields, empty resource arrays, varying data shapes across customers
+- [x] Idempotent loads — safe to re-run without duplicating data
+- [x] Local mode: Docker Compose spins up PostgreSQL, creates tables, loads data
+- [x] Cloud mode: Terraform provisions BigQuery dataset, tables, and service account
+- [x] Pre-built clinical SQL queries (patient summaries, encounter timelines, lab trends, medication lists)
+- [x] Pre-built operational SQL queries (data completeness, source breakdowns, patient counts, resource coverage)
+- [x] SQL queries work on both PostgreSQL and BigQuery with minimal dialect differences
+- [x] Configuration via environment variables / .env — no code changes needed per customer
+- [x] Works from clean checkout: clone, configure, run
+- [x] Sample data included for local testing (from existing flat_data.json)
+- [x] Clear README with setup steps for both local and cloud modes
 
 ### Active
 
-- [ ] Python-based pipeline that parses Particle GET Flat JSON response into per-resource-type records
-- [ ] Dual ingestion modes: call Particle API directly (live) or load from file/stdin
-- [ ] DDL statements for all 21 flat resource types (aICitations, aIOutputs, allergies, coverages, documentReferences, encounters, familyMemberHistories, immunizations, labs, locations, medications, organizations, patients, practitioners, problems, procedures, recordSources, socialHistories, sources, transitions, vitalSigns)
-- [ ] Schema resilience — handles missing/extra fields, empty resource arrays, varying data shapes across customers
-- [ ] Idempotent loads — safe to re-run without duplicating data
-- [ ] Local mode: Docker Compose spins up PostgreSQL, creates tables, loads data
-- [ ] Cloud mode: Terraform provisions BigQuery dataset, tables, and service account
-- [ ] Pre-built clinical SQL queries (patient summaries, encounter timelines, lab trends, medication lists)
-- [ ] Pre-built operational SQL queries (data completeness, source breakdowns, patient counts, resource coverage)
-- [ ] SQL queries work on both PostgreSQL and BigQuery with minimal dialect differences
-- [ ] Configuration via environment variables / .env — no code changes needed per customer
-- [ ] Works from clean checkout: clone, configure, run
-- [ ] Sample data included for local testing (from existing flat_data.json)
-- [ ] Clear README with setup steps for both local and cloud modes
+(None — v1 shipped, awaiting v2 planning)
 
 ### Out of Scope
 
@@ -62,12 +62,20 @@ Customers can go from raw Particle flat data to queryable, structured tables wit
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Python for pipeline | Matches existing particle-health-starters, customers already set up | — Pending |
-| PostgreSQL for local | Closest BigQuery SQL dialect, most universal | — Pending |
-| All 21 resource types | Full coverage, no customer left wondering why their data type is missing | — Pending |
-| Dual ingestion (API + file) | Flexibility: test with files, run live in production | — Pending |
-| Minimal Terraform scope | Dataset + tables + SA only, customer handles scheduling | — Pending |
-| Both clinical + operational queries | Covers analytics engineers and ops teams | — Pending |
+| Python for pipeline | Matches existing particle-health-starters, customers already set up | Validated (v1) |
+| PostgreSQL for local | Closest BigQuery SQL dialect, most universal | Validated (v1) |
+| All 21 resource types | Full coverage, no customer left wondering why their data type is missing | Validated (v1) |
+| Dual ingestion (API + file) | Flexibility: test with files, run live in production | Validated (v1) |
+| Minimal Terraform scope | Dataset + tables + SA only, customer handles scheduling | Validated (v1) |
+| Both clinical + operational queries | Covers analytics engineers and ops teams | Validated (v1) |
+| Stdlib-only HTTP (no httpx) | Maximum portability, fewer deps to install | Validated (v1) |
+| ELT approach (all columns TEXT) | Transform in SQL queries, no type coercion on load | Validated (v1) |
+| python-dotenv required | CLI needs .env loading for all config | Validated (v1) |
+| google-cloud-bigquery optional | Only needed for cloud mode, not required for local-only users | Validated (v1) |
+
+## Milestones
+
+- **v1.0 Pipeline Accelerator** — Shipped 2026-02-08. See `.planning/milestones/v1.0-ROADMAP.md`
 
 ---
-*Last updated: 2026-02-07 after initialization*
+*Last updated: 2026-02-08 after v1.0 milestone completion*

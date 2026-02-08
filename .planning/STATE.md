@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-07)
 ## Current Position
 
 Phase: 2 of 5 (Local Pipeline)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-08 -- Completed 02-01-PLAN.md (Docker Compose, pipeline dependencies)
+Last activity: 2026-02-08 -- Completed 02-02-PLAN.md (PostgreSQL loader module)
 
-Progress: [###.......] 27% (4/15 plans)
+Progress: [###.......] 33% (5/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 2.3min
-- Total execution time: 9min
+- Total plans completed: 5
+- Average duration: 2.2min
+- Total execution time: 11min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
-| 2. Local Pipeline | 1/4 | 1min | 1.0min |
+| 2. Local Pipeline | 2/4 | 3min | 1.5min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2min), 01-02 (3min), 01-03 (3min), 02-01 (1min)
+- Last 5 plans: 01-02 (3min), 01-03 (3min), 02-01 (1min), 02-02 (2min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -58,6 +58,9 @@ Recent decisions affecting current work:
 - 02-01: python-dotenv promoted from optional to required dependency for CLI .env loading
 - 02-01: compose.yaml (Compose V2, no version key) with direct DDL bind mount
 - 02-01: PG_* env vars with defaults matching compose.yaml for zero-config local dev
+- 02-02: Transaction scope per-patient per-resource-type for failure isolation
+- 02-02: Column ordering uses ResourceSchema.columns as single source of truth
+- 02-02: All SQL identifiers quoted via psycopg.sql.Identifier for reserved word safety
 
 ### Pending Todos
 
@@ -70,5 +73,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 02-01-PLAN.md (Docker Compose + pipeline deps)
+Stopped at: Completed 02-02-PLAN.md (PostgreSQL loader module)
 Resume file: None

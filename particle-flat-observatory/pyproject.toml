@@ -19,6 +19,9 @@ observatory-generate-ddl = "observatory.generate_ddl:main"
 particle-pipeline = "observatory.cli:app"
 
 [project.optional-dependencies]
+bigquery = [
+    "google-cloud-bigquery>=3.40.0",
+]
 dev = [
     "pytest>=8.0.0",
     "ruff>=0.1.0",

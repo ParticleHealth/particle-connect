@@ -1,8 +1,8 @@
 """Typer CLI entry point for the Particle flat data pipeline.
 
-Wires together the parser, schema inspector, and PostgreSQL loader into a
-single `particle-pipeline load` command with .env loading, actionable error
-messages, and --help usage.
+Wires together the parser (or API client), schema inspector, and database
+loader into a single `particle-pipeline load` command with .env loading,
+actionable error messages, and --help usage.
 """
 
 import logging
@@ -56,14 +56,23 @@ def load(
             envvar="FLAT_DATA_PATH",
         ),
     ] = "sample-data/flat_data.json",
+    patient_id: Annotated[
+        str | None,
+        typer.Option(
+            "--patient-id",
+            help="Patient ID for API source",
+            envvar="PARTICLE_PATIENT_ID",
+        ),
+    ] = None,
     verbose: Annotated[
         bool, typer.Option("--verbose", "-v", help="Enable debug logging")
     ] = False,
 ) -> None:
     """Load Particle flat data into a target database.
 
-    Parses a flat_data.json file, inspects the schema, and loads all resource
-    types into the target database with idempotent semantics (safe to re-run).
+    Parses a flat_data.json file (or fetches from the Particle API), inspects
+    the schema, and loads all resource types into the target database with
+    idempotent semantics (safe to re-run).
 
     Examples:
 
@@ -72,6 +81,8 @@ def load(
         particle-pipeline load --target bigquery
 
         particle-pipeline load --data-path /path/to/flat_data.json
+
+        particle-pipeline load --source api --patient-id abc-123 --target postgres
 
         particle-pipeline load --verbose
     """
@@ -83,9 +94,6 @@ def load(
             f"Invalid source: '{source}'. Must be one of: {', '.join(VALID_SOURCES)}"
         )
         raise typer.Exit(code=1)
-    if source == "api":
-        typer.echo("API source not yet implemented (coming in Phase 5)")
-        raise typer.Exit(code=1)
 
     # Validate target
     if target not in VALID_TARGETS:
@@ -95,17 +103,51 @@ def load(
         raise typer.Exit(code=1)
     typer.echo(f"Loading Particle flat data (source={source}, target={target})")
 
-    # --- Parse flat data ---
-    from observatory.parser import load_flat_data
+    # --- Fetch or parse flat data ---
+    if source == "api":
+        if not patient_id:
+            typer.echo(
+                "--patient-id is required when --source api\n\n"
+                "Usage: particle-pipeline load --source api "
+                "--patient-id <patient-id> --target postgres"
+            )
+            raise typer.Exit(code=1)
 
-    try:
-        data = load_flat_data(data_path)
-    except FileNotFoundError:
-        typer.echo(
-            f"Data file not found: {data_path}\n\n"
-            "To fix: check --data-path or set FLAT_DATA_PATH in .env"
-        )
-        raise typer.Exit(code=1)
+        from observatory.api_client import ParticleAPIClient
+
+        try:
+            api_client = ParticleAPIClient()
+        except ValueError as e:
+            typer.echo(str(e))
+            raise typer.Exit(code=1)
+
+        try:
+            raw_data = api_client.get_flat_data(patient_id)
+        except Exception as e:
+            typer.echo(f"API request failed: {e}")
+            raise typer.Exit(code=1)
+
+        # Apply same normalization as file mode for identical downstream behavior
+        from observatory.normalizer import normalize_resource
+        from observatory.parser import EXPECTED_RESOURCE_TYPES
+
+        data: dict[str, list[dict]] = {}
+        for key in EXPECTED_RESOURCE_TYPES:
+            records = raw_data.get(key, [])
+            data[key] = normalize_resource(records)
+
+    else:
+        # --- File source (default) ---
+        from observatory.parser import load_flat_data
+
+        try:
+            data = load_flat_data(data_path)
+        except FileNotFoundError:
+            typer.echo(
+                f"Data file not found: {data_path}\n\n"
+                "To fix: check --data-path or set FLAT_DATA_PATH in .env"
+            )
+            raise typer.Exit(code=1)
 
     # --- Inspect schema ---
     from observatory.schema import inspect_schema

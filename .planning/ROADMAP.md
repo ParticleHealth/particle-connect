@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. All five timestamp formats found in Particle flat data parse successfully into a consistent format
   4. Schema-resilient parsing handles missing fields, extra fields, and empty resource arrays without errors -- verified against sample data
   5. Project includes .env.example with all configuration variables documented and sample flat_data.json for immediate testing
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Project scaffolding, dependencies, and security foundations
-- [ ] 01-02: JSON parser, schema inspector, and data normalization layer
-- [ ] 01-03: DDL generator with dialect-aware type mapping for all 21 resource types
+- [ ] 01-01-PLAN.md -- Project scaffolding, Python package, configuration, and sample data
+- [ ] 01-02-PLAN.md -- JSON parser, schema inspector, and data normalization layer
+- [ ] 01-03-PLAN.md -- DDL generator with CLI and dialect-aware SQL output for all 21 resource types
 
 ### Phase 2: Local Pipeline
 **Goal**: Customers can load Particle flat data into a local PostgreSQL database from a clean checkout with a single command, getting immediate feedback on data quality
@@ -109,7 +109,7 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema Foundation | 0/3 | Not started | - |
+| 1. Schema Foundation | 0/3 | Planned | - |
 | 2. Local Pipeline | 0/4 | Not started | - |
 | 3. Analytics Queries | 0/3 | Not started | - |
 | 4. Cloud Mode | 0/3 | Not started | - |

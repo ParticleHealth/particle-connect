@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Schema Foundation** - DDL generation, data normalization, and project scaffolding for all 21 Particle flat resource types
 - [x] **Phase 2: Local Pipeline** - End-to-end file-to-PostgreSQL pipeline with Docker, CLI, and developer experience
-- [ ] **Phase 3: Analytics Queries** - Pre-built clinical, operational, and cross-cutting SQL queries for both database targets
+- [x] **Phase 3: Analytics Queries** - Pre-built clinical, operational, and cross-cutting SQL queries for both database targets
 - [ ] **Phase 4: Cloud Mode** - BigQuery target with Terraform provisioning and production-ready cloud loading
 - [ ] **Phase 5: API Ingestion** - Live Particle Health API integration with authentication, retries, and error handling
 
@@ -67,9 +67,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Clinical analytics queries (patient summary, problems, medications, labs, vitals, encounters, care team) for PostgreSQL and BigQuery
-- [ ] 03-02-PLAN.md -- Operational analytics queries (completeness, sources, freshness, provenance, AI outputs) for PostgreSQL and BigQuery
-- [ ] 03-03-PLAN.md -- Cross-cutting queries (labs-by-encounter, medications-by-problem, procedures-by-encounter) and query catalog README
+- [x] 03-01-PLAN.md -- Clinical analytics queries (patient summary, problems, medications, labs, vitals, encounters, care team) for PostgreSQL and BigQuery
+- [x] 03-02-PLAN.md -- Operational analytics queries (completeness, sources, freshness, provenance, AI outputs) for PostgreSQL and BigQuery
+- [x] 03-03-PLAN.md -- Cross-cutting queries (labs-by-encounter, medications-by-problem, procedures-by-encounter) and query catalog README
 
 ### Phase 4: Cloud Mode
 **Goal**: Customers can provision BigQuery infrastructure with Terraform and load Particle flat data into a production-ready cloud warehouse
@@ -111,6 +111,6 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 3/3 | Complete | 2026-02-08 |
 | 2. Local Pipeline | 4/4 | Complete | 2026-02-08 |
-| 3. Analytics Queries | 0/3 | Not started | - |
+| 3. Analytics Queries | 3/3 | Complete | 2026-02-08 |
 | 4. Cloud Mode | 0/3 | Not started | - |
 | 5. API Ingestion | 0/2 | Not started | - |

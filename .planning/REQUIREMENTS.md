@@ -14,24 +14,24 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PIPE-03**: Pipeline handles 5+ timestamp formats present in Particle flat data
 - [x] **PIPE-04**: Pipeline handles mixed int/float numeric values and large numeric string IDs
 - [x] **PIPE-05**: Schema-resilient loading — handles missing fields, extra fields, and empty resource arrays without crashing
-- [ ] **PIPE-06**: Idempotent loading via delete+insert per patient_id per resource type — safe to re-run
+- [x] **PIPE-06**: Idempotent loading via delete+insert per patient_id per resource type — safe to re-run
 - [x] **PIPE-07**: Pipeline gracefully skips empty resource types (logs info, creates empty table, no error)
 
 ### Ingestion
 
-- [ ] **INGEST-01**: File-based ingestion loads flat_data.json (or any Particle flat JSON file) into target database
+- [x] **INGEST-01**: File-based ingestion loads flat_data.json (or any Particle flat JSON file) into target database
 - [ ] **INGEST-02**: Live API ingestion authenticates with Particle Health and calls GET Flat endpoint
 - [ ] **INGEST-03**: API ingestion includes retries with exponential backoff for 429/5xx errors
 - [ ] **INGEST-04**: API ingestion includes configurable timeout
-- [ ] **INGEST-05**: Both ingestion modes feed the same downstream pipeline (parse → load)
+- [x] **INGEST-05**: Both ingestion modes feed the same downstream pipeline (parse → load)
 
 ### Local Mode
 
-- [ ] **LOCAL-01**: Docker Compose file spins up PostgreSQL with pre-configured database and user
-- [ ] **LOCAL-02**: DDL auto-runs on container startup (tables created automatically)
-- [ ] **LOCAL-03**: Single command loads sample data into local PostgreSQL
-- [ ] **LOCAL-04**: Docker volumes persist data across container restarts
-- [ ] **LOCAL-05**: Configurable PostgreSQL port (avoids conflicts with existing local PG)
+- [x] **LOCAL-01**: Docker Compose file spins up PostgreSQL with pre-configured database and user
+- [x] **LOCAL-02**: DDL auto-runs on container startup (tables created automatically)
+- [x] **LOCAL-03**: Single command loads sample data into local PostgreSQL
+- [x] **LOCAL-04**: Docker volumes persist data across container restarts
+- [x] **LOCAL-05**: Configurable PostgreSQL port (avoids conflicts with existing local PG)
 
 ### Cloud Mode
 
@@ -44,11 +44,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### CLI
 
-- [ ] **CLI-01**: CLI entry point with typer — `particle-pipeline load --source file --target postgres`
-- [ ] **CLI-02**: CLI supports `--source file` and `--source api` modes
-- [ ] **CLI-03**: CLI supports `--target postgres` and `--target bigquery` modes
-- [ ] **CLI-04**: CLI reads configuration from environment variables / .env file
-- [ ] **CLI-05**: CLI provides `--help` with usage examples
+- [x] **CLI-01**: CLI entry point with typer — `particle-pipeline load --source file --target postgres`
+- [x] **CLI-02**: CLI supports `--source file` and `--source api` modes
+- [x] **CLI-03**: CLI supports `--target postgres` and `--target bigquery` modes
+- [x] **CLI-04**: CLI reads configuration from environment variables / .env file
+- [x] **CLI-05**: CLI provides `--help` with usage examples
 
 ### Analytics Queries — Clinical
 
@@ -76,9 +76,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Developer Experience
 
-- [ ] **DX-01**: Actionable error messages — tells what went wrong and how to fix it (not raw stack traces)
-- [ ] **DX-02**: Data quality report after loading — records per table, null %, date ranges, issues flagged
-- [ ] **DX-03**: README with setup steps for local mode (Docker)
+- [x] **DX-01**: Actionable error messages — tells what went wrong and how to fix it (not raw stack traces)
+- [x] **DX-02**: Data quality report after loading — records per table, null %, date ranges, issues flagged
+- [x] **DX-03**: README with setup steps for local mode (Docker)
 - [ ] **DX-04**: README with setup steps for cloud mode (Terraform + BigQuery)
 - [x] **DX-05**: .env.example with all required environment variables documented
 - [x] **DX-06**: Sample data (flat_data.json) included in repo for immediate testing
@@ -130,29 +130,29 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PIPE-03 | Phase 1: Schema Foundation | Complete |
 | PIPE-04 | Phase 1: Schema Foundation | Complete |
 | PIPE-05 | Phase 1: Schema Foundation | Complete |
-| PIPE-06 | Phase 1: Schema Foundation | Pending |
+| PIPE-06 | Phase 2: Local Pipeline | Complete |
 | PIPE-07 | Phase 1: Schema Foundation | Complete |
-| INGEST-01 | Phase 2: Local Pipeline | Pending |
+| INGEST-01 | Phase 2: Local Pipeline | Complete |
 | INGEST-02 | Phase 5: API Ingestion | Pending |
 | INGEST-03 | Phase 5: API Ingestion | Pending |
 | INGEST-04 | Phase 5: API Ingestion | Pending |
-| INGEST-05 | Phase 2: Local Pipeline | Pending |
-| LOCAL-01 | Phase 2: Local Pipeline | Pending |
-| LOCAL-02 | Phase 2: Local Pipeline | Pending |
-| LOCAL-03 | Phase 2: Local Pipeline | Pending |
-| LOCAL-04 | Phase 2: Local Pipeline | Pending |
-| LOCAL-05 | Phase 2: Local Pipeline | Pending |
+| INGEST-05 | Phase 2: Local Pipeline | Complete |
+| LOCAL-01 | Phase 2: Local Pipeline | Complete |
+| LOCAL-02 | Phase 2: Local Pipeline | Complete |
+| LOCAL-03 | Phase 2: Local Pipeline | Complete |
+| LOCAL-04 | Phase 2: Local Pipeline | Complete |
+| LOCAL-05 | Phase 2: Local Pipeline | Complete |
 | CLOUD-01 | Phase 4: Cloud Mode | Pending |
 | CLOUD-02 | Phase 4: Cloud Mode | Pending |
 | CLOUD-03 | Phase 4: Cloud Mode | Pending |
 | CLOUD-04 | Phase 4: Cloud Mode | Pending |
 | CLOUD-05 | Phase 4: Cloud Mode | Pending |
 | CLOUD-06 | Phase 4: Cloud Mode | Pending |
-| CLI-01 | Phase 2: Local Pipeline | Pending |
-| CLI-02 | Phase 2: Local Pipeline | Pending |
-| CLI-03 | Phase 2: Local Pipeline | Pending |
-| CLI-04 | Phase 2: Local Pipeline | Pending |
-| CLI-05 | Phase 2: Local Pipeline | Pending |
+| CLI-01 | Phase 2: Local Pipeline | Complete |
+| CLI-02 | Phase 2: Local Pipeline | Complete |
+| CLI-03 | Phase 2: Local Pipeline | Complete |
+| CLI-04 | Phase 2: Local Pipeline | Complete |
+| CLI-05 | Phase 2: Local Pipeline | Complete |
 | CLIN-01 | Phase 3: Analytics Queries | Pending |
 | CLIN-02 | Phase 3: Analytics Queries | Pending |
 | CLIN-03 | Phase 3: Analytics Queries | Pending |
@@ -168,9 +168,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CROSS-01 | Phase 3: Analytics Queries | Pending |
 | CROSS-02 | Phase 3: Analytics Queries | Pending |
 | CROSS-03 | Phase 3: Analytics Queries | Pending |
-| DX-01 | Phase 2: Local Pipeline | Pending |
-| DX-02 | Phase 2: Local Pipeline | Pending |
-| DX-03 | Phase 2: Local Pipeline | Pending |
+| DX-01 | Phase 2: Local Pipeline | Complete |
+| DX-02 | Phase 2: Local Pipeline | Complete |
+| DX-03 | Phase 2: Local Pipeline | Complete |
 | DX-04 | Phase 4: Cloud Mode | Pending |
 | DX-05 | Phase 1: Schema Foundation | Complete |
 | DX-06 | Phase 1: Schema Foundation | Complete |
@@ -183,4 +183,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-08 after Phase 1 completion*
+*Last updated: 2026-02-08 after Phase 2 completion*

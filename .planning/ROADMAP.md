@@ -13,7 +13,7 @@ This roadmap delivers a customer-facing data pipeline accelerator that takes Par
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Schema Foundation** - DDL generation, data normalization, and project scaffolding for all 21 Particle flat resource types
-- [ ] **Phase 2: Local Pipeline** - End-to-end file-to-PostgreSQL pipeline with Docker, CLI, and developer experience
+- [x] **Phase 2: Local Pipeline** - End-to-end file-to-PostgreSQL pipeline with Docker, CLI, and developer experience
 - [ ] **Phase 3: Analytics Queries** - Pre-built clinical, operational, and cross-cutting SQL queries for both database targets
 - [ ] **Phase 4: Cloud Mode** - BigQuery target with Terraform provisioning and production-ready cloud loading
 - [ ] **Phase 5: API Ingestion** - Live Particle Health API integration with authentication, retries, and error handling
@@ -50,10 +50,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Docker Compose PostgreSQL setup with auto-DDL, volume persistence, and pipeline dependencies
-- [ ] 02-02-PLAN.md -- PostgreSQL loader module with idempotent delete+insert per patient per resource type
-- [ ] 02-03-PLAN.md -- Typer CLI entry point with .env configuration, error handling, and end-to-end verification
-- [ ] 02-04-PLAN.md -- Data quality report with Rich formatting and local setup README
+- [x] 02-01-PLAN.md -- Docker Compose PostgreSQL setup with auto-DDL, volume persistence, and pipeline dependencies
+- [x] 02-02-PLAN.md -- PostgreSQL loader module with idempotent delete+insert per patient per resource type
+- [x] 02-03-PLAN.md -- Typer CLI entry point with .env configuration, error handling, and end-to-end verification
+- [x] 02-04-PLAN.md -- Data quality report with Rich formatting and local setup README
 
 ### Phase 3: Analytics Queries
 **Goal**: Customers have a library of ready-to-run SQL queries that answer common clinical and operational questions about their Particle data
@@ -110,7 +110,7 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 3/3 | Complete | 2026-02-08 |
-| 2. Local Pipeline | 0/4 | Not started | - |
+| 2. Local Pipeline | 4/4 | Complete | 2026-02-08 |
 | 3. Analytics Queries | 0/3 | Not started | - |
 | 4. Cloud Mode | 0/3 | Not started | - |
 | 5. API Ingestion | 0/2 | Not started | - |

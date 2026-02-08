@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md -- Project scaffolding, Python package, configuration, and sample data
-- [ ] 01-02-PLAN.md -- JSON parser, schema inspector, and data normalization layer
+- [x] 01-02-PLAN.md -- JSON parser, schema inspector, and data normalization layer
 - [ ] 01-03-PLAN.md -- DDL generator with CLI and dialect-aware SQL output for all 21 resource types
 
 ### Phase 2: Local Pipeline
@@ -109,7 +109,7 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema Foundation | 1/3 | In progress | - |
+| 1. Schema Foundation | 2/3 | In progress | - |
 | 2. Local Pipeline | 0/4 | Not started | - |
 | 3. Analytics Queries | 0/3 | Not started | - |
 | 4. Cloud Mode | 0/3 | Not started | - |

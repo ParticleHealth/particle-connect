@@ -64,12 +64,12 @@ Plans:
   2. Operational queries return meaningful results: data completeness scorecard, source coverage breakdown, record freshness per resource type, data provenance tracing, and AI output summaries with citation counts
   3. Cross-cutting queries join across resource types: labs-by-encounter, medications-by-problem, and procedures-by-encounter all return results from sample data
   4. Every query runs successfully on both PostgreSQL and BigQuery with documented dialect variants where standard SQL is insufficient
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: Clinical analytics queries (patient summaries, problems, medications, labs, vitals, encounters, care team)
-- [ ] 03-02: Operational analytics queries (completeness, sources, freshness, provenance, AI outputs)
-- [ ] 03-03: Cross-cutting queries and BigQuery dialect compatibility validation
+- [ ] 03-01-PLAN.md -- Clinical analytics queries (patient summary, problems, medications, labs, vitals, encounters, care team) for PostgreSQL and BigQuery
+- [ ] 03-02-PLAN.md -- Operational analytics queries (completeness, sources, freshness, provenance, AI outputs) for PostgreSQL and BigQuery
+- [ ] 03-03-PLAN.md -- Cross-cutting queries (labs-by-encounter, medications-by-problem, procedures-by-encounter) and query catalog README
 
 ### Phase 4: Cloud Mode
 **Goal**: Customers can provision BigQuery infrastructure with Terraform and load Particle flat data into a production-ready cloud warehouse

@@ -35,12 +35,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Cloud Mode
 
-- [ ] **CLOUD-01**: Terraform module creates BigQuery dataset
-- [ ] **CLOUD-02**: Terraform creates all 21 resource type tables with correct BigQuery column types
-- [ ] **CLOUD-03**: Terraform creates service account with minimum required permissions
-- [ ] **CLOUD-04**: Python loader uses google-cloud-bigquery load jobs (not streaming inserts)
-- [ ] **CLOUD-05**: BigQuery loader uses same idempotent delete+insert pattern as PostgreSQL
-- [ ] **CLOUD-06**: Terraform uses variables for project ID, dataset name, region (customer-configurable)
+- [x] **CLOUD-01**: Terraform module creates BigQuery dataset
+- [x] **CLOUD-02**: Terraform creates all 21 resource type tables with correct BigQuery column types
+- [x] **CLOUD-03**: Terraform creates service account with minimum required permissions
+- [x] **CLOUD-04**: Python loader uses google-cloud-bigquery load jobs (not streaming inserts)
+- [x] **CLOUD-05**: BigQuery loader uses same idempotent delete+insert pattern as PostgreSQL
+- [x] **CLOUD-06**: Terraform uses variables for project ID, dataset name, region (customer-configurable)
 
 ### CLI
 
@@ -79,7 +79,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DX-01**: Actionable error messages — tells what went wrong and how to fix it (not raw stack traces)
 - [x] **DX-02**: Data quality report after loading — records per table, null %, date ranges, issues flagged
 - [x] **DX-03**: README with setup steps for local mode (Docker)
-- [ ] **DX-04**: README with setup steps for cloud mode (Terraform + BigQuery)
+- [x] **DX-04**: README with setup steps for cloud mode (Terraform + BigQuery)
 - [x] **DX-05**: .env.example with all required environment variables documented
 - [x] **DX-06**: Sample data (flat_data.json) included in repo for immediate testing
 - [x] **DX-07**: SQL queries work on both PostgreSQL and BigQuery (standard SQL where possible, dialect variants where needed)
@@ -142,12 +142,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOCAL-03 | Phase 2: Local Pipeline | Complete |
 | LOCAL-04 | Phase 2: Local Pipeline | Complete |
 | LOCAL-05 | Phase 2: Local Pipeline | Complete |
-| CLOUD-01 | Phase 4: Cloud Mode | Pending |
-| CLOUD-02 | Phase 4: Cloud Mode | Pending |
-| CLOUD-03 | Phase 4: Cloud Mode | Pending |
-| CLOUD-04 | Phase 4: Cloud Mode | Pending |
-| CLOUD-05 | Phase 4: Cloud Mode | Pending |
-| CLOUD-06 | Phase 4: Cloud Mode | Pending |
+| CLOUD-01 | Phase 4: Cloud Mode | Complete |
+| CLOUD-02 | Phase 4: Cloud Mode | Complete |
+| CLOUD-03 | Phase 4: Cloud Mode | Complete |
+| CLOUD-04 | Phase 4: Cloud Mode | Complete |
+| CLOUD-05 | Phase 4: Cloud Mode | Complete |
+| CLOUD-06 | Phase 4: Cloud Mode | Complete |
 | CLI-01 | Phase 2: Local Pipeline | Complete |
 | CLI-02 | Phase 2: Local Pipeline | Complete |
 | CLI-03 | Phase 2: Local Pipeline | Complete |
@@ -171,7 +171,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DX-01 | Phase 2: Local Pipeline | Complete |
 | DX-02 | Phase 2: Local Pipeline | Complete |
 | DX-03 | Phase 2: Local Pipeline | Complete |
-| DX-04 | Phase 4: Cloud Mode | Pending |
+| DX-04 | Phase 4: Cloud Mode | Complete |
 | DX-05 | Phase 1: Schema Foundation | Complete |
 | DX-06 | Phase 1: Schema Foundation | Complete |
 | DX-07 | Phase 3: Analytics Queries | Complete |
@@ -183,4 +183,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-08 after Phase 3 completion*
+*Last updated: 2026-02-08 after Phase 4 completion*

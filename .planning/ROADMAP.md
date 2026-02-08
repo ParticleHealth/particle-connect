@@ -80,12 +80,12 @@ Plans:
   2. `particle-pipeline load --source file --target bigquery` loads sample data into BigQuery using batch load jobs (not streaming inserts) with the same idempotent delete+insert pattern as PostgreSQL
   3. All analytics queries from Phase 3 run successfully against the BigQuery tables
   4. README documents cloud setup including Terraform variables, authentication via Application Default Credentials, and first query walkthrough
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: Terraform module for BigQuery dataset, tables, and IAM
-- [ ] 04-02: BigQuery loader with batch load jobs and idempotent delete+insert
-- [ ] 04-03: Cloud mode integration testing and README
+- [ ] 04-01-PLAN.md -- Terraform module for BigQuery dataset, 21 tables (for_each), service account, and IAM bindings
+- [ ] 04-02-PLAN.md -- BigQuery loader module with batch load jobs, idempotent delete+insert, and CLI wiring
+- [ ] 04-03-PLAN.md -- Cloud Mode README section with Terraform setup, ADC auth, and query walkthrough
 
 ### Phase 5: API Ingestion
 **Goal**: Customers can pull data directly from the Particle Health API instead of loading from files, with production-grade error handling

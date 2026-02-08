@@ -5,32 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-07)
 
 **Core value:** Customers go from raw Particle flat data to queryable structured tables with useful analytics queries -- working from a clean checkout with zero code changes beyond configuration.
-**Current focus:** Phase 2: Local Pipeline (Phase 1 complete)
+**Current focus:** Phase 2: Local Pipeline (in progress)
 
 ## Current Position
 
-Phase: 1 of 5 (Schema Foundation) -- COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-08 -- Completed 01-03-PLAN.md (DDL generator, CLI, committed SQL files)
+Phase: 2 of 5 (Local Pipeline)
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-02-08 -- Completed 02-01-PLAN.md (Docker Compose, pipeline dependencies)
 
-Progress: [##........] 20% (3/15 plans)
+Progress: [###.......] 27% (4/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 2.7min
-- Total execution time: 8min
+- Total plans completed: 4
+- Average duration: 2.3min
+- Total execution time: 9min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
+| 2. Local Pipeline | 1/4 | 1min | 1.0min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2min), 01-02 (3min), 01-03 (3min)
+- Last 5 plans: 01-01 (2min), 01-02 (3min), 01-03 (3min), 02-01 (1min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -54,6 +55,9 @@ Recent decisions affecting current work:
 - 01-03: All column names quoted unconditionally to handle SQL reserved words
 - 01-03: Empty resource types get commented-out placeholders, not empty tables
 - 01-03: DDL files committed as static reviewable artifacts, not gitignored
+- 02-01: python-dotenv promoted from optional to required dependency for CLI .env loading
+- 02-01: compose.yaml (Compose V2, no version key) with direct DDL bind mount
+- 02-01: PG_* env vars with defaults matching compose.yaml for zero-config local dev
 
 ### Pending Todos
 
@@ -66,5 +70,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 01-03-PLAN.md (Phase 1 complete)
+Stopped at: Completed 02-01-PLAN.md (Docker Compose + pipeline deps)
 Resume file: None

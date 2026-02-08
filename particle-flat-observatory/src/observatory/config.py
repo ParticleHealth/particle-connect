@@ -22,6 +22,8 @@ class ObservatorySettings:
     ddl_dialect: str
     output_dir: str
     log_level: str
+    bq_project_id: str
+    bq_dataset: str
 
 
 def load_settings() -> ObservatorySettings:
@@ -66,9 +68,15 @@ def load_settings() -> ObservatorySettings:
             f"Must be one of: {', '.join(VALID_LOG_LEVELS)}."
         )
 
+    # BigQuery settings (optional -- only needed for --target bigquery)
+    bq_project_id = os.environ.get("BQ_PROJECT_ID", "")
+    bq_dataset = os.environ.get("BQ_DATASET", "particle_observatory")
+
     return ObservatorySettings(
         flat_data_path=flat_data_path,
         ddl_dialect=ddl_dialect,
         output_dir=output_dir,
         log_level=log_level,
+        bq_project_id=bq_project_id,
+        bq_dataset=bq_dataset,
     )

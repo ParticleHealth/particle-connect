@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-07)
 
 **Core value:** Customers go from raw Particle flat data to queryable structured tables with useful analytics queries -- working from a clean checkout with zero code changes beyond configuration.
-**Current focus:** Phase 2: Local Pipeline (verified) -> Phase 3: Analytics Queries (next)
+**Current focus:** Phase 3: Analytics Queries (in progress)
 
 ## Current Position
 
-Phase: 3 of 5 (Analytics Queries — next)
-Plan: 0 of 3 in current phase
-Status: Not started
-Last activity: 2026-02-08 -- Phase 2 verified (4/5 truths, Docker runtime needs human verification)
+Phase: 3 of 5 (Analytics Queries)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-08 -- Completed 03-01-PLAN.md (clinical analytics queries)
 
-Progress: [#####.....] 47% (7/15 plans)
+Progress: [#####.....] 53% (8/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 2.4min
-- Total execution time: 17min
+- Total plans completed: 8
+- Average duration: 2.5min
+- Total execution time: 20min
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [#####.....] 47% (7/15 plans)
 |-------|-------|-------|----------|
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
 | 2. Local Pipeline | 4/4 | 9min | 2.3min |
+| 3. Analytics Queries | 1/3 | 3min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (1min), 02-02 (2min), 02-03 (3min), 02-04 (3min)
+- Last 5 plans: 02-02 (2min), 02-03 (3min), 02-04 (3min), 03-01 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -67,6 +68,10 @@ Recent decisions affecting current work:
 - 02-04: Quality analysis operates on Python dicts, not database -- works even if DB write partially failed
 - 02-04: rich added as explicit dependency even though typer pulls it in -- direct import requires explicit dep
 - 02-04: README targets 5-minute time-to-value with numbered Quick Start steps
+- 03-01: Hardcoded sample patient_id with replacement comments for immediate runnability
+- 03-01: UNION ALL pattern for care team aggregation from 3 sources (encounters, medications, procedures)
+- 03-01: Commented-out LOINC reference range CASE block for customer customization
+- 03-01: BigQuery uses PARSE_TIMESTAMP with %z for +0000 offsets (not SAFE_CAST)
 
 ### Pending Todos
 
@@ -79,5 +84,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Phase 2 verified and complete (Docker e2e deferred to human verification)
+Stopped at: Completed 03-01-PLAN.md (clinical analytics queries)
 Resume file: None

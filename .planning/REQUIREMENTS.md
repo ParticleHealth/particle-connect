@@ -52,27 +52,27 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Analytics Queries — Clinical
 
-- [ ] **CLIN-01**: Patient summary query — demographics, conditions, medications, allergies for a patient
-- [ ] **CLIN-02**: Active problem list — current conditions with onset dates and clinical status
-- [ ] **CLIN-03**: Medication timeline — medications with start/end dates, dosage, and status
-- [ ] **CLIN-04**: Lab results over time — lab values trended by date, flagged abnormals
-- [ ] **CLIN-05**: Vital sign trends — blood pressure, heart rate, temperature, BMI over time
-- [ ] **CLIN-06**: Encounter history — chronological encounters with type, location, duration
-- [ ] **CLIN-07**: Care team — practitioners involved in care with roles and specialties
+- [x] **CLIN-01**: Patient summary query — demographics, conditions, medications, allergies for a patient
+- [x] **CLIN-02**: Active problem list — current conditions with onset dates and clinical status
+- [x] **CLIN-03**: Medication timeline — medications with start/end dates, dosage, and status
+- [x] **CLIN-04**: Lab results over time — lab values trended by date, flagged abnormals
+- [x] **CLIN-05**: Vital sign trends — blood pressure, heart rate, temperature, BMI over time
+- [x] **CLIN-06**: Encounter history — chronological encounters with type, location, duration
+- [x] **CLIN-07**: Care team — practitioners involved in care with roles and specialties
 
 ### Analytics Queries — Operational
 
-- [ ] **OPS-01**: Data completeness scorecard — records per resource type, percentage populated
-- [ ] **OPS-02**: Source coverage — which data sources contributed records, by type
-- [ ] **OPS-03**: Record freshness — most recent records per resource type and source
-- [ ] **OPS-04**: Data provenance — trace any clinical record back to originating source
-- [ ] **OPS-05**: AI output summary — AI-generated insights with citation counts and source documents
+- [x] **OPS-01**: Data completeness scorecard — records per resource type, percentage populated
+- [x] **OPS-02**: Source coverage — which data sources contributed records, by type
+- [x] **OPS-03**: Record freshness — most recent records per resource type and source
+- [x] **OPS-04**: Data provenance — trace any clinical record back to originating source
+- [x] **OPS-05**: AI output summary — AI-generated insights with citation counts and source documents
 
 ### Analytics Queries — Cross-cutting
 
-- [ ] **CROSS-01**: Encounter-to-labs join — labs ordered during specific encounters
-- [ ] **CROSS-02**: Medication-problem correlation — medications mapped to the problems they treat
-- [ ] **CROSS-03**: Procedures by encounter — procedures performed during each encounter with practitioners
+- [x] **CROSS-01**: Encounter-to-labs join — labs ordered during specific encounters
+- [x] **CROSS-02**: Medication-problem correlation — medications mapped to the problems they treat
+- [x] **CROSS-03**: Procedures by encounter — procedures performed during each encounter with practitioners
 
 ### Developer Experience
 
@@ -82,7 +82,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DX-04**: README with setup steps for cloud mode (Terraform + BigQuery)
 - [x] **DX-05**: .env.example with all required environment variables documented
 - [x] **DX-06**: Sample data (flat_data.json) included in repo for immediate testing
-- [ ] **DX-07**: SQL queries work on both PostgreSQL and BigQuery (standard SQL where possible, dialect variants where needed)
+- [x] **DX-07**: SQL queries work on both PostgreSQL and BigQuery (standard SQL where possible, dialect variants where needed)
 
 ## v2 Requirements
 
@@ -153,28 +153,28 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-03 | Phase 2: Local Pipeline | Complete |
 | CLI-04 | Phase 2: Local Pipeline | Complete |
 | CLI-05 | Phase 2: Local Pipeline | Complete |
-| CLIN-01 | Phase 3: Analytics Queries | Pending |
-| CLIN-02 | Phase 3: Analytics Queries | Pending |
-| CLIN-03 | Phase 3: Analytics Queries | Pending |
-| CLIN-04 | Phase 3: Analytics Queries | Pending |
-| CLIN-05 | Phase 3: Analytics Queries | Pending |
-| CLIN-06 | Phase 3: Analytics Queries | Pending |
-| CLIN-07 | Phase 3: Analytics Queries | Pending |
-| OPS-01 | Phase 3: Analytics Queries | Pending |
-| OPS-02 | Phase 3: Analytics Queries | Pending |
-| OPS-03 | Phase 3: Analytics Queries | Pending |
-| OPS-04 | Phase 3: Analytics Queries | Pending |
-| OPS-05 | Phase 3: Analytics Queries | Pending |
-| CROSS-01 | Phase 3: Analytics Queries | Pending |
-| CROSS-02 | Phase 3: Analytics Queries | Pending |
-| CROSS-03 | Phase 3: Analytics Queries | Pending |
+| CLIN-01 | Phase 3: Analytics Queries | Complete |
+| CLIN-02 | Phase 3: Analytics Queries | Complete |
+| CLIN-03 | Phase 3: Analytics Queries | Complete |
+| CLIN-04 | Phase 3: Analytics Queries | Complete |
+| CLIN-05 | Phase 3: Analytics Queries | Complete |
+| CLIN-06 | Phase 3: Analytics Queries | Complete |
+| CLIN-07 | Phase 3: Analytics Queries | Complete |
+| OPS-01 | Phase 3: Analytics Queries | Complete |
+| OPS-02 | Phase 3: Analytics Queries | Complete |
+| OPS-03 | Phase 3: Analytics Queries | Complete |
+| OPS-04 | Phase 3: Analytics Queries | Complete |
+| OPS-05 | Phase 3: Analytics Queries | Complete |
+| CROSS-01 | Phase 3: Analytics Queries | Complete |
+| CROSS-02 | Phase 3: Analytics Queries | Complete |
+| CROSS-03 | Phase 3: Analytics Queries | Complete |
 | DX-01 | Phase 2: Local Pipeline | Complete |
 | DX-02 | Phase 2: Local Pipeline | Complete |
 | DX-03 | Phase 2: Local Pipeline | Complete |
 | DX-04 | Phase 4: Cloud Mode | Pending |
 | DX-05 | Phase 1: Schema Foundation | Complete |
 | DX-06 | Phase 1: Schema Foundation | Complete |
-| DX-07 | Phase 3: Analytics Queries | Pending |
+| DX-07 | Phase 3: Analytics Queries | Complete |
 
 **Coverage:**
 - v1 requirements: 50 total
@@ -183,4 +183,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-08 after Phase 2 completion*
+*Last updated: 2026-02-08 after Phase 3 completion*

@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Local Pipeline** - End-to-end file-to-PostgreSQL pipeline with Docker, CLI, and developer experience
 - [x] **Phase 3: Analytics Queries** - Pre-built clinical, operational, and cross-cutting SQL queries for both database targets
 - [x] **Phase 4: Cloud Mode** - BigQuery target with Terraform provisioning and production-ready cloud loading
-- [ ] **Phase 5: API Ingestion** - Live Particle Health API integration with authentication, retries, and error handling
+- [x] **Phase 5: API Ingestion** - Live Particle Health API integration with authentication, retries, and error handling
 
 ## Phase Details
 
@@ -98,8 +98,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Particle API client with authentication, retries, JWT token management, and unit tests (TDD)
-- [ ] 05-02-PLAN.md -- CLI integration wiring --source api with --patient-id, .env.example update, and integration tests
+- [x] 05-01-PLAN.md -- Particle API client with authentication, retries, JWT token management, and unit tests (TDD)
+- [x] 05-02-PLAN.md -- CLI integration wiring --source api with --patient-id, .env.example update, and integration tests
 
 ## Progress
 
@@ -113,4 +113,4 @@ Note: Phase 3 can proceed in parallel with Phase 2 after Phase 1 completes.
 | 2. Local Pipeline | 4/4 | Complete | 2026-02-08 |
 | 3. Analytics Queries | 3/3 | Complete | 2026-02-08 |
 | 4. Cloud Mode | 3/3 | Complete | 2026-02-08 |
-| 5. API Ingestion | 0/2 | Not started | - |
+| 5. API Ingestion | 2/2 | Complete | 2026-02-08 |

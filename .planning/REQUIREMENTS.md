@@ -20,9 +20,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Ingestion
 
 - [x] **INGEST-01**: File-based ingestion loads flat_data.json (or any Particle flat JSON file) into target database
-- [ ] **INGEST-02**: Live API ingestion authenticates with Particle Health and calls GET Flat endpoint
-- [ ] **INGEST-03**: API ingestion includes retries with exponential backoff for 429/5xx errors
-- [ ] **INGEST-04**: API ingestion includes configurable timeout
+- [x] **INGEST-02**: Live API ingestion authenticates with Particle Health and calls GET Flat endpoint
+- [x] **INGEST-03**: API ingestion includes retries with exponential backoff for 429/5xx errors
+- [x] **INGEST-04**: API ingestion includes configurable timeout
 - [x] **INGEST-05**: Both ingestion modes feed the same downstream pipeline (parse → load)
 
 ### Local Mode
@@ -133,9 +133,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PIPE-06 | Phase 2: Local Pipeline | Complete |
 | PIPE-07 | Phase 1: Schema Foundation | Complete |
 | INGEST-01 | Phase 2: Local Pipeline | Complete |
-| INGEST-02 | Phase 5: API Ingestion | Pending |
-| INGEST-03 | Phase 5: API Ingestion | Pending |
-| INGEST-04 | Phase 5: API Ingestion | Pending |
+| INGEST-02 | Phase 5: API Ingestion | Complete |
+| INGEST-03 | Phase 5: API Ingestion | Complete |
+| INGEST-04 | Phase 5: API Ingestion | Complete |
 | INGEST-05 | Phase 2: Local Pipeline | Complete |
 | LOCAL-01 | Phase 2: Local Pipeline | Complete |
 | LOCAL-02 | Phase 2: Local Pipeline | Complete |
@@ -183,4 +183,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-08 after Phase 4 completion*
+*Last updated: 2026-02-08 after Phase 5 completion*

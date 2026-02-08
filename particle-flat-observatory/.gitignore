@@ -1,0 +1,25 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Package build artifacts
+*.egg-info/
+dist/
+build/
+
+# Environment files (keep .env.example)
+.env
+
+# Tool caches
+.ruff_cache/
+.pytest_cache/
+
+# Generated DDL outputs (committed explicitly after generation)
+ddl/postgres/create_all.sql
+ddl/bigquery/create_all.sql

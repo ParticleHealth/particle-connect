@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-07)
 
 **Core value:** Customers go from raw Particle flat data to queryable structured tables with useful analytics queries -- working from a clean checkout with zero code changes beyond configuration.
-**Current focus:** Phase 4: Cloud Deployment (complete)
+**Current focus:** Phase 5: API Ingestion (in progress)
 
 ## Current Position
 
-Phase: 4 of 5 (Cloud Mode)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-08 -- Completed 04-03-PLAN.md (Cloud Mode README documentation)
+Phase: 5 of 5 (API Ingestion)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-08 -- Completed 05-01-PLAN.md (Particle API Client)
 
-Progress: [#########.] 87% (13/15 plans)
+Progress: [#########.] 93% (14/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
+- Total plans completed: 14
 - Average duration: 2.6min
-- Total execution time: 34min
+- Total execution time: 36min
 
 **By Phase:**
 
@@ -31,10 +31,11 @@ Progress: [#########.] 87% (13/15 plans)
 | 2. Local Pipeline | 4/4 | 9min | 2.3min |
 | 3. Analytics Queries | 3/3 | 8min | 2.7min |
 | 4. Cloud Mode | 3/3 | 9min | 3.0min |
+| 5. API Ingestion | 1/2 | 2min | 2.0min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (3min), 04-01 (2min), 04-02 (5min), 04-03 (2min)
-- Trend: stable (documentation plans consistently fast)
+- Last 5 plans: 04-01 (2min), 04-02 (5min), 04-03 (2min), 05-01 (2min)
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -95,6 +96,11 @@ Recent decisions affecting current work:
 - 04-03: Two query execution paths documented (BigQuery Console + bq CLI) since customers use both
 - 04-03: Default dataset requirement for unqualified table names called out with bold formatting
 - 04-03: Known limitations (load quota, non-atomic, DML concurrency) co-located in Cloud Mode section
+- 05-01: Stdlib-only HTTP via urllib.request -- no httpx, tenacity, or jwt libraries
+- 05-01: JWT exp claim decoded via base64url without signature verification (sufficient for TTL check)
+- 05-01: Retry-After header respected via max(calculated_backoff, retry_after) on 429 responses
+- 05-01: 401 during data fetch triggers single token refresh, not infinite retry loop
+- 05-01: python-dotenv loaded in constructor (same pattern as config.py) for .env credential loading
 
 ### Pending Todos
 
@@ -107,5 +113,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 04-03-PLAN.md (Cloud Mode README documentation). Phase 4 complete (3/3 plans).
+Stopped at: Completed 05-01-PLAN.md (Particle API Client). Phase 5 in progress (1/2 plans).
 Resume file: None

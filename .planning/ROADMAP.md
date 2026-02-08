@@ -95,11 +95,11 @@ Plans:
   1. `particle-pipeline load --source api --target postgres` authenticates with Particle Health and loads flat data from the GET Flat endpoint into the target database
   2. API calls retry automatically with exponential backoff on 429 (rate limit) and 5xx (server error) responses, with configurable timeout
   3. API ingestion feeds the same downstream pipeline as file ingestion -- identical parsing, normalization, and loading behavior
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Particle API client with authentication, retries, and timeout
-- [ ] 05-02: API ingestion integration with existing pipeline and CLI
+- [ ] 05-01-PLAN.md -- Particle API client with authentication, retries, JWT token management, and unit tests (TDD)
+- [ ] 05-02-PLAN.md -- CLI integration wiring --source api with --patient-id, .env.example update, and integration tests
 
 ## Progress
 

@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-07)
 
 **Core value:** Customers go from raw Particle flat data to queryable structured tables with useful analytics queries -- working from a clean checkout with zero code changes beyond configuration.
-**Current focus:** Phase 3: Analytics Queries (complete) -> Phase 4: Cloud Deployment (next)
+**Current focus:** Phase 4: Cloud Deployment (in progress)
 
 ## Current Position
 
-Phase: 3 of 5 (Analytics Queries -- complete)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-08 -- Completed 03-03-PLAN.md (cross-cutting queries and README catalog)
+Phase: 4 of 5 (Cloud Mode)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-08 -- Completed 04-01-PLAN.md (Terraform BigQuery infrastructure)
 
-Progress: [######....] 67% (10/15 plans)
+Progress: [#######...] 73% (11/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 2.5min
-- Total execution time: 25min
+- Total execution time: 27min
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [######....] 67% (10/15 plans)
 | 1. Schema Foundation | 3/3 | 8min | 2.7min |
 | 2. Local Pipeline | 4/4 | 9min | 2.3min |
 | 3. Analytics Queries | 3/3 | 8min | 2.7min |
+| 4. Cloud Mode | 1/3 | 2min | 2.0min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (3min), 03-01 (3min), 03-02 (2min), 03-03 (3min)
+- Last 5 plans: 03-01 (3min), 03-02 (2min), 03-03 (3min), 04-01 (2min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -81,6 +82,11 @@ Recent decisions affecting current work:
 - 03-03: LEFT JOIN for procedures-by-encounter since encounter_reference_id is NULL in sample data
 - 03-03: Commented-out alternative queries for data quality edge cases
 - 03-03: README catalogs all 15 queries with requirement IDs, descriptions, scope, and known limitations
+- 04-01: for_each with locals map for 21 tables -- single resource block, DRY
+- 04-01: All columns STRING/NULLABLE via jsonencode -- matches DDL ELT approach
+- 04-01: 5 empty tables created with patient_id placeholder for future data
+- 04-01: deletion_protection=false and delete_contents_on_destroy=true for accelerator use
+- 04-01: dataEditor at dataset level, jobUser at project level -- minimum privilege IAM
 
 ### Pending Todos
 
@@ -93,5 +99,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 03-03-PLAN.md (cross-cutting queries and README catalog). Phase 3 complete.
+Stopped at: Completed 04-01-PLAN.md (Terraform BigQuery infrastructure). Phase 4 plan 1 of 3 done.
 Resume file: None

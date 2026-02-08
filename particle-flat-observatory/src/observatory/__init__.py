@@ -5,9 +5,12 @@ __version__ = "0.1.0"
 from observatory.config import ObservatorySettings, load_settings
 from observatory.normalizer import normalize_record, normalize_resource
 from observatory.parser import load_flat_data
+from observatory.schema import ResourceSchema, inspect_schema
 
 __all__ = [
     "ObservatorySettings",
+    "ResourceSchema",
+    "inspect_schema",
     "load_flat_data",
     "load_settings",
     "normalize_record",

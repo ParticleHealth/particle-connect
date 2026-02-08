@@ -40,20 +40,20 @@ Plans:
 ### Phase 2: Local Pipeline
 **Goal**: Customers can load Particle flat data into a local PostgreSQL database from a clean checkout with a single command, getting immediate feedback on data quality
 **Depends on**: Phase 1
-**Requirements**: LOCAL-01, LOCAL-02, LOCAL-03, LOCAL-04, LOCAL-05, INGEST-01, INGEST-05, CLI-01, CLI-02, CLI-03, CLI-04, CLI-05, DX-01, DX-02, DX-03
+**Requirements**: LOCAL-01, LOCAL-02, LOCAL-03, LOCAL-04, LOCAL-05, INGEST-01, INGEST-05, CLI-01, CLI-02, CLI-03, CLI-04, CLI-05, DX-01, DX-02, DX-03, PIPE-06
 **Success Criteria** (what must be TRUE):
   1. `docker compose up` starts PostgreSQL with all 21 tables created automatically, and data persists across container restarts
   2. `particle-pipeline load --source file --target postgres` loads sample data into PostgreSQL with a data quality report showing record counts per table, null percentages, and date ranges
   3. Re-running the load command produces identical results (idempotent via delete+insert per patient_id per resource type) with no duplicate records
   4. CLI provides `--help` with usage examples, reads config from .env, and displays actionable error messages when things go wrong (not raw stack traces)
   5. README documents local setup from clone to first query in under 5 minutes
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: Docker Compose PostgreSQL setup with auto-DDL and volume persistence
-- [ ] 02-02: PostgreSQL loader with idempotent delete+insert and file ingestion
-- [ ] 02-03: CLI entry point with typer, .env configuration, and error handling
-- [ ] 02-04: Data quality report and local mode README
+- [ ] 02-01-PLAN.md -- Docker Compose PostgreSQL setup with auto-DDL, volume persistence, and pipeline dependencies
+- [ ] 02-02-PLAN.md -- PostgreSQL loader module with idempotent delete+insert per patient per resource type
+- [ ] 02-03-PLAN.md -- Typer CLI entry point with .env configuration, error handling, and end-to-end verification
+- [ ] 02-04-PLAN.md -- Data quality report with Rich formatting and local setup README
 
 ### Phase 3: Analytics Queries
 **Goal**: Customers have a library of ready-to-run SQL queries that answer common clinical and operational questions about their Particle data

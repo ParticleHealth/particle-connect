@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-07)
 ## Current Position
 
 Phase: 1 of 5 (Schema Foundation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-08 -- Completed 01-01-PLAN.md (Project scaffolding, config, sample data)
+Last activity: 2026-02-08 -- Completed 01-02-PLAN.md (JSON parser, schema inspector, data normalization)
 
-Progress: [#.........] 7% (1/15 plans)
+Progress: [##........] 13% (2/15 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 2min
-- Total execution time: 2min
+- Total plans completed: 2
+- Average duration: 2.5min
+- Total execution time: 5min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Schema Foundation | 1/3 | 2min | 2min |
+| 1. Schema Foundation | 2/3 | 5min | 2.5min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2min)
-- Trend: baseline
+- Last 5 plans: 01-01 (2min), 01-02 (3min)
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - 01-01: Stdlib-only dependencies for maximum portability (no pydantic, no structlog)
 - 01-01: python-dotenv supported as optional import, not required
 - 01-01: LOG_LEVEL validation added alongside DDL_DIALECT validation
+- 01-02: Schema inspector scans ALL records per resource type to discover full column set
+- 01-02: Column order preserves JSON key insertion order from Particle API (not alphabetical)
+- 01-02: camelCase aI prefix special-cased to produce ai_ not a_i_
 
 ### Pending Todos
 
@@ -59,5 +62,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Completed 01-01-PLAN.md
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

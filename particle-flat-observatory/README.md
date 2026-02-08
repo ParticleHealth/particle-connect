@@ -175,3 +175,176 @@ The sample data contains 1,187 records across 16 resource types:
 | patients | patients | 1 | 15 |
 
 Five resource types are empty in the sample data (no records): allergies, coverages, familyMemberHistories, immunizations, and socialHistories. Their tables are not created until data is available.
+
+## Cloud Mode (BigQuery)
+
+Load the same flat data into Google BigQuery for cloud-scale analytics. Terraform provisions the dataset and tables. The same CLI loads data into BigQuery instead of PostgreSQL.
+
+### Prerequisites
+
+- Everything from the local Quick Start (Python 3.11+, pip)
+- Google Cloud account with a project and billing enabled
+- [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.0
+- [gcloud CLI](https://cloud.google.com/sdk/docs/install) installed
+
+### 1. Install BigQuery support
+
+The BigQuery dependency is optional. The base install works without it for local-only (PostgreSQL) users.
+
+```bash
+cd particle-flat-observatory
+pip install -e ".[bigquery]"
+```
+
+This adds `google-cloud-bigquery` to your environment. Verify:
+
+```bash
+python -c "from google.cloud import bigquery; print('OK')"
+```
+
+### 2. Authenticate
+
+The BigQuery client uses [Application Default Credentials (ADC)](https://cloud.google.com/docs/authentication/application-default-credentials). For local development:
+
+```bash
+gcloud auth application-default login
+```
+
+This opens a browser to authenticate and stores credentials locally. The BigQuery client discovers them automatically -- no key files or environment variables needed.
+
+For CI or production, set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path of a service account key file:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
+```
+
+The `terraform/iam.tf` file creates a dedicated service account (`observatory-pipeline`) with minimum permissions (dataEditor on the dataset, jobUser on the project). You can create a key for this service account in the GCP Console.
+
+### 3. Provision infrastructure with Terraform
+
+Terraform creates 1 BigQuery dataset, 21 tables, 1 service account, and 2 IAM bindings.
+
+```bash
+cd terraform/
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Edit `terraform.tfvars` and set `project_id` to your GCP project:
+
+```hcl
+project_id   = "your-gcp-project-id"
+dataset_name = "particle_observatory"
+region       = "US"
+```
+
+Then initialize and apply:
+
+```bash
+terraform init
+terraform plan    # Review: 1 dataset, 21 tables, 1 service account, 2 IAM bindings
+terraform apply
+```
+
+Type `yes` when prompted. Terraform creates all resources and outputs the dataset ID and service account email.
+
+**Terraform variables:**
+
+| Variable | Default | Description |
+|---|---|---|
+| `project_id` | (required) | GCP project ID |
+| `dataset_name` | `particle_observatory` | BigQuery dataset name |
+| `region` | `US` | Dataset location |
+
+### 4. Configure environment
+
+Uncomment and set the BigQuery variables in your `.env` file (or copy from `.env.example`):
+
+```bash
+BQ_PROJECT_ID=your-gcp-project-id
+BQ_DATASET=particle_observatory
+```
+
+`BQ_PROJECT_ID` is required. `BQ_DATASET` defaults to `particle_observatory` if not set.
+
+### 5. Load data
+
+```bash
+particle-pipeline load --source file --target bigquery
+```
+
+Expected output is similar to local mode: record counts per table and a data quality report. The loader uses the same flat data file (`sample-data/flat_data.json` by default, or the path in `FLAT_DATA_PATH`).
+
+Loading is idempotent: each run deletes existing rows for the patient and reinserts. Safe to re-run.
+
+### 6. Run analytics queries
+
+The `queries/bigquery/` directory contains 15 pre-built analytics queries organized by category:
+
+- **clinical/** -- patient summary, active problems, medication timeline, lab results, vital sign trends, encounter history, care team
+- **operational/** -- data completeness, source coverage, record freshness, data provenance, AI output summary
+- **cross-cutting/** -- labs by encounter, medications by problem, procedures by encounter
+
+**Important: default dataset for unqualified table names.** The analytics queries use unqualified table names (e.g., `FROM patients` not `FROM your-project.particle_observatory.patients`). You must set a default dataset before running them.
+
+**Option A: BigQuery Console**
+
+1. Navigate to your project in the [BigQuery Console](https://console.cloud.google.com/bigquery)
+2. In the query editor, click **More > Query settings > Additional settings**
+3. Set **Default dataset** to `particle_observatory`
+4. Paste a query from `queries/bigquery/` and run it
+
+Try the patient summary first:
+
+```sql
+-- queries/bigquery/clinical/patient_summary.sql
+-- Replace the patient_id with one from your data
+SELECT * FROM patients LIMIT 5;
+```
+
+**Option B: bq CLI**
+
+Use `--dataset_id` to set the default dataset:
+
+```bash
+bq query --use_legacy_sql=false \
+  --dataset_id=particle_observatory \
+  < queries/bigquery/clinical/patient_summary.sql
+```
+
+Other examples:
+
+```bash
+# Active problems list
+bq query --use_legacy_sql=false \
+  --dataset_id=particle_observatory \
+  < queries/bigquery/clinical/active_problems.sql
+
+# Data completeness scorecard
+bq query --use_legacy_sql=false \
+  --dataset_id=particle_observatory \
+  < queries/bigquery/operational/data_completeness.sql
+
+# Labs correlated with encounters
+bq query --use_legacy_sql=false \
+  --dataset_id=particle_observatory \
+  < queries/bigquery/cross-cutting/labs_by_encounter.sql
+```
+
+### 7. Tear down (optional)
+
+To remove all BigQuery resources:
+
+```bash
+cd terraform/
+terraform destroy
+```
+
+Type `yes` when prompted. This deletes the dataset, all tables, and the service account.
+
+Tables have `deletion_protection` disabled for this accelerator. Production deployments should set `deletion_protection = true` in `main.tf`.
+
+### Cloud Mode known limitations
+
+- **Load job quota:** BigQuery allows 1,500 load jobs per table per day. For production with many patients, batch multiple patients per load job instead of one load job per patient.
+- **Non-atomic delete+insert:** The DELETE runs as a DML query and the INSERT runs as a load job. These are not in a single transaction. Loading is idempotent (safe to re-run) but not atomic -- a failure between DELETE and INSERT leaves the patient with no rows until re-run.
+- **DML concurrency:** BigQuery limits concurrent DML to 2 active + 20 queued operations per table. This is not a concern for single-user accelerator use but matters for parallel multi-patient production loads.

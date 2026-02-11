@@ -6,7 +6,7 @@ import json
 
 from particle.core import ParticleHTTPClient
 
-from .models import DocumentSubmission, DocumentResponse
+from .models import DocumentResponse, DocumentSubmission
 
 
 class DocumentService:

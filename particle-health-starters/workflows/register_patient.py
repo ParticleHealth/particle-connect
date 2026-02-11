@@ -40,14 +40,13 @@ import json
 import sys
 
 from particle.core import (
-    ParticleSettings,
-    ParticleHTTPClient,
     ParticleAPIError,
+    ParticleHTTPClient,
+    ParticleSettings,
     ParticleValidationError,
     configure_logging,
 )
-from particle.patient import PatientService, PatientRegistration, Gender
-
+from particle.patient import Gender, PatientRegistration, PatientService
 
 # Default demo patient data
 DEFAULT_PATIENT = {
@@ -57,7 +56,7 @@ DEFAULT_PATIENT = {
     "gender": "FEMALE",
     "postal_code": "02215",
     "address_city": "Boston",
-    "address_state": "MA",
+    "address_state": "Massachusetts",
     "patient_id": "test-elvira-valadez",
     "address_lines": [""],
     "ssn": "123-45-6789",

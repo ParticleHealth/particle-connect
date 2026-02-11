@@ -55,7 +55,7 @@ for i in range(30):
     )
     status_response.raise_for_status()
     status = status_response.json()
-    query_status = status.get("query_status", "UNKNOWN")
+    query_status = status.get("state", "UNKNOWN")
     print(f"  [{i+1}] Status: {query_status}")
 
     if query_status in ("COMPLETE", "PARTIAL"):

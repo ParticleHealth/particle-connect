@@ -2,31 +2,44 @@
 
 import logging
 
+# Document
+from particle.document import (
+    DocumentResponse,
+    DocumentService,
+    DocumentSubmission,
+    DocumentType,
+    MimeType,
+)
+
+# Patient
+from particle.patient import (
+    Gender,
+    PatientRegistration,
+    PatientResponse,
+    PatientService,
+)
+
+# Query
+from particle.query import (
+    PurposeOfUse,
+    QueryRequest,
+    QueryResponse,
+    QueryService,
+    QueryStatus,
+)
+
 # Set up NullHandler to avoid "No handler found" warnings
 # Applications should configure their own logging handlers
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __version__ = "0.1.0"
 
-# Query
-from particle.query import (
-    QueryService,
-    QueryRequest,
-    QueryResponse,
-    PurposeOfUse,
-    QueryStatus,
-)
-
-# Document
-from particle.document import (
-    DocumentService,
-    DocumentSubmission,
-    DocumentResponse,
-    DocumentType,
-    MimeType,
-)
-
 __all__ = [
+    # Patient
+    "PatientService",
+    "PatientRegistration",
+    "PatientResponse",
+    "Gender",
     # Query
     "QueryService",
     "QueryRequest",

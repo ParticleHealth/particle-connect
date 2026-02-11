@@ -20,12 +20,33 @@ pip install -e ".[dev]"
 ### 3. Set environment variables
 
 ```bash
+cp .env.example .env
+# Edit .env with your Particle Health credentials
+```
+
+Or export directly:
+
+```bash
 export PARTICLE_CLIENT_ID="your-client-id"
 export PARTICLE_CLIENT_SECRET="your-client-secret"
 export PARTICLE_SCOPE_ID="projects/your-scope-id"
 ```
 
+### 4. Validate setup
+
+```bash
+python workflows/check_setup.py
+```
+
 ## Quick Start
+
+The fastest way to see data: run the end-to-end demo (register, query, poll, retrieve, summarize):
+
+```bash
+python workflows/hello_particle.py
+```
+
+Or run each step individually:
 
 ### 1. Register a patient
 
@@ -58,6 +79,8 @@ python workflows/retrieve_data.py <particle_patient_id> ccda
 
 | Script | Description |
 |--------|-------------|
+| `workflows/hello_particle.py` | End-to-end demo: register, query, retrieve, summarize |
+| `workflows/check_setup.py` | Validate environment variables and credentials |
 | `workflows/register_patient.py` | Register a new patient |
 | `workflows/submit_query.py` | Submit a clinical data query |
 | `workflows/retrieve_data.py` | Retrieve data in FHIR, Flat, or CCDA format |
@@ -119,6 +142,7 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | `/api/v2/patients/{id}/flat` | GET | Get flat JSON data |
 | `/api/v2/patients/{id}/fhir` | GET | Get FHIR Bundle (production only) |
 | `/api/v2/patients/{id}/ccda` | GET | Get CCDA ZIP |
+| `/api/v1/documents` | POST | Submit a clinical document (multipart) |
 
 ### Base URLs
 
@@ -143,6 +167,16 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | `telephone` | No | XXX-XXX-XXXX |
 | `patient_id` | No | Your external ID |
 | `email` | No | String |
+
+## Notebooks
+
+| Notebook | Description |
+|----------|-------------|
+| `notebooks/explore_flat_data.ipynb` | Explore flat JSON data with no credentials required |
+
+## Troubleshooting
+
+See [docs/troubleshooting.md](docs/troubleshooting.md) for common sandbox issues including FHIR 404s, address_state formatting, overlay errors, and query timing.
 
 ## Running Tests
 

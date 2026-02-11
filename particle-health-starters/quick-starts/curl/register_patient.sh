@@ -7,7 +7,9 @@
 # Usage:
 #   bash quick-starts/curl/register_patient.sh
 
-curl -s -X POST "https://sandbox.particlehealth.com/api/v2/patients" \
+BASE_URL="${PARTICLE_BASE_URL:-https://sandbox.particlehealth.com}"
+
+curl -s -X POST "${BASE_URL}/api/v2/patients" \
   -H "Authorization: Bearer $TOKEN" \
   -H "content-type: application/json" \
   -H "accept: application/json" \

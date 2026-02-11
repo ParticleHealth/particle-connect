@@ -1,7 +1,7 @@
 """Typer CLI entry point for the Particle flat data pipeline.
 
 Wires together the parser (or API client), schema inspector, and database
-loader into a single `particle-pipeline load` command with .env loading,
+loader into a single `particle-pipeline` command with .env loading,
 actionable error messages, and --help usage.
 """
 
@@ -76,15 +76,15 @@ def load(
 
     Examples:
 
-        particle-pipeline load
+        particle-pipeline
 
-        particle-pipeline load --target bigquery
+        particle-pipeline --target bigquery
 
-        particle-pipeline load --data-path /path/to/flat_data.json
+        particle-pipeline --data-path /path/to/flat_data.json
 
-        particle-pipeline load --source api --patient-id abc-123 --target postgres
+        particle-pipeline --source api --patient-id abc-123 --target postgres
 
-        particle-pipeline load --verbose
+        particle-pipeline --verbose
     """
     _configure_logging(verbose)
 
@@ -108,7 +108,7 @@ def load(
         if not patient_id:
             typer.echo(
                 "--patient-id is required when --source api\n\n"
-                "Usage: particle-pipeline load --source api "
+                "Usage: particle-pipeline --source api "
                 "--patient-id <patient-id> --target postgres"
             )
             raise typer.Exit(code=1)

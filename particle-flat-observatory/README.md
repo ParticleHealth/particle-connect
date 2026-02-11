@@ -16,7 +16,7 @@ Takes a `flat_data.json` response from the Particle Health API, normalizes it in
 
 ```bash
 cd particle-flat-observatory
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -e .
 ```
@@ -38,7 +38,7 @@ docker compose ps
 ### 3. Load sample data
 
 ```bash
-particle-pipeline load
+particle-pipeline
 ```
 
 This loads the included sample data (`sample-data/flat_data.json`) into PostgreSQL. After loading, a data quality report shows record counts, null percentages, and date ranges per table.
@@ -92,14 +92,14 @@ PG_PORT=5433 docker compose up -d
 Replace the sample data file or point to a different path:
 
 ```bash
-particle-pipeline load --data-path /path/to/your/flat_data.json
+particle-pipeline --data-path /path/to/your/flat_data.json
 ```
 
 Or set the environment variable:
 
 ```bash
 export FLAT_DATA_PATH=/path/to/your/flat_data.json
-particle-pipeline load
+particle-pipeline
 ```
 
 Data is loaded idempotently: re-running the command replaces existing records per patient. It is safe to run multiple times.
@@ -107,11 +107,11 @@ Data is loaded idempotently: re-running the command replaces existing records pe
 ## CLI Reference
 
 ```
-particle-pipeline load                                    # Load flat data into PostgreSQL
-particle-pipeline load --help                             # Show all options
-particle-pipeline load --source file --target postgres    # Explicit mode (default)
-particle-pipeline load --data-path /path/to/data.json     # Custom data file
-particle-pipeline load --verbose                          # Enable debug logging
+particle-pipeline                                    # Load flat data into PostgreSQL
+particle-pipeline --help                             # Show all options
+particle-pipeline --source file --target postgres    # Explicit mode (default)
+particle-pipeline --data-path /path/to/data.json     # Custom data file
+particle-pipeline --verbose                          # Enable debug logging
 ```
 
 ## Resetting the Database
@@ -271,7 +271,7 @@ BQ_DATASET=particle_observatory
 ### 5. Load data
 
 ```bash
-particle-pipeline load --source file --target bigquery
+particle-pipeline --source file --target bigquery
 ```
 
 Expected output is similar to local mode: record counts per table and a data quality report. The loader uses the same flat data file (`sample-data/flat_data.json` by default, or the path in `FLAT_DATA_PATH`).

@@ -34,10 +34,10 @@ Notes:
 import sys
 
 from particle.core import (
-    ParticleSettings,
-    ParticleHTTPClient,
     ParticleAPIError,
+    ParticleHTTPClient,
     ParticleNotFoundError,
+    ParticleSettings,
     ParticleValidationError,
     configure_logging,
 )
@@ -85,7 +85,12 @@ def main() -> None:
             service_stop_time="2020-01-04T00:00:00Z",
         )
         # Minimal valid CCDA stub for demonstration
-        file_content = b'<?xml version="1.0" encoding="UTF-8"?><ClinicalDocument xmlns="urn:hl7-org:v3"><title>Clinical Summary</title></ClinicalDocument>'
+        file_content = (
+            b'<?xml version="1.0" encoding="UTF-8"?>'
+            b'<ClinicalDocument xmlns="urn:hl7-org:v3">'
+            b"<title>Clinical Summary</title>"
+            b"</ClinicalDocument>"
+        )
         print("Submitting CCDA (XML) document...")
     else:
         document = DocumentSubmission(
@@ -99,7 +104,12 @@ def main() -> None:
             type_code="11369-6",
         )
         # Minimal PDF stub for demonstration
-        file_content = b"%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Kids[]/Count 0>>endobj\nxref\n0 3\ntrailer<</Size 3/Root 1 0 R>>\nstartxref\n0\n%%EOF"
+        file_content = (
+            b"%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n"
+            b"2 0 obj<</Type/Pages/Kids[]/Count 0>>endobj\n"
+            b"xref\n0 3\ntrailer<</Size 3/Root 1 0 R>>\n"
+            b"startxref\n0\n%%EOF"
+        )
         print("Submitting PDF document...")
 
     print(f"  Document ID: {document.document_id}")

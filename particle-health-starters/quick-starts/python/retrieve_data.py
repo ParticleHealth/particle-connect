@@ -17,7 +17,10 @@ import httpx
 BASE_URL = os.environ.get("PARTICLE_BASE_URL", "https://sandbox.particlehealth.com")
 
 if len(sys.argv) < 2:
-    sys.exit("Usage: python quick-starts/python/retrieve_data.py <particle_patient_id> [flat|fhir|ccda]")
+    sys.exit(
+        "Usage: python quick-starts/python/retrieve_data.py"
+        " <particle_patient_id> [flat|fhir|ccda]"
+    )
 
 patient_id = sys.argv[1]
 data_format = sys.argv[2] if len(sys.argv) > 2 else "flat"

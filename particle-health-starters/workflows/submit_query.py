@@ -38,14 +38,14 @@ Notes:
 import sys
 
 from particle.core import (
-    ParticleSettings,
-    ParticleHTTPClient,
     ParticleAPIError,
-    ParticleQueryTimeoutError,
+    ParticleHTTPClient,
     ParticleQueryFailedError,
+    ParticleQueryTimeoutError,
+    ParticleSettings,
     configure_logging,
 )
-from particle.query import QueryService, PurposeOfUse
+from particle.query import PurposeOfUse, QueryService
 
 
 def main() -> None:
@@ -93,9 +93,10 @@ def main() -> None:
                 print(f"  Files available: {result.files_available}")
             print(f"  Patient ID: {particle_patient_id}")
             print("\nNext steps:")
-            print(f"  python workflows/retrieve_data.py {particle_patient_id} fhir")
             print(f"  python workflows/retrieve_data.py {particle_patient_id} flat")
             print(f"  python workflows/retrieve_data.py {particle_patient_id} ccda")
+            pid = particle_patient_id
+            print(f"  # python workflows/retrieve_data.py {pid} fhir  # production only")
 
     except ParticleQueryTimeoutError as e:
         print(f"\nQuery timed out: {e.message}")

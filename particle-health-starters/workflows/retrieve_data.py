@@ -47,9 +47,9 @@ import json
 import sys
 
 from particle.core import (
-    ParticleSettings,
-    ParticleHTTPClient,
     ParticleAPIError,
+    ParticleHTTPClient,
+    ParticleSettings,
     configure_logging,
 )
 from particle.query import QueryService, QueryStatus
@@ -144,14 +144,18 @@ def main() -> None:
             if data_format == "fhir":
                 data = service.get_fhir(particle_patient_id)
                 print_fhir_summary(data)
-                print("\nTo see full data, save to file:")
-                print(f"  python -c \"import json; from particle.core import *; from particle.query import *; s=ParticleSettings(); c=ParticleHTTPClient(s); print(json.dumps(QueryService(c).get_fhir('{particle_patient_id}'), indent=2))\" > fhir_data.json")
+                # Save full data to file
+                with open("fhir_data.json", "w") as f:
+                    json.dump(data, f, indent=2)
+                print("\nFull data saved to: fhir_data.json")
 
             elif data_format == "flat":
                 data = service.get_flat(particle_patient_id)
                 print_flat_summary(data)
-                print("\nTo see full data, save to file:")
-                print(f"  python -c \"import json; from particle.core import *; from particle.query import *; s=ParticleSettings(); c=ParticleHTTPClient(s); print(json.dumps(QueryService(c).get_flat('{particle_patient_id}'), indent=2))\" > flat_data.json")
+                # Save full data to file
+                with open("flat_data.json", "w") as f:
+                    json.dump(data, f, indent=2)
+                print("\nFull data saved to: flat_data.json")
 
             elif data_format == "ccda":
                 ccda_bytes = service.get_ccda(particle_patient_id)

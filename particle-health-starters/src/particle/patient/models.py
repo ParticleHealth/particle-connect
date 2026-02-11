@@ -18,7 +18,6 @@ from __future__ import annotations
 import re
 from datetime import date
 from enum import Enum
-from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 

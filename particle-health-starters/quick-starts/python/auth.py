@@ -27,5 +27,5 @@ response.raise_for_status()
 
 token = response.text.strip()
 print(f"Token: {token[:20]}...")
-print(f"\nExport for other scripts:")
+print("\nExport for other scripts:")
 print(f'export PARTICLE_TOKEN="{token}"')

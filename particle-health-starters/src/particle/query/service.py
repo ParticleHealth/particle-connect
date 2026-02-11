@@ -21,7 +21,7 @@ Usage:
 from __future__ import annotations
 
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from particle.core import ParticleHTTPClient
 from particle.core.exceptions import (
@@ -110,10 +110,10 @@ class QueryService:
             ParticleQueryTimeoutError: If timeout exceeded
             ParticleQueryFailedError: If query failed on server
         """
-        deadline = datetime.now() + timedelta(seconds=timeout_seconds)
+        deadline = datetime.now(tz=timezone.utc) + timedelta(seconds=timeout_seconds)
         current_interval = poll_interval
 
-        while datetime.now() < deadline:
+        while datetime.now(tz=timezone.utc) < deadline:
             try:
                 status = self.get_query_status(particle_patient_id)
             except ParticleNotFoundError:

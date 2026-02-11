@@ -72,8 +72,9 @@ def load_resource(conn, table_name: str, columns: list[str], records: list[dict]
     rows = [tuple(record.get(col) for col in columns) for record in records]
 
     with conn.transaction():
-        conn.execute(delete_query, (patient_id,))
-        conn.executemany(insert_query, rows)
+        with conn.cursor() as cur:
+            cur.execute(delete_query, (patient_id,))
+            cur.executemany(insert_query, rows)
 
     count = len(rows)
     logger.info(

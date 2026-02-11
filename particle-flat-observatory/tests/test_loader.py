@@ -75,6 +75,12 @@ class TestLoadResource:
         tx.__enter__ = MagicMock(return_value=tx)
         tx.__exit__ = MagicMock(return_value=False)
 
+        # cursor() returns a context manager
+        cur = MagicMock()
+        conn.cursor.return_value = cur
+        cur.__enter__ = MagicMock(return_value=cur)
+        cur.__exit__ = MagicMock(return_value=False)
+
         records = [
             {"patient_id": "p1", "lab_name": "CBC"},
             {"patient_id": "p1", "lab_name": "BMP"},
@@ -84,10 +90,10 @@ class TestLoadResource:
 
         assert result == 2
         conn.transaction.assert_called_once()
-        # DELETE is called via conn.execute
-        conn.execute.assert_called_once()
-        # INSERT is called via conn.executemany
-        conn.executemany.assert_called_once()
+        # DELETE is called via cursor.execute
+        cur.execute.assert_called_once()
+        # INSERT is called via cursor.executemany
+        cur.executemany.assert_called_once()
 
     def test_returns_correct_count(self):
         """Return value matches the number of records inserted."""
@@ -109,6 +115,12 @@ class TestLoadResource:
         tx.__enter__ = MagicMock(return_value=tx)
         tx.__exit__ = MagicMock(return_value=False)
 
+        # cursor() returns a context manager
+        cur = MagicMock()
+        conn.cursor.return_value = cur
+        cur.__enter__ = MagicMock(return_value=cur)
+        cur.__exit__ = MagicMock(return_value=False)
+
         # Record is missing "lab_value" column
         records = [{"patient_id": "p1", "lab_name": "CBC"}]
         columns = ["patient_id", "lab_name", "lab_value"]
@@ -116,7 +128,7 @@ class TestLoadResource:
         load_resource(conn, "labs", columns, records, "p1")
 
         # Check the rows passed to executemany -- the third column should be None
-        executemany_call = conn.executemany.call_args
+        executemany_call = cur.executemany.call_args
         rows = executemany_call[0][1]  # second positional arg is the rows
         assert rows == [("p1", "CBC", None)]
 

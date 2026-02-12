@@ -23,6 +23,9 @@ def _make_schema(
 
 
 class TestDDLDialectEnum:
+    def test_duckdb_value(self):
+        assert DDLDialect.DUCKDB == "duckdb"
+
     def test_postgres_value(self):
         assert DDLDialect.POSTGRES == "postgres"
 
@@ -65,6 +68,27 @@ class TestGenerateCreateTableBigQuery:
         schema = _make_schema()
         sql = generate_create_table(schema, "bigquery")
         assert sql.count("STRING") == 3
+
+
+class TestGenerateCreateTableDuckDB:
+    def test_basic_create_table(self):
+        schema = _make_schema()
+        sql = generate_create_table(schema, "duckdb")
+        assert "CREATE TABLE IF NOT EXISTS labs (" in sql
+        assert '"lab_id" TEXT' in sql
+        assert '"lab_name" TEXT' in sql
+        assert '"lab_value" TEXT' in sql
+        assert sql.rstrip().endswith(");")
+
+    def test_column_count(self):
+        schema = _make_schema()
+        sql = generate_create_table(schema, "duckdb")
+        assert sql.count("TEXT") == 3
+
+    def test_header_comment(self):
+        schema = _make_schema()
+        sql = generate_create_table(schema, "duckdb")
+        assert "-- labs: 111 records, 3 columns" in sql
 
 
 class TestGenerateCreateTableEmpty:
@@ -141,6 +165,11 @@ class TestGenerateDDLHeader:
         schemas = [_make_schema()]
         sql = generate_ddl(schemas, "postgres")
         assert "DDL for postgres" in sql
+
+    def test_header_contains_duckdb_dialect(self):
+        schemas = [_make_schema()]
+        sql = generate_ddl(schemas, "duckdb")
+        assert "DDL for duckdb" in sql
 
     def test_header_contains_bigquery_dialect(self):
         schemas = [_make_schema()]

@@ -1,54 +1,73 @@
-"""Unit tests for the PostgreSQL loader module.
+"""Unit tests for the DuckDB loader module.
 
-All tests use mocked connections -- no running PostgreSQL required.
+All tests use mocked connections -- no running DuckDB required.
 """
 
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 
-from observatory.loader import get_connection_string, load_all, load_resource
+from observatory.loader import ensure_table, get_connection, load_all, load_resource
 from observatory.schema import ResourceSchema
 
 
 # ---------------------------------------------------------------------------
-# get_connection_string tests
+# get_connection tests
 # ---------------------------------------------------------------------------
 
-class TestGetConnectionString:
-    """Tests for get_connection_string()."""
+class TestGetConnection:
+    """Tests for get_connection()."""
 
-    def test_defaults(self, monkeypatch):
-        """Default env vars produce the compose.yaml connection string."""
-        # Clear any PG_* env vars that might be set
-        for var in ("PG_HOST", "PG_PORT", "PG_USER", "PG_PASSWORD", "PG_DATABASE"):
-            monkeypatch.delenv(var, raising=False)
+    def test_default_path(self, monkeypatch):
+        """Default path is observatory.duckdb when DUCKDB_PATH is not set."""
+        monkeypatch.delenv("DUCKDB_PATH", raising=False)
 
-        result = get_connection_string()
-        assert result == "postgresql://observatory:observatory@localhost:5432/observatory"
+        with patch("observatory.loader.duckdb") as mock_duckdb:
+            get_connection()
+            mock_duckdb.connect.assert_called_once_with("observatory.duckdb")
 
-    def test_custom_host(self, monkeypatch):
-        """PG_HOST env var overrides the default host."""
-        monkeypatch.setenv("PG_HOST", "db.example.com")
-        monkeypatch.delenv("PG_PORT", raising=False)
-        monkeypatch.delenv("PG_USER", raising=False)
-        monkeypatch.delenv("PG_PASSWORD", raising=False)
-        monkeypatch.delenv("PG_DATABASE", raising=False)
+    def test_env_var_path(self, monkeypatch):
+        """DUCKDB_PATH env var overrides the default path."""
+        monkeypatch.setenv("DUCKDB_PATH", "/tmp/custom.duckdb")
 
-        result = get_connection_string()
-        assert "db.example.com" in result
-        assert result == "postgresql://observatory:observatory@db.example.com:5432/observatory"
+        with patch("observatory.loader.duckdb") as mock_duckdb:
+            get_connection()
+            mock_duckdb.connect.assert_called_once_with("/tmp/custom.duckdb")
 
-    def test_all_custom_vars(self, monkeypatch):
-        """All PG_* env vars are reflected in the connection string."""
-        monkeypatch.setenv("PG_HOST", "myhost")
-        monkeypatch.setenv("PG_PORT", "9999")
-        monkeypatch.setenv("PG_USER", "admin")
-        monkeypatch.setenv("PG_PASSWORD", "secret")
-        monkeypatch.setenv("PG_DATABASE", "mydb")
+    def test_explicit_path(self, monkeypatch):
+        """Explicit path argument overrides env var and default."""
+        monkeypatch.setenv("DUCKDB_PATH", "/tmp/env.duckdb")
 
-        result = get_connection_string()
-        assert result == "postgresql://admin:secret@myhost:9999/mydb"
+        with patch("observatory.loader.duckdb") as mock_duckdb:
+            get_connection("/tmp/explicit.duckdb")
+            mock_duckdb.connect.assert_called_once_with("/tmp/explicit.duckdb")
+
+
+# ---------------------------------------------------------------------------
+# ensure_table tests
+# ---------------------------------------------------------------------------
+
+class TestEnsureTable:
+    """Tests for ensure_table()."""
+
+    def test_creates_table_with_columns(self):
+        """ensure_table executes CREATE TABLE IF NOT EXISTS with quoted columns."""
+        conn = MagicMock()
+        schema = ResourceSchema(
+            resource_type="labs",
+            table_name="labs",
+            columns=["patient_id", "lab_name", "lab_value"],
+            record_count=5,
+            is_empty=False,
+        )
+
+        ensure_table(conn, schema)
+
+        sql = conn.execute.call_args[0][0]
+        assert "CREATE TABLE IF NOT EXISTS labs" in sql
+        assert '"patient_id" TEXT' in sql
+        assert '"lab_name" TEXT' in sql
+        assert '"lab_value" TEXT' in sql
 
 
 # ---------------------------------------------------------------------------
@@ -69,18 +88,6 @@ class TestLoadResource:
     def test_inserts_records(self):
         """Non-empty records trigger DELETE + INSERT in a transaction."""
         conn = MagicMock()
-        # transaction() returns a context manager
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
-
-        # cursor() returns a context manager
-        cur = MagicMock()
-        conn.cursor.return_value = cur
-        cur.__enter__ = MagicMock(return_value=cur)
-        cur.__exit__ = MagicMock(return_value=False)
-
         records = [
             {"patient_id": "p1", "lab_name": "CBC"},
             {"patient_id": "p1", "lab_name": "BMP"},
@@ -89,20 +96,15 @@ class TestLoadResource:
         result = load_resource(conn, "labs", ["patient_id", "lab_name"], records, "p1")
 
         assert result == 2
-        conn.transaction.assert_called_once()
-        # DELETE is called via cursor.execute
-        cur.execute.assert_called_once()
-        # INSERT is called via cursor.executemany
-        cur.executemany.assert_called_once()
+        conn.begin.assert_called_once()
+        conn.commit.assert_called_once()
+        # DELETE then INSERT
+        assert conn.execute.call_count == 1  # DELETE
+        conn.executemany.assert_called_once()  # INSERT
 
     def test_returns_correct_count(self):
         """Return value matches the number of records inserted."""
         conn = MagicMock()
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
-
         records = [{"patient_id": "p1", "col_a": "x"} for _ in range(5)]
         result = load_resource(conn, "test_table", ["patient_id", "col_a"], records, "p1")
         assert result == 5
@@ -110,16 +112,6 @@ class TestLoadResource:
     def test_missing_columns_become_none(self):
         """Records missing some columns get None for those columns."""
         conn = MagicMock()
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
-
-        # cursor() returns a context manager
-        cur = MagicMock()
-        conn.cursor.return_value = cur
-        cur.__enter__ = MagicMock(return_value=cur)
-        cur.__exit__ = MagicMock(return_value=False)
 
         # Record is missing "lab_value" column
         records = [{"patient_id": "p1", "lab_name": "CBC"}]
@@ -128,24 +120,37 @@ class TestLoadResource:
         load_resource(conn, "labs", columns, records, "p1")
 
         # Check the rows passed to executemany -- the third column should be None
-        executemany_call = cur.executemany.call_args
+        executemany_call = conn.executemany.call_args
         rows = executemany_call[0][1]  # second positional arg is the rows
         assert rows == [("p1", "CBC", None)]
 
-    def test_transaction_used_as_context_manager(self):
-        """conn.transaction() is used as a context manager (with block)."""
+    def test_rollback_on_error(self):
+        """If executemany raises, the transaction is rolled back."""
         conn = MagicMock()
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
+        conn.executemany.side_effect = Exception("insert failed")
 
-        records = [{"patient_id": "p1", "name": "test"}]
-        load_resource(conn, "patients", ["patient_id", "name"], records, "p1")
+        with pytest.raises(Exception, match="insert failed"):
+            load_resource(conn, "labs", ["patient_id"], [{"patient_id": "p1"}], "p1")
 
-        # Verify transaction context manager was entered and exited
-        tx.__enter__.assert_called_once()
-        tx.__exit__.assert_called_once()
+        conn.begin.assert_called_once()
+        conn.rollback.assert_called_once()
+        conn.commit.assert_not_called()
+
+    def test_uses_question_mark_placeholders(self):
+        """DuckDB uses ? placeholders, not psycopg's %s."""
+        conn = MagicMock()
+        records = [{"patient_id": "p1", "lab_name": "CBC"}]
+
+        load_resource(conn, "labs", ["patient_id", "lab_name"], records, "p1")
+
+        # Check the INSERT SQL uses ? placeholders
+        insert_sql = conn.executemany.call_args[0][0]
+        assert "?" in insert_sql
+        assert "%s" not in insert_sql
+
+        # Check the DELETE SQL uses ? placeholder
+        delete_sql = conn.execute.call_args[0][0]
+        assert "?" in delete_sql
 
 
 # ---------------------------------------------------------------------------
@@ -195,10 +200,6 @@ class TestLoadAll:
     def test_loads_records_per_patient(self):
         """Records are grouped by patient_id and loaded per-patient."""
         conn = MagicMock()
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
 
         schemas = [
             self._make_schema("labs", "labs", ["patient_id", "lab_name"], record_count=3),
@@ -214,16 +215,12 @@ class TestLoadAll:
         result = load_all(conn, data, schemas)
 
         assert result == {"labs": 3}
-        # Two patients = two transaction blocks (two load_resource calls)
-        assert conn.transaction.call_count == 2
+        # Two patients = two begin/commit cycles
+        assert conn.begin.call_count == 2
 
     def test_correct_return_mapping(self):
         """Return dict maps table_name -> total records loaded."""
         conn = MagicMock()
-        tx = MagicMock()
-        conn.transaction.return_value = tx
-        tx.__enter__ = MagicMock(return_value=tx)
-        tx.__exit__ = MagicMock(return_value=False)
 
         schemas = [
             self._make_schema("labs", "labs", ["patient_id", "lab_name"], record_count=2),
@@ -262,3 +259,20 @@ class TestLoadAll:
 
         assert result == {}
         conn.execute.assert_not_called()
+
+    def test_ensure_table_called(self):
+        """ensure_table is called before loading records."""
+        conn = MagicMock()
+
+        schemas = [
+            self._make_schema("patients", "patients", ["patient_id", "name"], record_count=1),
+        ]
+        data = {
+            "patients": [{"patient_id": "p1", "name": "Jane"}],
+        }
+
+        load_all(conn, data, schemas)
+
+        # First execute call should be the CREATE TABLE from ensure_table
+        first_sql = conn.execute.call_args_list[0][0][0]
+        assert "CREATE TABLE IF NOT EXISTS" in first_sql

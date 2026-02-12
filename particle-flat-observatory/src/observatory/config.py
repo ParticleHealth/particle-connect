@@ -8,7 +8,7 @@ import logging
 import os
 from dataclasses import dataclass
 
-VALID_DIALECTS = ("postgres", "bigquery")
+VALID_DIALECTS = ("duckdb", "postgres", "bigquery")
 VALID_LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 
 logger = logging.getLogger(__name__)
@@ -49,7 +49,7 @@ def load_settings() -> ObservatorySettings:
         pass
 
     flat_data_path = os.environ.get("FLAT_DATA_PATH", "sample-data/flat_data.json")
-    ddl_dialect = os.environ.get("DDL_DIALECT", "postgres")
+    ddl_dialect = os.environ.get("DDL_DIALECT", "duckdb")
     output_dir = os.environ.get("OUTPUT_DIR", "ddl")
     log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
 
@@ -58,7 +58,7 @@ def load_settings() -> ObservatorySettings:
         raise ValueError(
             f"Invalid DDL_DIALECT: '{ddl_dialect}'. "
             f"Must be one of: {', '.join(VALID_DIALECTS)}. "
-            f"Set DDL_DIALECT environment variable to 'postgres' or 'bigquery'."
+            f"Set DDL_DIALECT environment variable to 'duckdb', 'postgres', or 'bigquery'."
         )
 
     # Validate log level

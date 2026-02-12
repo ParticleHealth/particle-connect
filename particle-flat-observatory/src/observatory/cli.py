@@ -24,7 +24,7 @@ app = typer.Typer(
 )
 
 VALID_SOURCES = ("file", "api")
-VALID_TARGETS = ("postgres", "bigquery")
+VALID_TARGETS = ("duckdb", "bigquery")
 
 
 def _configure_logging(verbose: bool) -> None:
@@ -46,8 +46,8 @@ def load(
         str, typer.Option("--source", help="Data source: 'file' or 'api'")
     ] = "file",
     target: Annotated[
-        str, typer.Option("--target", help="Target database: 'postgres' or 'bigquery'")
-    ] = "postgres",
+        str, typer.Option("--target", help="Target database: 'duckdb' or 'bigquery'")
+    ] = "duckdb",
     data_path: Annotated[
         str,
         typer.Option(
@@ -82,7 +82,7 @@ def load(
 
         particle-pipeline --data-path /path/to/flat_data.json
 
-        particle-pipeline --source api --patient-id abc-123 --target postgres
+        particle-pipeline --source api --patient-id abc-123 --target duckdb
 
         particle-pipeline --verbose
     """
@@ -188,27 +188,19 @@ def load(
 
         results = load_all_bq(client, dataset_id, data, schemas)
 
-    elif target == "postgres":
-        import psycopg
+    elif target == "duckdb":
+        from observatory.loader import get_connection, load_all
 
-        from observatory.loader import get_connection_string, load_all
-
-        conn_string = get_connection_string()
-
-        # Extract host/port for error messages
-        pg_host = os.environ.get("PG_HOST", "localhost")
-        pg_port = os.environ.get("PG_PORT", "5432")
+        db_path = os.environ.get("DUCKDB_PATH", "observatory.duckdb")
 
         try:
-            with psycopg.connect(conn_string) as conn:
-                results = load_all(conn, data, schemas)
-        except psycopg.OperationalError:
+            conn = get_connection(db_path)
+            results = load_all(conn, data, schemas)
+            conn.close()
+        except Exception as e:
             typer.echo(
-                f"Could not connect to PostgreSQL at {pg_host}:{pg_port}\n\n"
-                "To fix:\n"
-                "  1. Start the database: docker compose up -d\n"
-                "  2. Wait for healthy: docker compose ps\n"
-                f"  3. Check connection: PG_HOST={pg_host} PG_PORT={pg_port} in .env"
+                f"Could not open DuckDB at {db_path}: {e}\n\n"
+                "To fix: check DUCKDB_PATH in .env or ensure the directory is writable"
             )
             raise typer.Exit(code=1)
 

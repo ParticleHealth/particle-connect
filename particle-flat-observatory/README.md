@@ -1,14 +1,13 @@
 # Particle Flat Data Observatory
 
-Load Particle Health flat data into a local PostgreSQL database and explore it with SQL.
+Load Particle Health flat data into a local DuckDB database and explore it with SQL.
 
-Takes a `flat_data.json` response from the Particle Health API, normalizes it into relational tables, and loads everything into PostgreSQL. You get structured, queryable data in a single command.
+Takes a `flat_data.json` response from the Particle Health API, normalizes it into relational tables, and loads everything into DuckDB. You get structured, queryable data in a single command. No Docker, no server, no connection config.
 
 ## Quick Start
 
 ### Prerequisites
 
-- Docker (for PostgreSQL)
 - Python 3.11+
 - pip
 
@@ -21,34 +20,18 @@ source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
-### 2. Start PostgreSQL
-
-```bash
-docker compose up -d
-```
-
-Tables are created automatically on first startup from `ddl/postgres/create_all.sql`.
-
-Wait for the database to be healthy:
-
-```bash
-docker compose ps
-```
-
-### 3. Load sample data
+### 2. Load sample data
 
 ```bash
 particle-pipeline
 ```
 
-This loads the included sample data (`sample-data/flat_data.json`) into PostgreSQL. After loading, a data quality report shows record counts, null percentages, and date ranges per table.
+This loads the included sample data (`sample-data/flat_data.json`) into a local DuckDB file (`observatory.duckdb`). Tables are created automatically. After loading, a data quality report shows record counts, null percentages, and date ranges per table.
 
-### 4. Query your data
-
-Connect to PostgreSQL:
+### 3. Query your data
 
 ```bash
-docker compose exec postgres psql -U observatory -d observatory
+duckdb observatory.duckdb
 ```
 
 Run some queries:
@@ -65,7 +48,7 @@ SELECT encounter_type_name, encounter_start_time, encounter_end_time FROM encoun
 SELECT medication_name, medication_statement_status FROM medications;
 ```
 
-Exit psql with `\q`.
+Exit with `.quit`.
 
 ## Configuration
 
@@ -74,18 +57,8 @@ Copy `.env.example` to `.env` to customize settings. CLI flags override environm
 | Variable | Default | Description |
 |---|---|---|
 | `FLAT_DATA_PATH` | `sample-data/flat_data.json` | Path to Particle flat data JSON file |
-| `PG_HOST` | `localhost` | PostgreSQL host |
-| `PG_PORT` | `5432` | PostgreSQL port |
-| `PG_USER` | `observatory` | PostgreSQL user |
-| `PG_PASSWORD` | `observatory` | PostgreSQL password |
-| `PG_DATABASE` | `observatory` | PostgreSQL database name |
+| `DUCKDB_PATH` | `observatory.duckdb` | Path to DuckDB database file |
 | `LOG_LEVEL` | `INFO` | Logging level (DEBUG, INFO, WARNING, ERROR) |
-
-If you already have PostgreSQL running on port 5432, set `PG_PORT` to another value (e.g., `5433`) in both `.env` and when starting Docker:
-
-```bash
-PG_PORT=5433 docker compose up -d
-```
 
 ## Loading Your Own Data
 
@@ -107,38 +80,35 @@ Data is loaded idempotently: re-running the command replaces existing records pe
 ## CLI Reference
 
 ```
-particle-pipeline                                    # Load flat data into PostgreSQL
+particle-pipeline                                    # Load flat data into DuckDB
 particle-pipeline --help                             # Show all options
-particle-pipeline --source file --target postgres    # Explicit mode (default)
+particle-pipeline --source file --target duckdb      # Explicit mode (default)
 particle-pipeline --data-path /path/to/data.json     # Custom data file
 particle-pipeline --verbose                          # Enable debug logging
 ```
 
 ## Resetting the Database
 
-To destroy all data and recreate tables from scratch:
+To start fresh, delete the DuckDB file:
 
 ```bash
-docker compose down -v && docker compose up -d
+rm observatory.duckdb
+particle-pipeline
 ```
 
-The `-v` flag removes the PostgreSQL data volume. On next startup, the init script (`create_all.sql`) runs again because the data directory is empty.
-
-When to reset:
-- After changing DDL files in `ddl/postgres/`
-- To start fresh with no loaded data
-- To recover from a corrupted database state
+Tables are auto-created on each load, so no init script is needed.
 
 ## Project Structure
 
 ```
 particle-flat-observatory/
-  compose.yaml              # PostgreSQL Docker service
   pyproject.toml            # Python package config and dependencies
   .env.example              # Environment variable template
   ddl/
+    duckdb/
+      create_all.sql        # Table definitions (reference artifact)
     postgres/
-      create_all.sql        # Table definitions (auto-loaded by Docker)
+      create_all.sql        # Table definitions (PostgreSQL dialect)
   sample-data/
     flat_data.json          # Sample Particle flat data response
   src/observatory/
@@ -146,8 +116,8 @@ particle-flat-observatory/
     parser.py               # JSON parser for flat_data.json
     normalizer.py           # Empty string -> None normalization
     schema.py               # Schema inspector (discovers columns per resource)
-    ddl.py                  # DDL generator (PostgreSQL and BigQuery)
-    loader.py               # PostgreSQL loader (idempotent per-patient writes)
+    ddl.py                  # DDL generator (DuckDB, PostgreSQL, and BigQuery)
+    loader.py               # DuckDB loader (idempotent per-patient writes)
     quality.py              # Data quality analysis and Rich table report
     config.py               # Settings and environment variable loading
   tests/                    # Unit tests (no database required)
@@ -178,9 +148,19 @@ The sample data contains 1,187 records across 16 resource types:
 
 Five resource types are empty in the sample data (no records): allergies, coverages, familyMemberHistories, immunizations, and socialHistories. Their tables are not created until data is available.
 
+## Analytics Queries
+
+The `queries/` directory contains 15 pre-built analytics queries. DuckDB is PostgreSQL-compatible, so the `queries/postgres/` files work directly:
+
+```bash
+duckdb observatory.duckdb < queries/postgres/clinical/patient_summary.sql
+```
+
+See [queries/README.md](queries/README.md) for the full query catalog.
+
 ## Cloud Mode (BigQuery)
 
-Load the same flat data into Google BigQuery for cloud-scale analytics. Terraform provisions the dataset and tables. The same CLI loads data into BigQuery instead of PostgreSQL.
+Load the same flat data into Google BigQuery for cloud-scale analytics. Terraform provisions the dataset and tables. The same CLI loads data into BigQuery instead of DuckDB.
 
 ### Prerequisites
 
@@ -191,10 +171,12 @@ Load the same flat data into Google BigQuery for cloud-scale analytics. Terrafor
 
 ### 1. Install BigQuery support
 
-The BigQuery dependency is optional. The base install works without it for local-only (PostgreSQL) users.
+The BigQuery dependency is optional. The base install works without it for local-only (DuckDB) users.
 
 ```bash
 cd particle-flat-observatory
+python3 -m venv .venv
+source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -e ".[bigquery]"
 ```
 

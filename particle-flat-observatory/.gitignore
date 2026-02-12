@@ -16,9 +16,13 @@ build/
 # Environment files (keep .env.example)
 .env
 
+# DuckDB database files
+*.duckdb
+*.duckdb.wal
+
 # Tool caches
 .ruff_cache/
 .pytest_cache/
 
 # Generated DDL outputs are committed as static reviewable artifacts.
-# Do NOT add ddl/postgres/create_all.sql or ddl/bigquery/create_all.sql here.
+# Do NOT add ddl/duckdb/, ddl/postgres/, or ddl/bigquery/ create_all.sql here.

@@ -1,7 +1,7 @@
 """DDL generation for Particle flat data observatory.
 
-Produces CREATE TABLE SQL for PostgreSQL and BigQuery from ResourceSchema objects.
-All columns use a single type (TEXT for PostgreSQL, STRING for BigQuery) following
+Produces CREATE TABLE SQL for DuckDB, PostgreSQL, and BigQuery from ResourceSchema objects.
+All columns use a single type (TEXT for DuckDB/PostgreSQL, STRING for BigQuery) following
 the ELT approach where type casting happens in queries, not on load.
 """
 
@@ -18,18 +18,21 @@ logger = logging.getLogger(__name__)
 class DDLDialect(str, Enum):
     """Supported SQL dialects for DDL generation."""
 
+    DUCKDB = "duckdb"
     POSTGRES = "postgres"
     BIGQUERY = "bigquery"
 
 
 # Every column gets the same type per dialect (ELT approach).
 TYPE_MAP: dict[str, str] = {
+    "duckdb": "TEXT",
     "postgres": "TEXT",
     "bigquery": "STRING",
 }
 
 # Column name quoting per dialect.
 _QUOTE_MAP: dict[str, tuple[str, str]] = {
+    "duckdb": ('"', '"'),
     "postgres": ('"', '"'),
     "bigquery": ("`", "`"),
 }

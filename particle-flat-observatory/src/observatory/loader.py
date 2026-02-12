@@ -1,46 +1,61 @@
-"""PostgreSQL loader for Particle flat data.
+"""DuckDB loader for Particle flat data.
 
 Implements idempotent delete+insert per patient_id per resource type,
-using psycopg 3 with safe dynamic SQL and transactional semantics.
+using DuckDB with transactional semantics. Tables are auto-created
+on first load via ensure_table().
 """
 
 import logging
 import os
 
-from psycopg import sql
+import duckdb
 
 from observatory.schema import ResourceSchema
 
 logger = logging.getLogger(__name__)
 
 
-def get_connection_string() -> str:
-    """Build a PostgreSQL connection string from environment variables.
+def get_connection(path: str | None = None) -> duckdb.DuckDBPyConnection:
+    """Open a DuckDB connection.
 
-    Reads PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE with defaults
-    matching the project's compose.yaml for zero-config local development.
+    Args:
+        path: Path to the DuckDB database file. Defaults to DUCKDB_PATH
+              env var or "observatory.duckdb" in the current directory.
 
     Returns:
-        PostgreSQL connection URI string.
+        An open DuckDB connection.
     """
-    host = os.environ.get("PG_HOST", "localhost")
-    port = os.environ.get("PG_PORT", "5432")
-    user = os.environ.get("PG_USER", "observatory")
-    password = os.environ.get("PG_PASSWORD", "observatory")
-    dbname = os.environ.get("PG_DATABASE", "observatory")
-    return f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
+    if path is None:
+        path = os.environ.get("DUCKDB_PATH", "observatory.duckdb")
+    return duckdb.connect(path)
 
 
-def load_resource(conn, table_name: str, columns: list[str], records: list[dict],
+def ensure_table(conn: duckdb.DuckDBPyConnection, schema: ResourceSchema) -> None:
+    """Create a table if it does not already exist.
+
+    All columns are TEXT (ELT approach). Uses double-quoted identifiers
+    for column names to handle SQL reserved words.
+
+    Args:
+        conn: An open DuckDB connection.
+        schema: ResourceSchema describing the table's columns.
+    """
+    col_defs = ", ".join(f'"{col}" TEXT' for col in schema.columns)
+    sql = f'CREATE TABLE IF NOT EXISTS {schema.table_name} ({col_defs})'
+    conn.execute(sql)
+
+
+def load_resource(conn: duckdb.DuckDBPyConnection, table_name: str,
+                  columns: list[str], records: list[dict],
                   patient_id: str) -> int:
-    """Load records for a single resource type and patient into PostgreSQL.
+    """Load records for a single resource type and patient into DuckDB.
 
     Uses idempotent delete+insert within a single transaction: first deletes
     all existing rows for the patient_id, then inserts the new records.
     If the insert fails, the delete is rolled back (no data loss).
 
     Args:
-        conn: An open psycopg connection.
+        conn: An open DuckDB connection.
         table_name: The snake_case SQL table name.
         columns: Ordered list of column names (from ResourceSchema.columns).
         records: List of record dicts to insert.
@@ -53,28 +68,24 @@ def load_resource(conn, table_name: str, columns: list[str], records: list[dict]
         logger.debug("Skipping %s for patient %s: no records", table_name, patient_id)
         return 0
 
-    # Build DELETE query with safe identifiers
-    delete_query = sql.SQL("DELETE FROM {table} WHERE {col} = %s").format(
-        table=sql.Identifier(table_name),
-        col=sql.Identifier("patient_id"),
-    )
+    # Build column references with double-quoted identifiers
+    quoted_cols = ", ".join(f'"{col}"' for col in columns)
+    placeholders = ", ".join("?" for _ in columns)
 
-    # Build INSERT query with safe identifiers for table and all columns
-    col_identifiers = sql.SQL(", ").join(sql.Identifier(c) for c in columns)
-    placeholders = sql.SQL(", ").join(sql.Placeholder() for _ in columns)
-    insert_query = sql.SQL("INSERT INTO {table} ({columns}) VALUES ({placeholders})").format(
-        table=sql.Identifier(table_name),
-        columns=col_identifiers,
-        placeholders=placeholders,
-    )
+    delete_sql = f'DELETE FROM {table_name} WHERE "patient_id" = ?'
+    insert_sql = f'INSERT INTO {table_name} ({quoted_cols}) VALUES ({placeholders})'
 
     # Extract row tuples in column order, using .get() for missing keys (returns None)
     rows = [tuple(record.get(col) for col in columns) for record in records]
 
-    with conn.transaction():
-        with conn.cursor() as cur:
-            cur.execute(delete_query, (patient_id,))
-            cur.executemany(insert_query, rows)
+    conn.begin()
+    try:
+        conn.execute(delete_sql, [patient_id])
+        conn.executemany(insert_sql, rows)
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
 
     count = len(rows)
     logger.info(
@@ -84,17 +95,18 @@ def load_resource(conn, table_name: str, columns: list[str], records: list[dict]
     return count
 
 
-def load_all(conn, data: dict[str, list[dict]],
+def load_all(conn: duckdb.DuckDBPyConnection, data: dict[str, list[dict]],
              schemas: list[ResourceSchema]) -> dict[str, int]:
-    """Load all resource types into PostgreSQL.
+    """Load all resource types into DuckDB.
 
     Iterates over schemas (not data keys) for consistent ordering. Skips
     empty schemas (no table exists) and resource types with no records.
+    Auto-creates tables via ensure_table() before loading.
     Loads per-patient for idempotency: each patient_id gets its own
     delete+insert transaction per resource type.
 
     Args:
-        conn: An open psycopg connection.
+        conn: An open DuckDB connection.
         data: Dict from load_flat_data -- resource_type -> list of record dicts.
         schemas: List of ResourceSchema objects from inspect_schema.
 
@@ -112,6 +124,9 @@ def load_all(conn, data: dict[str, list[dict]],
         if not records:
             logger.debug("Skipping %s: no records in data", schema.table_name)
             continue
+
+        # Auto-create table if it doesn't exist
+        ensure_table(conn, schema)
 
         # Group records by patient_id for per-patient idempotent loading
         patients: dict[str, list[dict]] = {}

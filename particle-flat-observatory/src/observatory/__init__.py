@@ -4,7 +4,7 @@ __version__ = "0.1.0"
 
 from observatory.config import ObservatorySettings, load_settings
 from observatory.ddl import DDLDialect, generate_ddl, write_ddl
-from observatory.loader import get_connection_string, load_all, load_resource
+from observatory.loader import get_connection, load_all, load_resource
 from observatory.normalizer import normalize_record, normalize_resource
 from observatory.parser import load_flat_data
 from observatory.quality import analyze_quality, print_quality_report
@@ -16,7 +16,7 @@ __all__ = [
     "ResourceSchema",
     "analyze_quality",
     "generate_ddl",
-    "get_connection_string",
+    "get_connection",
     "inspect_schema",
     "load_all",
     "load_flat_data",

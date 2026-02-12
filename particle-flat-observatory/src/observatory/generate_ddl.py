@@ -30,7 +30,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         epilog=(
             "Environment variables (overridden by CLI args):\n"
             "  FLAT_DATA_PATH  Path to flat_data.json (default: sample-data/flat_data.json)\n"
-            "  DDL_DIALECT     postgres, bigquery, or all (default: postgres)\n"
+            "  DDL_DIALECT     duckdb, postgres, bigquery, or all (default: duckdb)\n"
             "  OUTPUT_DIR      Output directory for DDL files (default: ddl)\n"
         ),
     )
@@ -42,8 +42,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--dialect",
         default=os.environ.get("DDL_DIALECT", "all"),
-        choices=["postgres", "bigquery", "all"],
-        help="SQL dialect: postgres, bigquery, or all (default: all)",
+        choices=["duckdb", "postgres", "bigquery", "all"],
+        help="SQL dialect: duckdb, postgres, bigquery, or all (default: all)",
     )
     parser.add_argument(
         "--output-dir",
@@ -70,7 +70,7 @@ def main(argv: list[str] | None = None) -> None:
 
     # Determine which dialects to generate
     if args.dialect == "all":
-        dialects = ["postgres", "bigquery"]
+        dialects = ["duckdb", "postgres", "bigquery"]
     else:
         dialects = [args.dialect]
 

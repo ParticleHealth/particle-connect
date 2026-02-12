@@ -4,15 +4,22 @@ Ready-to-run SQL queries for Particle flat data. Each query is available in both
 
 ## Quick Start
 
-1. Load sample data into PostgreSQL (see main [README](../README.md))
+1. Load sample data into DuckDB (see main [README](../README.md))
 2. Open any query file from `postgres/` or `bigquery/`
 3. Replace the sample `patient_id` with your own (for patient-scoped queries)
-4. Run in your SQL client
+4. Run in the DuckDB CLI or your SQL client
+
+The `postgres/` queries work directly in DuckDB -- DuckDB is PostgreSQL-compatible with double-quoted identifiers, TEXT type, CAST, and string_agg.
+
+```bash
+# Run a query in DuckDB
+duckdb observatory.duckdb < queries/postgres/clinical/patient_summary.sql
+```
 
 ## Dialect Differences
 
 Queries are provided in two dialects:
-- **`postgres/`** -- Uses double-quoted identifiers, `CAST(col AS TIMESTAMPTZ)` casting, `string_to_array` + `unnest`
+- **`postgres/`** -- Uses double-quoted identifiers, `CAST(col AS TIMESTAMPTZ)` casting, `string_to_array` + `unnest`. Also works in DuckDB.
 - **`bigquery/`** -- Uses backtick identifiers, `SAFE_CAST`/`PARSE_TIMESTAMP`, `SPLIT` + `UNNEST`
 
 Business logic is identical across dialects. Only SQL syntax differs.

@@ -120,17 +120,14 @@ class TestApiSourceNormalizesData:
             captured_data.update(data)
             return {"patients": 1}
 
+        mock_conn = MagicMock()
         with (
             patch("observatory.api_client.ParticleAPIClient", return_value=mock_client),
-            patch("psycopg.connect") as mock_connect,
+            patch("observatory.loader.get_connection", return_value=mock_conn),
             patch("observatory.loader.load_all", fake_load_all),
         ):
-            mock_conn = MagicMock()
-            mock_connect.return_value.__enter__ = MagicMock(return_value=mock_conn)
-            mock_connect.return_value.__exit__ = MagicMock(return_value=False)
-
             result = runner.invoke(
-                app, ["--source", "api", "--patient-id", "test-123", "--target", "postgres"]
+                app, ["--source", "api", "--patient-id", "test-123", "--target", "duckdb"]
             )
 
         # Verify normalization: empty string -> None
@@ -158,15 +155,12 @@ class TestFileSourceIgnoresPatientId:
         def fake_load_all(conn, data, schemas):
             return {"patients": 1}
 
+        mock_conn = MagicMock()
         with (
             patch("observatory.parser.load_flat_data", return_value=test_data),
-            patch("psycopg.connect") as mock_connect,
+            patch("observatory.loader.get_connection", return_value=mock_conn),
             patch("observatory.loader.load_all", fake_load_all),
         ):
-            mock_conn = MagicMock()
-            mock_connect.return_value.__enter__ = MagicMock(return_value=mock_conn)
-            mock_connect.return_value.__exit__ = MagicMock(return_value=False)
-
             result = runner.invoke(
                 app,
                 [

@@ -1,25 +1,28 @@
 # Analytics Query Library
 
-Ready-to-run SQL queries for Particle flat data. Each query is available in both PostgreSQL and BigQuery dialects.
+Ready-to-run SQL queries for Particle flat data. Each query is available in both DuckDB and BigQuery dialects.
 
 ## Quick Start
 
 1. Load sample data into DuckDB (see main [README](../README.md))
-2. Open any query file from `postgres/` or `bigquery/`
+2. Open any query file from `duckdb/` or `bigquery/`
 3. Replace the sample `patient_id` with your own (for patient-scoped queries)
 4. Run in the DuckDB CLI or your SQL client
 
-The `postgres/` queries work directly in DuckDB -- DuckDB is PostgreSQL-compatible with double-quoted identifiers, TEXT type, CAST, and string_agg.
+The `duckdb/` queries use double-quoted identifiers, TEXT type, CAST, and string_agg.
 
 ```bash
-# Run a query in DuckDB
-duckdb observatory.duckdb < queries/postgres/clinical/patient_summary.sql
+# Run a query via Python (works after pip install)
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql(open('queries/duckdb/clinical/patient_summary.sql').read()).show()"
+
+# Or with the DuckDB CLI (install separately: brew install duckdb)
+duckdb observatory.duckdb < queries/duckdb/clinical/patient_summary.sql
 ```
 
 ## Dialect Differences
 
 Queries are provided in two dialects:
-- **`postgres/`** -- Uses double-quoted identifiers, `CAST(col AS TIMESTAMPTZ)` casting, `string_to_array` + `unnest`. Also works in DuckDB.
+- **`duckdb/`** -- Uses double-quoted identifiers, `CAST(col AS TIMESTAMPTZ)` casting, `string_to_array` + `unnest`.
 - **`bigquery/`** -- Uses backtick identifiers, `SAFE_CAST`/`PARSE_TIMESTAMP`, `SPLIT` + `UNNEST`
 
 Business logic is identical across dialects. Only SQL syntax differs.

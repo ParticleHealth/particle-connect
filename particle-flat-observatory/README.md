@@ -30,25 +30,37 @@ This loads the included sample data (`sample-data/flat_data.json`) into a local 
 
 ### 3. Query your data
 
+Run queries using the Python `duckdb` module (already installed):
+
+```bash
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql('SELECT given_name, family_name, date_of_birth, gender FROM patients').show()"
+```
+
+More examples:
+
+```bash
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql('SELECT lab_name, lab_value, lab_unit FROM labs LIMIT 10').show()"
+
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql('SELECT condition_name, condition_clinical_status FROM problems').show()"
+
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql('SELECT medication_name, medication_statement_status FROM medications').show()"
+```
+
+**Optional: DuckDB CLI.** For an interactive SQL shell, install the [DuckDB CLI](https://duckdb.org/docs/installation/) separately (it is not included in the pip package):
+
+```bash
+# macOS
+brew install duckdb
+
+# or any platform
+curl https://install.duckdb.org | sh
+```
+
+Then connect directly:
+
 ```bash
 duckdb observatory.duckdb
 ```
-
-Run some queries:
-
-```sql
-SELECT given_name, family_name, date_of_birth, gender FROM patients;
-
-SELECT lab_name, lab_value, lab_unit, lab_timestamp FROM labs LIMIT 10;
-
-SELECT condition_name, condition_clinical_status FROM problems;
-
-SELECT encounter_type_name, encounter_start_time, encounter_end_time FROM encounters;
-
-SELECT medication_name, medication_statement_status FROM medications;
-```
-
-Exit with `.quit`.
 
 ## Configuration
 
@@ -150,10 +162,16 @@ Five resource types are empty in the sample data (no records): allergies, covera
 
 ## Analytics Queries
 
-The `queries/` directory contains 15 pre-built analytics queries. DuckDB is PostgreSQL-compatible, so the `queries/postgres/` files work directly:
+The `queries/` directory contains 15 pre-built analytics queries:
 
 ```bash
-duckdb observatory.duckdb < queries/postgres/clinical/patient_summary.sql
+python3 -c "import duckdb; conn = duckdb.connect('observatory.duckdb'); conn.sql(open('queries/duckdb/clinical/patient_summary.sql').read()).show()"
+```
+
+With the DuckDB CLI installed, the same query is shorter:
+
+```bash
+duckdb observatory.duckdb < queries/duckdb/clinical/patient_summary.sql
 ```
 
 See [queries/README.md](queries/README.md) for the full query catalog.
@@ -202,11 +220,11 @@ For CI or production, set the `GOOGLE_APPLICATION_CREDENTIALS` environment varia
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
 ```
 
-The `terraform/iam.tf` file creates a dedicated service account (`observatory-pipeline`) with minimum permissions (dataEditor on the dataset, jobUser on the project). You can create a key for this service account in the GCP Console.
+For production, `terraform/iam.tf` can create a dedicated service account (`observatory-pipeline`) with minimum permissions. Set `create_service_account = true` in `terraform.tfvars` (requires IAM admin permissions on the project).
 
 ### 3. Provision infrastructure with Terraform
 
-Terraform creates 1 BigQuery dataset, 21 tables, 1 service account, and 2 IAM bindings.
+Terraform creates 1 BigQuery dataset and 21 tables.
 
 ```bash
 cd terraform/
@@ -225,11 +243,11 @@ Then initialize and apply:
 
 ```bash
 terraform init
-terraform plan    # Review: 1 dataset, 21 tables, 1 service account, 2 IAM bindings
+terraform plan    # Review: 1 dataset, 21 tables
 terraform apply
 ```
 
-Type `yes` when prompted. Terraform creates all resources and outputs the dataset ID and service account email.
+Type `yes` when prompted. Terraform creates all resources and outputs the dataset ID.
 
 **Terraform variables:**
 
@@ -237,7 +255,8 @@ Type `yes` when prompted. Terraform creates all resources and outputs the datase
 |---|---|---|
 | `project_id` | (required) | GCP project ID |
 | `dataset_name` | `particle_observatory` | BigQuery dataset name |
-| `region` | `US` | Dataset location |
+| `region` | `US` | Dataset location (multi-region `US`/`EU` or single-region e.g. `us-central1`) |
+| `create_service_account` | `false` | Create a dedicated service account (requires IAM admin) |
 
 ### 4. Configure environment
 

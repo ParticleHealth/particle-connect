@@ -1,0 +1,89 @@
+name: Sync to Public Repo
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Add your checks here. Examples:
+      # - name: Run tests
+      #   run: pytest
+      #
+      # - name: Lint
+      #   run: ruff check .
+      #
+      # - name: Check for secrets
+      #   uses: trufflesecurity/trufflehog@main
+      #   with:
+      #     extra_args: --only-verified
+
+      - name: Verify no private files leaked
+        run: |
+          FAILED=0
+
+          # 1. Check for sensitive file patterns
+          PRIVATE_PATTERNS=(".env" "credentials" "secrets")
+          for pattern in "${PRIVATE_PATTERNS[@]}"; do
+            if find . -path "./.git" -prune -o -name "*${pattern}*" -print | grep -q .; then
+              echo "::error::Found sensitive file matching pattern: ${pattern}"
+              FAILED=1
+            fi
+          done
+
+          # 2. Check that private directories exist (so removal step works)
+          PRIVATE_DIRS=(".planning" ".claude" "_private")
+          for dir in "${PRIVATE_DIRS[@]}"; do
+            if [ -d "$dir" ]; then
+              echo "Private directory '${dir}' found — will be stripped before sync."
+            fi
+          done
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo "::error::Sensitive files detected. Fix before syncing."
+            exit 1
+          fi
+          echo "All checks passed."
+
+  sync:
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove private-only files
+        run: |
+          # Remove directories/files that should not go to the public repo
+          rm -rf .planning
+          rm -rf .claude
+          rm -rf _private
+          rm -f CLAUDE.md CLAUDE.local.md
+
+      - name: Push to public repo
+        env:
+          SSH_KEY: ${{ secrets.PUBLIC_REPO_DEPLOY_KEY }}
+        run: |
+          # Configure SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          # Set git config
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage the removal of private files so they don't get pushed
+          git add -A
+          git diff --staged --quiet || git commit -m "Remove private-only files for public sync"
+
+          # Push to public repo
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            git push --force \
+            git@github.com:ParticleHealth/particle-connect.git main

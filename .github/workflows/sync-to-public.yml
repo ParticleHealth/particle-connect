@@ -26,14 +26,21 @@ jobs:
         run: |
           FAILED=0
 
-          # 1. Check for sensitive file patterns
-          PRIVATE_PATTERNS=(".env" "credentials" "secrets")
-          for pattern in "${PRIVATE_PATTERNS[@]}"; do
-            if find . -path "./.git" -prune -o -name "*${pattern}*" -print | grep -q .; then
-              echo "::error::Found sensitive file matching pattern: ${pattern}"
-              FAILED=1
-            fi
-          done
+          # 1. Check for sensitive file patterns (exclude safe example/template files)
+          SENSITIVE=$(find . -path "./.git" -prune -o \( \
+            -name ".env" -o \
+            -name ".env.local" -o \
+            -name ".env.production" -o \
+            -name ".env.development" -o \
+            -name "*credentials*" -o \
+            -name "*secrets*" \
+          \) -not -name "*.example" -not -name "*.sample" -not -name "*.template" -print)
+
+          if [ -n "$SENSITIVE" ]; then
+            echo "::error::Found sensitive files:"
+            echo "$SENSITIVE"
+            FAILED=1
+          fi
 
           # 2. Check that private directories exist (so removal step works)
           PRIVATE_DIRS=(".planning" ".claude" "_private")

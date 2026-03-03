@@ -63,6 +63,7 @@ jobs:
           rm -rf .planning
           rm -rf .claude
           rm -rf _private
+          rm -rf .github
           rm -f CLAUDE.md CLAUDE.local.md
 
       - name: Push to public repo

@@ -46,6 +46,14 @@ PatientRegistration(
 
 **Prevention:** Generate unique `patient_id` values per patient. Don't reuse IDs across different people. The `hello_particle.py` demo uses a fixed ID with fixed demographics, so re-runs are safe.
 
+## Flat data returns empty in sandbox
+
+**Symptom:** Query completes successfully but `GET /api/v2/patients/{id}/flat` returns `{}`.
+
+**Cause:** Sandbox only returns flat data for seeded test patients. Arbitrary demographics (e.g., "John Smith") will register and query successfully but return no clinical data.
+
+**Fix:** Use the demo patient from `hello_particle.py` (Elvira Valadez-Nucleus) or other seeded test patients when testing in sandbox.
+
 ## Query stays in PROCESSING for several minutes
 
 **Symptom:** Query status returns `PROCESSING` for 2-5 minutes before completing.

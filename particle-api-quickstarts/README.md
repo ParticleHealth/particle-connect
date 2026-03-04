@@ -229,7 +229,7 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | `address_lines` | No | Array of strings |
 | `ssn` | No | XXX-XX-XXXX |
 | `telephone` | No | XXX-XXX-XXXX |
-| `patient_id` | No | Your external ID |
+| `patient_id` | Yes | Your external ID |
 | `email` | No | String |
 
 ## Troubleshooting
@@ -239,6 +239,8 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 **FHIR endpoint returns 404 in sandbox.** The `/fhir` endpoint is production-only. Use `flat` or `ccda` in sandbox.
 
 **Query takes 2-5 minutes.** This is normal — Particle queries a nationwide network. The SDK polls with exponential backoff automatically.
+
+**Flat data returns empty in sandbox.** Sandbox only returns data for seeded test patients (e.g., Elvira Valadez-Nucleus). Arbitrary demographics will query successfully but return `{}`.
 
 For more issues (overlay errors, 404 after query submission, timeout tuning), see [docs/troubleshooting.md](docs/troubleshooting.md).
 

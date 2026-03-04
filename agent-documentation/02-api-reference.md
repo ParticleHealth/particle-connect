@@ -41,7 +41,7 @@ Body:
   "gender": "MALE | FEMALE (required)",
   "postal_code": "5 or 9 digit ZIP (required)",
   "address_city": "string (required)",
-  "address_state": "Full state name, e.g. 'Massachusetts' (required)",
+  "address_state": "Two-letter state abbreviation, e.g. 'MA' (required)",
   "patient_id": "your external ID (required, enables idempotency)",
   "address_lines": ["string array (optional)"],
   "ssn": "XXX-XX-XXXX (optional)",
@@ -57,7 +57,7 @@ Response 200:
 }
 ```
 
-**Gotcha**: `address_state` MUST be the full state name. "MA" is rejected; "Massachusetts" is accepted.
+**Gotcha**: `address_state` MUST be a two-letter state abbreviation. "Massachusetts" is rejected; "MA" is accepted.
 
 **Idempotency**: Same `patient_id` + same demographics = updates existing. Same `patient_id` + different demographics = overlay error.
 

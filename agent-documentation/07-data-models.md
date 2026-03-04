@@ -18,7 +18,7 @@ Pydantic models used across the Python SDK and Management UI.
 | gender | Gender | Yes | MALE or FEMALE |
 | postal_code | str | Yes | Regex: `^\d{5}(-\d{4})?$` |
 | address_city | str | Yes | Min 1 char |
-| address_state | str | Yes | Full state name (e.g., "Massachusetts") |
+| address_state | str | Yes | Two-letter abbreviation (e.g., "MA") |
 | patient_id | str | Yes | Your external ID |
 | address_lines | list[str] | No | — |
 | ssn | str | No | Format: XXX-XX-XXXX |
@@ -108,7 +108,7 @@ Config: `str_strip_whitespace=True`
 
 ## Flat Data Resource Types
 
-When loaded into DuckDB/BigQuery, each resource type becomes a table. All columns are TEXT/STRING.
+When loaded into a database or a data warehouse, each resource type becomes a table. All columns are TEXT/STRING.
 
 | API Key | Table Name | Key Columns |
 |---------|------------|-------------|

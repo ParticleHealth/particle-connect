@@ -56,7 +56,7 @@ DEFAULT_PATIENT = {
     "gender": "FEMALE",
     "postal_code": "02215",
     "address_city": "Boston",
-    "address_state": "Massachusetts",
+    "address_state": "MA",
     "patient_id": "test-elvira-valadez",
     "address_lines": [""],
     "ssn": "123-45-6789",

@@ -225,7 +225,7 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | `gender` | Yes | MALE or FEMALE |
 | `postal_code` | Yes | 5 or 9 digit ZIP |
 | `address_city` | Yes | String |
-| `address_state` | Yes | **Full state name** (e.g., "Massachusetts", not "MA") |
+| `address_state` | Yes | **Two-letter abbreviation** (e.g., "MA", not "Massachusetts") |
 | `address_lines` | No | Array of strings |
 | `ssn` | No | XXX-XX-XXXX |
 | `telephone` | No | XXX-XXX-XXXX |
@@ -234,7 +234,7 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 
 ## Troubleshooting
 
-**`address_state` must be the full state name.** The API rejects abbreviations — use `"Massachusetts"`, not `"MA"`.
+**`address_state` must be a two-letter abbreviation.** The API rejects full state names — use `"MA"`, not `"Massachusetts"`.
 
 **FHIR endpoint returns 404 in sandbox.** The `/fhir` endpoint is production-only. Use `flat` or `ccda` in sandbox.
 

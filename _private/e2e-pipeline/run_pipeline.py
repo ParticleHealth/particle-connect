@@ -25,7 +25,7 @@ TEST_PATIENT = {
     "gender": "FEMALE",
     "postal_code": "02215",
     "address_city": "Boston",
-    "address_state": "Massachusetts",
+    "address_state": "MA",
     "address_lines": [""],
     "ssn": "123-45-6789",
     "telephone": "234-567-8910",

@@ -222,7 +222,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", ssn="123-45-6789",
+            address_state="MA", patient_id="test-patient", ssn="123-45-6789",
         )
         assert patient.ssn == "123-45-6789"
 
@@ -232,7 +232,7 @@ class TestPatientRegistrationValidators:
             PatientRegistration(
                 given_name="Test", family_name="User", date_of_birth="1990-01-01",
                 gender=Gender.MALE, postal_code="12345", address_city="Boston",
-                address_state="Massachusetts", patient_id="test-patient", ssn="123456789",
+                address_state="MA", patient_id="test-patient", ssn="123456789",
             )
 
     def test_ssn_none_allowed(self):
@@ -240,7 +240,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient",
+            address_state="MA", patient_id="test-patient",
         )
         assert patient.ssn is None
 
@@ -249,7 +249,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="234-567-8910",
+            address_state="MA", patient_id="test-patient", telephone="234-567-8910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -258,7 +258,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="(234) 567-8910",
+            address_state="MA", patient_id="test-patient", telephone="(234) 567-8910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -267,7 +267,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="234.567.8910",
+            address_state="MA", patient_id="test-patient", telephone="234.567.8910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -276,7 +276,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="2345678910",
+            address_state="MA", patient_id="test-patient", telephone="2345678910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -285,7 +285,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="1-234-567-8910",
+            address_state="MA", patient_id="test-patient", telephone="1-234-567-8910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -294,7 +294,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient", telephone="+1 234 567 8910",
+            address_state="MA", patient_id="test-patient", telephone="+1 234 567 8910",
         )
         assert patient.telephone == "234-567-8910"
 
@@ -304,7 +304,7 @@ class TestPatientRegistrationValidators:
             PatientRegistration(
                 given_name="Test", family_name="User", date_of_birth="1990-01-01",
                 gender=Gender.MALE, postal_code="12345", address_city="Boston",
-                address_state="Massachusetts", patient_id="test-patient", telephone="234-567",
+                address_state="MA", patient_id="test-patient", telephone="234-567",
             )
 
     def test_telephone_none_allowed(self):
@@ -312,7 +312,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="12345", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient",
+            address_state="MA", patient_id="test-patient",
         )
         assert patient.telephone is None
 
@@ -321,7 +321,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="02215", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient",
+            address_state="MA", patient_id="test-patient",
         )
         assert patient.postal_code == "02215"
 
@@ -330,7 +330,7 @@ class TestPatientRegistrationValidators:
         patient = PatientRegistration(
             given_name="Test", family_name="User", date_of_birth="1990-01-01",
             gender=Gender.MALE, postal_code="02215-1234", address_city="Boston",
-            address_state="Massachusetts", patient_id="test-patient",
+            address_state="MA", patient_id="test-patient",
         )
         assert patient.postal_code == "02215-1234"
 
@@ -340,7 +340,7 @@ class TestPatientRegistrationValidators:
             PatientRegistration(
                 given_name="Test", family_name="User", date_of_birth="1990-01-01",
                 gender=Gender.MALE, postal_code="0221", address_city="Boston",
-                address_state="Massachusetts",
+                address_state="MA",
             )
 
     def test_gender_only_male_female(self):
@@ -354,7 +354,7 @@ class TestPatientRegistrationValidators:
             PatientRegistration(
                 family_name="User", date_of_birth="1990-01-01",
                 gender=Gender.MALE, postal_code="12345", address_city="Boston",
-                address_state="Massachusetts",
+                address_state="MA",
             )
 
 
@@ -396,7 +396,7 @@ class TestMockIntegrationFlow:
             "gender": "MALE",
             "postal_code": "12345",
             "address_city": "Boston",
-            "address_state": "Massachusetts",
+            "address_state": "MA",
             "patient_id": "test-patient",
         }
         submit_body = {"particle_patient_id": "pid-12345"}
@@ -425,7 +425,7 @@ class TestMockIntegrationFlow:
             patient = PatientRegistration(
                 given_name="Test", family_name="User", date_of_birth="1990-01-01",
                 gender=Gender.MALE, postal_code="12345", address_city="Boston",
-                address_state="Massachusetts", patient_id="test-patient",
+                address_state="MA", patient_id="test-patient",
             )
             reg_resp = patient_svc.register(patient)
             assert reg_resp.particle_patient_id == "pid-12345"

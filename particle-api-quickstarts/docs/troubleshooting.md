@@ -21,18 +21,18 @@ python workflows/retrieve_data.py <patient_id> ccda
 
 **Symptom:** 422 validation error on patient registration mentioning `address_state`.
 
-**Cause:** The API requires full state names, not abbreviations. `"MA"` is rejected; `"Massachusetts"` is accepted.
+**Cause:** The API requires two-letter state abbreviations. Full state names like `"Massachusetts"` are rejected; `"MA"` is accepted.
 
-**Fix:** Use the full state name:
+**Fix:** Use the two-letter abbreviation:
 
 ```python
 PatientRegistration(
-    address_state="Massachusetts",  # not "MA"
+    address_state="MA",  # not "Massachusetts"
     ...
 )
 ```
 
-**Prevention:** The SDK does not auto-expand abbreviations. Always pass the full state name in your patient data.
+**Prevention:** The SDK does not auto-abbreviate state names. Always pass the two-letter abbreviation in your patient data.
 
 ## Overlay error on re-registration
 

@@ -1,0 +1,30 @@
+# Particle Connect
+
+> Tools, helper scripts, and reference examples for integrating with the Particle Health Platform. Includes a Python SDK for the Query Flow API, a DuckDB/BigQuery analytics pipeline, and a React admin UI for the Management API.
+
+## Documentation
+
+- [Project Overview](01-project-overview.md): Repository structure, three sub-projects, and how they relate
+- [API Reference — Query Flow](02-api-reference.md): Endpoints for patient registration, clinical data queries, and data retrieval (flat/CCDA/FHIR)
+- [API Reference — Management](03-management-api-reference.md): Endpoints for projects, service accounts, credentials, and IAM policies
+- [SDK Reference](04-sdk-reference.md): Python SDK architecture — modules, classes, and usage patterns
+- [Analytics Pipeline](05-analytics-pipeline.md): DuckDB and BigQuery pipeline for Particle flat data with 15 pre-built SQL queries
+- [Management UI](06-management-ui.md): React + FastAPI admin interface architecture and Docker setup
+- [Data Models](07-data-models.md): Pydantic schemas for patients, queries, documents, and API responses
+- [Authentication](08-authentication.md): JWT auth flows for Query Flow API and Management API
+- [Troubleshooting](09-troubleshooting.md): Common errors, gotchas, and sandbox limitations
+- [Environment Setup](10-environment-setup.md): Prerequisites, credentials, configuration variables, and verification
+
+## Instructions
+
+- Always use the Python SDK (`from particle.patient import PatientService`) over raw HTTP calls for new integrations
+- Never use state abbreviations ("MA") in patient registration — always use full state names ("Massachusetts")
+- Never use the FHIR endpoint in sandbox — it returns 404; use flat or CCDA instead
+- Never poll query status in a tight loop — always use exponential backoff (SDK handles this automatically)
+- Prefer flat format over CCDA for data analysis and pipeline work; use CCDA when you need original clinical documents
+- The Management API uses a different base URL (`management.*` subdomain) than the Query Flow API
+- Auth is NOT OAuth2 — it's a custom flow with GET /auth and custom headers
+
+## Optional
+
+- [AGENTS.md](AGENTS.md): Universal agent instructions — build commands, code style, and conventions

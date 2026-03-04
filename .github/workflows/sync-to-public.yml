@@ -26,14 +26,21 @@ jobs:
         run: |
           FAILED=0
 
-          # 1. Check for sensitive file patterns (exclude safe example/template files)
+          # 1. Check for sensitive file patterns (exclude safe example/template and source code files)
           SENSITIVE=$(find . -path "./.git" -prune -o \( \
             -name ".env" -o \
             -name ".env.local" -o \
             -name ".env.production" -o \
             -name ".env.development" -o \
-            -name "*credentials*" -o \
-            -name "*secrets*" \
+            -name "credentials.json" -o \
+            -name "secrets.json" -o \
+            -name "secrets.yaml" -o \
+            -name "secrets.yml" -o \
+            -name "*.tfstate" -o \
+            -name "*.tfstate.backup" -o \
+            -name "terraform.tfvars" -o \
+            -name "*.pem" -o \
+            -name "*.key" \
           \) -not -name "*.example" -not -name "*.sample" -not -name "*.template" -print)
 
           if [ -n "$SENSITIVE" ]; then

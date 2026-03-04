@@ -19,11 +19,11 @@ python workflows/retrieve_data.py <patient_id> flat
 
 **Symptom**: 422 validation error mentioning `address_state`.
 
-**Cause**: API requires full state names. "MA" is rejected.
+**Cause**: API requires two-letter state abbreviations. Full state names like "Massachusetts" are rejected.
 
-**Fix**: Use full state name: `"Massachusetts"`, not `"MA"`.
+**Fix**: Use the two-letter abbreviation: `"MA"`, not `"Massachusetts"`.
 
-**Note**: The SDK does not auto-expand abbreviations.
+**Note**: The SDK does not auto-abbreviate state names.
 
 ## Overlay Error on Re-Registration
 

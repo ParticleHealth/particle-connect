@@ -10,7 +10,7 @@ Field Format Requirements:
 - ssn: XXX-XX-XXXX (e.g., "123-45-6789")
 - telephone: 10-digit US phone, any common format (normalized to XXX-XXX-XXXX)
 - postal_code: 5-digit or 9-digit ZIP (e.g., "12345" or "12345-6789")
-- address_state: Full state name (e.g., "New York", not "NY")
+- address_state: Two-letter state abbreviation (e.g., "NY", not "New York")
 """
 
 from __future__ import annotations
@@ -45,7 +45,7 @@ class PatientRegistration(BaseModel):
         gender: MALE or FEMALE (required)
         postal_code: 5 or 9 digit ZIP code (required)
         address_city: City name (required)
-        address_state: Full state name like "New York" (required)
+        address_state: Two-letter state abbreviation like "NY" (required)
         patient_id: Your external ID for idempotent registration (required)
         address_lines: Street address lines (optional)
         ssn: Social security number in XXX-XX-XXXX format (optional)

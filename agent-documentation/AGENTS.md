@@ -64,7 +64,7 @@ npm install && npm run dev   # Runs on :5173
 
 ## Key Conventions
 
-- **State names**: Particle API requires full state names ("Massachusetts", not "MA") for patient registration
+- **State names**: Particle API requires two-letter state abbreviations ("MA", not "Massachusetts") for patient registration
 - **Auth**: Custom flow — GET /auth with custom headers, returns JWT as plain text (NOT OAuth2)
 - **Environments**: Sandbox (sandbox.particlehealth.com) and Production (api.particlehealth.com)
 - **FHIR**: Not available in sandbox — only flat and CCDA formats work in sandbox

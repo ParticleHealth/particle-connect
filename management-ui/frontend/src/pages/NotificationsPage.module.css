@@ -1,0 +1,376 @@
+.page {
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.createButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.createButton:hover {
+  background: var(--color-primary-hover);
+}
+
+.tableWrapper {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.93rem;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: #fafbfc;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 16px !important;
+  color: var(--color-text-secondary);
+}
+
+.nameCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notifName {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.notifId {
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  font-family: var(--font-mono);
+}
+
+.urlCell {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  word-break: break-all;
+  max-width: 280px;
+}
+
+.typeBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.badgeActive {
+  background: var(--color-success-light);
+  color: #1a5c2e;
+}
+
+.badgeInactive {
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+}
+
+.dateCell {
+  font-size: 0.82rem;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toggleButton {
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.activate {
+  color: var(--color-success);
+}
+
+.activate:hover:not(:disabled) {
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+}
+
+.deactivate {
+  color: var(--color-danger);
+}
+
+.deactivate:hover:not(:disabled) {
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+}
+
+.toggleButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deleteButton {
+  padding: 5px 12px;
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-danger);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: var(--color-danger-light);
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form styles */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.fieldRow {
+  display: flex;
+  gap: 12px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.input {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.93rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.cancelButton {
+  padding: 9px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.cancelButton:hover {
+  background: var(--color-background);
+}
+
+.submitButton {
+  padding: 9px 18px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Signature Key button */
+
+.sigkeyButton {
+  padding: 5px 12px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.sigkeyButton:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Signature Key modal */
+
+.sigkeyInputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.sigkeyInputRow .input {
+  flex: 1;
+}
+
+.generateButton {
+  padding: 9px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.generateButton:hover {
+  background: var(--color-background);
+}
+
+.sigkeyHint {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.sigkeyResult {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sigkeyWarning {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: #fef9e7;
+  border: 1px solid #f5e6b8;
+  color: #856404;
+  font-size: 0.88rem;
+}
+
+.sigkeyField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sigkeyLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+
+.sigkeyValueRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sigkeyValue {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-background);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  word-break: break-all;
+}

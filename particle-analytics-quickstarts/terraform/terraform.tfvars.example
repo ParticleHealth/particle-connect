@@ -1,0 +1,6 @@
+project_id   = "your-gcp-project-id"
+dataset_name = "particle_observatory"
+region       = "US"
+
+# Set to true to create a dedicated service account (requires IAM admin permissions)
+# create_service_account = true

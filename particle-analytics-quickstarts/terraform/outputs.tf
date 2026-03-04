@@ -10,7 +10,7 @@ output "dataset_location" {
 
 output "service_account_email" {
   description = "Service account email for pipeline authentication"
-  value       = google_service_account.observatory.email
+  value       = var.create_service_account ? google_service_account.observatory[0].email : "(not created)"
 }
 
 output "table_count" {

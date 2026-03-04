@@ -9,6 +9,18 @@ sync-key.pub
 # Planning docs (private)
 .planning/
 
+# Node.js
+node_modules/
+dist/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
+
 # macOS
 .DS_Store
 

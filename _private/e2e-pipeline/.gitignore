@@ -1,0 +1,4 @@
+.venv/
+*.db
+flat_data_raw.json
+__pycache__/

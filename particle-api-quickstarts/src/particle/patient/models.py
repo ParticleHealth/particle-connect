@@ -46,7 +46,7 @@ class PatientRegistration(BaseModel):
         postal_code: 5 or 9 digit ZIP code (required)
         address_city: City name (required)
         address_state: Full state name like "New York" (required)
-        patient_id: Your external ID for idempotent registration (optional)
+        patient_id: Your external ID for idempotent registration (required)
         address_lines: Street address lines (optional)
         ssn: Social security number in XXX-XX-XXXX format (optional)
         telephone: Phone number, any common US format (normalized to XXX-XXX-XXXX)
@@ -62,8 +62,8 @@ class PatientRegistration(BaseModel):
     address_city: str = Field(..., min_length=1)
     address_state: str = Field(..., min_length=1)
 
-    # Optional fields
-    patient_id: str | None = None
+    # Required — API returns 400 if missing
+    patient_id: str
     address_lines: list[str] | None = None
     ssn: str | None = None
     telephone: str | None = None

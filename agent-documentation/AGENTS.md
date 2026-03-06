@@ -10,7 +10,7 @@ This is a monorepo with three sub-projects for integrating with the Particle Hea
 
 ```
 particle-connect-private/
-  particle-api-quickstarts/     # Python SDK + workflows for Query Flow API
+  particle-api-quickstarts/     # Python SDK + workflows for Query Flow API + Signal
   particle-analytics-quickstarts/  # DuckDB/BigQuery pipeline for flat data
   management-ui/                # React + FastAPI admin UI for Management API
   agent-documentation/          # AI agent-optimized docs (this folder)

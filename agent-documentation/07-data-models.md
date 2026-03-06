@@ -85,6 +85,56 @@ Config: `str_strip_whitespace=True`
 | patient_id | str |
 | status | str (optional) |
 
+### Signal Models (`particle-api-quickstarts/src/particle/signal/models.py`)
+
+**SubscriptionType** (enum): `MONITORING`
+
+**WorkflowType** (enum): `ADMIT_TRANSITION_ALERT | DISCHARGE_TRANSITION_ALERT | TRANSFER_TRANSITION_ALERT | NEW_ENCOUNTER_ALERT | REFERRAL_ALERT | ADT | DISCHARGE_SUMMARY_ALERT`
+
+**ADTEventType** (enum): `A01 | A02 | A03 | A04 | A08`
+
+**Subscription**: `type: SubscriptionType` (default: MONITORING)
+
+**SubscriptionResponse**: `id: str, type: SubscriptionType` (extra="ignore")
+
+**SubscribeResponse**: `subscriptions: list[SubscriptionResponse]` (default: [])
+
+**TriggerSandboxWorkflowRequest**:
+
+| Field | Type | Required | Default |
+|-------|------|----------|---------|
+| workflow | WorkflowType | Yes | — |
+| callback_url | str | Yes | — |
+| display_name | str | No | "Test" |
+| event_type | ADTEventType | Only for ADT workflow | None |
+
+**ReferralOrganization**: `oid: str` (min_length=1)
+
+**TransitionResource**: `file_id: str, resource_ids: list[str]` (extra="ignore")
+
+**WebhookNotificationData** (CloudEvents data payload):
+
+| Field | Type | Notes |
+|-------|------|-------|
+| particle_patient_id | str | Required |
+| event_type | str | None | e.g., "A01" |
+| event_sequence | int | None | Order within event stream |
+| is_final_event | bool | None | True when stream is complete |
+| resources | list[TransitionResource] | File IDs + resource paths |
+
+**WebhookNotification** (CloudEvents 1.0 envelope):
+
+| Field | Type | Default |
+|-------|------|---------|
+| specversion | str | "1.0" |
+| type | str | e.g., "com.particlehealth.api.v2.transitionalerts" |
+| subject | str | None |
+| source | str | None |
+| id | str | Notification UUID |
+| time | datetime | None |
+| datacontenttype | str | None |
+| data | WebhookNotificationData | Required |
+
 ## Management UI Models
 
 ### Backend Pydantic Models (`management-ui/backend/app/routers/`)
@@ -105,6 +155,22 @@ Config: `str_strip_whitespace=True`
 **PolicyBinding**: `role: str, resources: list[str]`
 
 **CreateCredentialRequest**: `oldCredentialTtlHours: int | None`
+
+**CreateNotificationRequest**:
+| Field | Type | Default |
+|-------|------|---------|
+| display_name | str | — |
+| notification_type | str | — (query, patient, networkalert, hl7v2) |
+| callback_url | str | — |
+| active | bool | True |
+
+**UpdateNotificationRequest**: `display_name: str | None, callback_url: str | None, active: bool | None`
+
+**Notification**: `name, display_name, notification_type, callback_url, active, create_time, update_time`
+
+**SignatureKey**: `name, signature_key, create_time, update_time`
+
+**CreateSignatureKeyRequest**: `signature_key: str`
 
 ## Flat Data Resource Types
 

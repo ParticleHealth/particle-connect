@@ -153,23 +153,53 @@ DELETE /v1/serviceaccounts/{account_id}/credentials/{credential_id}
 **List notifications**
 ```
 GET /v1/notifications
+
+Response: { "notifications": [...] }
 ```
 
 **Create notification**
 ```
 POST /v1/notifications
+Body:
+{
+  "notification": {
+    "display_name": "string",
+    "notification_type": "query | patient | networkalert | hl7v2",
+    "callback_url": "https://your-endpoint.example.com/webhook",
+    "active": true
+  }
+}
 ```
 
-**Get/Update/Delete notification**
+**Get notification**
 ```
 GET /v1/notifications/{notification_id}
+```
+
+**Update notification**
+```
 PATCH /v1/notifications/{notification_id}
+Body: { "display_name": "...", "callback_url": "...", "active": true|false }
+```
+
+**Delete notification**
+```
 DELETE /v1/notifications/{notification_id}
 ```
 
-**Signature keys** (for verifying webhook payloads)
+**Create signature key** (for verifying webhook payloads)
 ```
 POST /v1/notifications/{notification_id}/signaturekeys
+Body:
+{
+  "signature_key": "string (24-80 characters)"
+}
+
+Response: { "name": "...", "signature_key": "...", "create_time": "..." }
+```
+
+**Get/Delete signature key**
+```
 GET /v1/notifications/{notification_id}/signaturekeys/{key_id}
 DELETE /v1/notifications/{notification_id}/signaturekeys/{key_id}
 ```

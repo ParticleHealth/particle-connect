@@ -165,6 +165,98 @@ Response 200:
 
 **Note**: Uses v1 endpoint (not v2). The `patient_id` is your external ID, not the Particle UUID.
 
+## Signal Endpoints
+
+### Subscribe Patient to Monitoring
+```
+POST /api/v1/patients/{particle_patient_id}/subscriptions
+Content-Type: application/json
+
+Body:
+{
+  "type": "MONITORING"
+}
+
+Response 200:
+{
+  "subscriptions": [
+    { "id": "uuid", "type": "MONITORING" }
+  ]
+}
+```
+
+**Gotcha**: Returns 400 if patient is already subscribed. Treat 400 as success (already subscribed).
+
+**Gotcha**: Sandbox may return empty response body. Parse defensively.
+
+### Trigger Sandbox Workflow
+```
+POST /api/v1/patients/{particle_patient_id}/subscriptions/trigger-sandbox-workflow
+Content-Type: application/json
+
+Body:
+{
+  "workflow": "ADMIT_TRANSITION_ALERT | DISCHARGE_TRANSITION_ALERT | TRANSFER_TRANSITION_ALERT | NEW_ENCOUNTER_ALERT | REFERRAL_ALERT | ADT | DISCHARGE_SUMMARY_ALERT",
+  "callback_url": "https://your-webhook-url.example.com/webhook",
+  "display_name": "Test",
+  "event_type": "A01 | A02 | A03 | A04 | A08 (required only for ADT workflow)"
+}
+
+Response 200: "success" (plain text, NOT JSON)
+```
+
+**Gotcha**: Response is raw text `"success"`, not a JSON object.
+
+### Register Referral Organizations
+```
+POST /api/v1/referrals/organizations/registered
+Content-Type: application/json
+
+Body:
+[
+  { "oid": "2.16.840.1.113883.3.8391.5.710576" }
+]
+```
+
+### Get HL7v2 Message
+```
+GET /hl7v2/{message_id}
+
+Response 200: HL7v2 message object (JSON)
+```
+
+**Note**: No `/api/v2` prefix — this endpoint is at the root path.
+
+### Retrieve Flat Transitions
+```
+GET /api/v2/patients/{particle_patient_id}/flat?TRANSITIONS
+
+Response 200: JSON object with transition resource arrays
+Response 404: No transitions available yet (returns empty dict in SDK)
+```
+
+### Webhook Notification Format (CloudEvents 1.0)
+```json
+{
+  "specversion": "1.0",
+  "type": "com.particlehealth.api.v2.transitionalerts",
+  "subject": "patient-id",
+  "source": "particle-health",
+  "id": "notification-uuid",
+  "time": "2026-03-06T12:00:00Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "particle_patient_id": "uuid",
+    "event_type": "A01",
+    "event_sequence": 1,
+    "is_final_event": false,
+    "resources": [
+      { "file_id": "uuid", "resource_ids": ["path/to/resource"] }
+    ]
+  }
+}
+```
+
 ## Data Formats Summary
 
 | Format | Sandbox | Production | Best For |
@@ -192,3 +284,4 @@ Source: `particle-api-quickstarts/src/particle/`
 - Patient: `patient/service.py` — PatientService.register()
 - Query: `query/service.py` — QueryService.submit_query(), wait_for_query_complete(), get_flat(), get_ccda(), get_fhir()
 - Document: `document/service.py` — DocumentService.submit()
+- Signal: `signal/service.py` — SignalService.subscribe(), trigger_sandbox_workflow(), register_referral_organizations(), get_hl7v2_message(), get_flat_transitions()

@@ -12,7 +12,7 @@ src/particle/
     config.py       # ParticleSettings (Pydantic BaseSettings, loads .env)
     http.py         # ParticleHTTPClient (retry, error mapping)
     exceptions.py   # Exception hierarchy
-    logging.py      # structlog configuration
+    logging.py      # structlog configuration + PHI redaction
   patient/
     models.py       # PatientRegistration, PatientResponse, Gender enum
     service.py      # PatientService.register()
@@ -22,6 +22,9 @@ src/particle/
   document/
     models.py       # DocumentSubmission, DocumentResponse, MimeType enum
     service.py      # DocumentService.submit()
+  signal/
+    models.py       # SubscriptionType, WorkflowType, ADTEventType, webhook models
+    service.py      # SignalService (subscribe, trigger, referrals, transitions)
 ```
 
 ## Core Module
@@ -103,6 +106,31 @@ Sends multipart form with:
 - `metadata` field: JSON string of document metadata
 - `file` field: Binary file content with filename and MIME type
 
+## Signal Module
+
+### SignalService (`signal/service.py`)
+- `subscribe(particle_patient_id, subscription_type=MONITORING) -> SubscribeResponse` — POST /api/v1/patients/{id}/subscriptions
+- `trigger_sandbox_workflow(particle_patient_id, workflow, callback_url, display_name="Test", event_type=None) -> dict` — POST /api/v1/patients/{id}/subscriptions/trigger-sandbox-workflow
+- `register_referral_organizations(organizations: list[ReferralOrganization]) -> dict` — POST /api/v1/referrals/organizations/registered
+- `get_hl7v2_message(message_id) -> dict` — GET /hl7v2/{id}
+- `get_flat_transitions(particle_patient_id) -> dict` — GET /api/v2/patients/{id}/flat?TRANSITIONS (returns `{}` on 404)
+- `parse_webhook_notification(payload) -> WebhookNotification` — Static method, validates CloudEvents payload
+
+### SubscriptionType enum
+`MONITORING`
+
+### WorkflowType enum (sandbox workflow triggers)
+`ADMIT_TRANSITION_ALERT | DISCHARGE_TRANSITION_ALERT | TRANSFER_TRANSITION_ALERT | NEW_ENCOUNTER_ALERT | REFERRAL_ALERT | ADT | DISCHARGE_SUMMARY_ALERT`
+
+### ADTEventType enum (required when workflow=ADT)
+`A01` (Admit) | `A02` (Transfer) | `A03` (Discharge) | `A04` (Register) | `A08` (Update Info)
+
+### API Quirks
+- `subscribe()` handles 400 "already subscribed" as success (returns empty subscription list)
+- `trigger_sandbox_workflow()` handles raw text `"success"` response (not JSON)
+- `get_flat_transitions()` returns `{}` on 404 (no transitions yet)
+- Webhook notifications use **CloudEvents 1.0** format with `type: "com.particlehealth.api.v2.transitionalerts"`
+
 ## Usage Pattern
 
 ```python
@@ -119,7 +147,7 @@ with ParticleHTTPClient(settings) as client:
         given_name="Kam", family_name="Quark",
         date_of_birth="1954-12-01", gender=Gender.MALE,
         postal_code="11111", address_city="Brooklyn",
-        address_state="New York",
+        address_state="NY",
     ))
 
     # Query clinical data
@@ -129,6 +157,34 @@ with ParticleHTTPClient(settings) as client:
 
     # Retrieve data
     flat_data = query_svc.get_flat(response.particle_patient_id)
+```
+
+### Signal Usage Pattern
+
+```python
+from particle.core import ParticleSettings, ParticleHTTPClient
+from particle.patient import PatientService, PatientRegistration, Gender
+from particle.signal import SignalService, WorkflowType
+
+settings = ParticleSettings()
+
+with ParticleHTTPClient(settings) as client:
+    # Register + subscribe
+    patient_svc = PatientService(client)
+    response = patient_svc.register(PatientRegistration(...))
+
+    signal_svc = SignalService(client)
+    sub = signal_svc.subscribe(response.particle_patient_id)
+
+    # Trigger sandbox alert
+    signal_svc.trigger_sandbox_workflow(
+        response.particle_patient_id,
+        workflow=WorkflowType.ADMIT_TRANSITION_ALERT,
+        callback_url="https://your-webhook.example.com/webhook",
+    )
+
+    # Retrieve transition data
+    transitions = signal_svc.get_flat_transitions(response.particle_patient_id)
 ```
 
 ## Workflow Scripts
@@ -141,6 +197,10 @@ with ParticleHTTPClient(settings) as client:
 | `workflows/submit_query.py` | Submit query + poll for completion |
 | `workflows/retrieve_data.py` | Retrieve flat/ccda data |
 | `workflows/submit_document.py` | Submit a clinical document |
+| `workflows/signal_subscribe_patient.py` | Register patient + subscribe to MONITORING |
+| `workflows/signal_trigger_alert.py` | Register → subscribe → trigger ADMIT_TRANSITION_ALERT |
+| `workflows/signal_end_to_end.py` | Full lifecycle: register → subscribe → trigger → retrieve transitions |
+| `workflows/signal_webhook_receiver.py` | Local HTTP server on port 8080 to receive CloudEvents webhooks |
 
 ## Quick-Start Scripts (No SDK)
 
@@ -152,3 +212,6 @@ Direct API calls without the SDK, useful for debugging:
 | Register | `quick-starts/curl/register_patient.sh` | `quick-starts/python/register_patient.py` |
 | Query | `quick-starts/curl/submit_query.sh` | `quick-starts/python/submit_query.py` |
 | Retrieve | `quick-starts/curl/retrieve_data.sh` | `quick-starts/python/retrieve_data.py` |
+| Signal Subscribe | — | `quick-starts/python/signal_subscribe.py` |
+| Signal Trigger | — | `quick-starts/python/signal_trigger_alert.py` |
+| Signal Register Org | — | `quick-starts/python/signal_register_org.py` |

@@ -29,7 +29,7 @@ backend/
       projects.py                # GET/POST /api/projects, GET/PATCH /api/projects/{id}
       service_accounts.py        # GET/POST /api/service-accounts, GET /api/service-accounts/{id}
       credentials.py             # POST/GET/DELETE /api/service-accounts/{id}/credentials
-      notifications.py           # Internal notification endpoints
+      notifications.py           # CRUD for webhook notification configs + signature keys
 ```
 
 ### Backend API Routes
@@ -52,6 +52,14 @@ backend/
 | `/api/service-accounts/{id}/credentials` | POST | Create credential (secret shown once) |
 | `/api/service-accounts/{id}/credentials` | GET | List credentials |
 | `/api/service-accounts/{id}/credentials/{cid}` | DELETE | Delete credential |
+| `/api/notifications` | GET | List webhook notification configs |
+| `/api/notifications` | POST | Create notification config |
+| `/api/notifications/{id}` | GET | Get notification config |
+| `/api/notifications/{id}` | PATCH | Update notification (callback_url, active status) |
+| `/api/notifications/{id}` | DELETE | Delete notification config |
+| `/api/notifications/{id}/signaturekeys` | POST | Create signature key for webhook verification |
+| `/api/notifications/{id}/signaturekeys/{kid}` | GET | Get signature key |
+| `/api/notifications/{id}/signaturekeys/{kid}` | DELETE | Delete signature key |
 
 ### ParticleClient (`services/particle_client.py`)
 - Module-level singleton shared across all requests
@@ -69,7 +77,7 @@ frontend/src/
   main.tsx             # Vite entry point
   api/                 # API client functions
   components/          # Reusable UI components
-  pages/               # Route pages (Login, Dashboard, Projects, ServiceAccounts, Credentials)
+  pages/               # Route pages (Dashboard, Projects, ServiceAccounts, Credentials, Notifications)
 ```
 
 ## Configuration

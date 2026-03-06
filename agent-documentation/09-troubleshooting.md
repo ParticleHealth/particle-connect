@@ -107,6 +107,30 @@ except Exception:
 
 **Fix**: Both the SDK (`ParticleAuth`) and management-ui (`ParticleClient`) auto-refresh tokens before expiry. If using direct API calls, re-authenticate when receiving 401.
 
+## Signal Subscribe Returns 400
+
+**Symptom**: `POST /api/v1/patients/{id}/subscriptions` returns 400.
+
+**Cause**: Patient is already subscribed to monitoring.
+
+**Fix**: Treat 400 as success. The SDK `SignalService.subscribe()` handles this automatically and returns an empty subscription list.
+
+## Signal Trigger Returns Plain Text
+
+**Symptom**: `trigger_sandbox_workflow()` fails to parse response as JSON.
+
+**Cause**: The endpoint returns raw text `"success"`, not a JSON object.
+
+**Fix**: The SDK handles this. If using raw httpx, check `response.text` instead of `response.json()`.
+
+## Signal Flat Transitions Returns 404
+
+**Symptom**: `GET /api/v2/patients/{id}/flat?TRANSITIONS` returns 404 after triggering a workflow.
+
+**Cause**: Transition data may not be available immediately after workflow trigger.
+
+**Fix**: The SDK `get_flat_transitions()` returns `{}` on 404. Retry after a short delay if needed.
+
 ## DuckDB Database Reset
 
 **Symptom**: Schema mismatch or stale data after loading new data.

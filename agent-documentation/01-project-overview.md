@@ -5,14 +5,15 @@ Particle Connect is a monorepo of tools for integrating with the Particle Health
 ## Sub-Projects
 
 ### 1. particle-api-quickstarts (Python SDK)
-**Purpose**: Python toolkit for the Particle Health Query Flow API. Register patients, submit queries, retrieve clinical data in Flat JSON, CCDA, or FHIR format.
+**Purpose**: Python toolkit for the Particle Health Query Flow API. Register patients, submit queries, retrieve clinical data in Flat JSON, CCDA, or FHIR format. Subscribe to Signal ADT event notifications via webhooks.
 
 **Key paths**:
 - `src/particle/core/` — Auth, HTTP client, config, exceptions
 - `src/particle/patient/` — Patient registration models and service
 - `src/particle/query/` — Query submission, polling, data retrieval
 - `src/particle/document/` — Clinical document submission
-- `workflows/` — Runnable scripts (hello_particle.py, register_patient.py, etc.)
+- `src/particle/signal/` — Signal subscriptions, ADT events, webhook parsing
+- `workflows/` — Runnable scripts (hello_particle.py, register_patient.py, signal_*.py, etc.)
 - `quick-starts/curl/` — cURL scripts for direct API calls
 - `quick-starts/python/` — httpx scripts (no SDK dependency)
 - `notebooks/` — Jupyter notebook for exploring flat data

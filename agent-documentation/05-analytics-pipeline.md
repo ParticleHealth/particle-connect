@@ -26,14 +26,29 @@ flat_data.json → parser → normalizer → schema discovery → DDL generation
 
 ## CLI Commands
 
+### particle-pipeline (main CLI)
 ```bash
 particle-pipeline                                  # Load file → DuckDB (default)
 particle-pipeline --source file --target duckdb    # Explicit default mode
 particle-pipeline --source file --target bigquery  # Load file → BigQuery
+particle-pipeline --source api --target duckdb --patient-id <id>  # Fetch from API → DuckDB
 particle-pipeline --data-path /path/to/data.json   # Custom data file
 particle-pipeline --verbose                        # Debug logging
 particle-pipeline --help                           # Show all options
 ```
+
+**`--source api` requires**: `PARTICLE_CLIENT_ID`, `PARTICLE_CLIENT_SECRET`, `PARTICLE_SCOPE_ID` env vars + `--patient-id` flag.
+
+### observatory-generate-ddl (DDL generator)
+```bash
+observatory-generate-ddl                                          # Generate DDL for all dialects
+observatory-generate-ddl --dialect duckdb                         # DuckDB only
+observatory-generate-ddl --dialect bigquery --output-dir ddl/     # BigQuery to custom dir
+observatory-generate-ddl --data-path /path/to/data.json           # Custom data file
+observatory-generate-ddl --no-normalize                           # Skip empty string → NULL
+```
+
+Output: `{output_dir}/{dialect}/create_all.sql`
 
 ## Configuration
 
@@ -44,6 +59,10 @@ particle-pipeline --help                           # Show all options
 | LOG_LEVEL | `INFO` | Logging level |
 | BQ_PROJECT_ID | (required for BigQuery) | GCP project ID |
 | BQ_DATASET | `particle_observatory` | BigQuery dataset name |
+| PARTICLE_CLIENT_ID | (required for --source api) | Particle API client ID |
+| PARTICLE_CLIENT_SECRET | (required for --source api) | Particle API client secret |
+| PARTICLE_SCOPE_ID | (required for --source api) | Particle scope/project ID |
+| PARTICLE_BASE_URL | `https://sandbox.particlehealth.com` | API base URL (for --source api) |
 
 ## Sample Data
 

@@ -38,6 +38,8 @@ PARTICLE_SCOPE_ID=projects/your-scope-id
 | PARTICLE_SCOPE_ID | Yes | — | Scope ID (format: `projects/<id>`) |
 | PARTICLE_BASE_URL | No | `https://sandbox.particlehealth.com` | API base URL |
 | PARTICLE_TIMEOUT | No | 30 | Request timeout in seconds |
+| SIGNAL_CALLBACK_URL | No | — | Webhook callback URL for Signal workflows |
+| WEBHOOK_PORT | No | 8080 | Port for local webhook receiver (`signal_webhook_receiver.py`) |
 
 ### Verify
 ```bash

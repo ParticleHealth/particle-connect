@@ -28,6 +28,22 @@ from particle.query import (
     QueryStatus,
 )
 
+# Signal
+from particle.signal import (
+    ADTEventType,
+    ReferralOrganization,
+    SignalService,
+    SubscribeResponse,
+    Subscription,
+    SubscriptionResponse,
+    SubscriptionType,
+    TransitionResource,
+    TriggerSandboxWorkflowRequest,
+    WebhookNotification,
+    WebhookNotificationData,
+    WorkflowType,
+)
+
 # Set up NullHandler to avoid "No handler found" warnings
 # Applications should configure their own logging handlers
 logging.getLogger(__name__).addHandler(logging.NullHandler())
@@ -52,4 +68,17 @@ __all__ = [
     "DocumentResponse",
     "DocumentType",
     "MimeType",
+    # Signal
+    "SignalService",
+    "SubscriptionType",
+    "WorkflowType",
+    "ADTEventType",
+    "Subscription",
+    "SubscriptionResponse",
+    "SubscribeResponse",
+    "TriggerSandboxWorkflowRequest",
+    "ReferralOrganization",
+    "TransitionResource",
+    "WebhookNotificationData",
+    "WebhookNotification",
 ]

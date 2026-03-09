@@ -48,6 +48,8 @@ agent-documentation/
   08-authentication.md               # Auth flows for all APIs
   09-troubleshooting.md              # Common errors and solutions
   10-environment-setup.md            # Setup, configuration, and credentials
+  11-flat-data-contract.md           # ODCS v3 flat data contract (22 table schemas)
+  12-notification-data-contract.md   # Webhook notification schemas (7 notification types)
 ```
 
 ## How Agents Should Use This Folder

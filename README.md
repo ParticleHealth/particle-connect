@@ -4,6 +4,30 @@ Tools, helper scripts, and reference examples to help customers integrate with t
 
 This repository is intended to accelerate evaluation and implementation work by providing practical starting points (e.g., sample workflows, utilities, and scaffolding). You are free to adapt these materials to your environment and requirements.
 
+## AI Agent-Friendly Documentation
+
+This repository includes agent-friendly documentation designed to help both engineers and AI agents understand, navigate, and work with the codebase safely. It provides clear setup instructions, repository structure, workflow guidance, and implementation examples to reduce ambiguity and accelerate time to value.
+
+The documentation lives in [`agent-documentation/`](agent-documentation/) and follows the [llms.txt](https://llmstxt.org/) standard. The entry point is [`agent-documentation/llms.txt`](agent-documentation/llms.txt) — a lightweight index that tells an agent which file to read for any given task.
+
+### Setting up your AI coding assistant
+
+For the best experience, add the following instruction to your tool's configuration so your agent automatically knows where to find the documentation:
+
+> For Particle API, SDK, data contract, or webhook tasks, start by reading `agent-documentation/llms.txt` to find the relevant topic file.
+
+Where to add this depends on your tool:
+
+| Tool | Configuration file |
+|------|-------------------|
+| **Claude Code** | `CLAUDE.md` in your project root |
+| **Cursor** | `.cursor/rules/` directory (create a `.mdc` file) |
+| **GitHub Copilot** | `.github/copilot-instructions.md` |
+| **Windsurf** | `.windsurfrules` in your project root |
+| **OpenAI Codex** | `AGENTS.md` in your project root |
+
+Or simply tell your agent directly: *"Read `agent-documentation/llms.txt` first."*
+
 ## Support expectations
 
 This repository is **not** an officially supported Particle product and does not include an SLA.  

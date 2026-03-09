@@ -14,6 +14,8 @@
 - [Authentication](08-authentication.md): JWT auth flows for Query Flow API and Management API
 - [Troubleshooting](09-troubleshooting.md): Common errors, gotchas, and sandbox limitations
 - [Environment Setup](10-environment-setup.md): Prerequisites, credentials, configuration variables, and verification
+- [Flat Data Contract](11-flat-data-contract.md): ODCS v3 data contract for flattened clinical data — 22 table schemas, column definitions, types, relationships, and provenance model
+- [Notification Data Contract](12-notification-data-contract.md): CloudEvents 1.0 webhook notification schemas — 7 notification types with payload definitions, examples, and signature verification
 
 ## Instructions
 

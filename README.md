@@ -4,6 +4,49 @@ Tools, helper scripts, and reference examples to help customers integrate with t
 
 This repository is intended to accelerate evaluation and implementation work by providing practical starting points (e.g., sample workflows, utilities, and scaffolding). You are free to adapt these materials to your environment and requirements.
 
+## Start Here
+
+Pick the path that matches what you're trying to do:
+
+| I want to... | Go here | Time to first result |
+|---|---|---|
+| **Pull clinical records** for a patient | [`particle-api-quickstarts/`](particle-api-quickstarts/) | ~10 min setup + 2-5 min query |
+| **Explore sample data** without any credentials | [`particle-api-quickstarts/notebooks/`](particle-api-quickstarts/notebooks/) | ~2 min |
+| **Load flat data into SQL** and run analytics | [`particle-analytics-quickstarts/`](particle-analytics-quickstarts/) | ~5 min (single command) |
+| **Manage projects & credentials** via UI | [`management-ui/`](management-ui/) | ~3 min (docker compose up) |
+| **See the raw API calls** (curl/httpx, no SDK) | [`particle-api-quickstarts/quick-starts/`](particle-api-quickstarts/quick-starts/) | ~5 min |
+| **Set up Signal/ADT webhooks** | [`particle-api-quickstarts/workflows/signal_end_to_end.py`](particle-api-quickstarts/workflows/signal_end_to_end.py) | ~10 min |
+
+### If you're brand new to Particle
+
+1. **No credentials yet?** Open the [sample data notebook](particle-api-quickstarts/notebooks/explore_flat_data.ipynb) — zero setup, see real clinical data shapes immediately
+2. **Have credentials?** Run [`workflows/check_setup.py`](particle-api-quickstarts/workflows/check_setup.py) to validate, then [`workflows/hello_particle.py`](particle-api-quickstarts/workflows/hello_particle.py) for a full end-to-end demo
+3. **Have flat data and want to query it?** Run `particle-pipeline` in [`particle-analytics-quickstarts/`](particle-analytics-quickstarts/) — one command loads everything into DuckDB
+
+### What's in each sub-project
+
+```
+particle-connect/
+├── particle-api-quickstarts/        # Python SDK + workflows + quick-starts
+│   ├── src/particle/                #   Installable SDK (auth, patient, query, document, signal)
+│   ├── workflows/                   #   Production-like reference scripts (start with hello_particle.py)
+│   ├── quick-starts/                #   Minimal curl + httpx examples (no SDK needed)
+│   ├── notebooks/                   #   Jupyter notebook for exploring sample data
+│   └── sample-data/                 #   Flat JSON + CCDA samples (no credentials needed)
+│
+├── particle-analytics-quickstarts/  # Load flat data → DuckDB/BigQuery + 15 pre-built SQL queries
+│   ├── src/observatory/             #   CLI pipeline tool
+│   ├── queries/                     #   Clinical, operational, and cross-cutting SQL queries
+│   ├── ddl/                         #   Table definitions (DuckDB, PostgreSQL, BigQuery)
+│   └── terraform/                   #   BigQuery infrastructure-as-code (optional)
+│
+├── management-ui/                   # Browser-based admin for projects, service accounts, credentials
+│   ├── frontend/                    #   React 19 + TypeScript
+│   └── backend/                     #   FastAPI proxy to Particle Management API
+│
+└── agent-documentation/             # AI-agent-friendly docs (llms.txt standard)
+```
+
 ## AI Agent-Friendly Documentation
 
 This repository includes agent-friendly documentation designed to help both engineers and AI agents understand, navigate, and work with the codebase safely. It provides clear setup instructions, repository structure, workflow guidance, and implementation examples to reduce ambiguity and accelerate time to value.

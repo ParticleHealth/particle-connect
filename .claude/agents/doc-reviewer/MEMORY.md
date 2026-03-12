@@ -1,7 +1,7 @@
 # Doc Reviewer Agent Memory
 
 ## Last Updated
-2026-03-06 — First full review completed.
+2026-03-11 — Integration template and new-integration command updated.
 
 ## Repo Snapshot
 - **Doc files**: 10 numbered files (01-10), README.md, AGENTS.md, llms.txt in `agent-documentation/`
@@ -12,7 +12,11 @@
 - **Management UI routers**: auth, projects, service_accounts, credentials, notifications
 
 ## Known Drift Issues
-None remaining after 2026-03-06 review.
+None remaining after 2026-03-11 review.
+
+## Changes (2026-03-11)
+- **Integration TEMPLATE.md** rewritten: removed compliance, data mapping, client contact sections. Now architecture-focused with 4 pipeline patterns (A-D), storage target menu (DuckDB/Postgres/BigQuery/GCS/S3/SQLite/API/Slack), detailed query flow/webhook/document submission design tables, expanded test scenarios, implementation checklist.
+- **new-integration.md command** rewritten to match: question groups now focus on pipeline pattern selection, storage target, integration layer, and detailed design. Removed compliance and field mapping questions.
 
 ## Fixed Issues (2026-03-06)
 - **CRITICAL**: llms.txt had WRONG address_state instruction — said "never use abbreviations" when API requires abbreviations. Fixed.

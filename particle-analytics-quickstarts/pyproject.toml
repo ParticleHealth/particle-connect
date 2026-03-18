@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "particle-flat-observatory"
 version = "0.1.0"
-description = "Data pipeline accelerator for Particle Health flat data — schema generation, normalization, and analytics"
+description = "Healthcare analytics pipeline for Particle Health flat data — loads clinical records into DuckDB or BigQuery with 15 pre-built SQL queries for labs, medications, encounters, problems, vital signs, and care team analysis"
 requires-python = ">=3.11"
 dependencies = [
     "duckdb>=1.0.0",

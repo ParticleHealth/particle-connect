@@ -1,8 +1,8 @@
 # particle-connect
 
-Tools, helper scripts, and reference examples to help customers integrate with the Particle Health Platform.
+A Python SDK, analytics pipeline, and admin UI for integrating with the [Particle Health](https://www.particlehealth.com/) nationwide health information exchange (HIE). Query clinical records (CCDA, FHIR R4, flat JSON) across thousands of EHR sources with a single API call — covering patient registration, clinical data retrieval, real-time ADT event subscriptions (Signal), and credential management.
 
-This repository is intended to accelerate evaluation and implementation work by providing practical starting points (e.g., sample workflows, utilities, and scaffolding). You are free to adapt these materials to your environment and requirements.
+This repository accelerates EHR integration and health data interoperability work by providing practical starting points (sample workflows, utilities, and scaffolding) for the Particle Health API. You are free to adapt these materials to your environment and requirements.
 
 ## Start Here
 

@@ -1,6 +1,6 @@
 # Particle Connect
 
-> Tools, helper scripts, and reference examples for integrating with the Particle Health Platform. Includes a Python SDK for the Query Flow API (with Signal/ADT event support), a DuckDB/BigQuery analytics pipeline, and a React admin UI for the Management API.
+> Python SDK, analytics pipeline, and admin UI for integrating with the Particle Health Platform — a nationwide health information exchange (HIE) for clinical data retrieval across thousands of EHR sources. Includes a Python SDK for the Query Flow API (patient registration, clinical records in CCDA/FHIR R4/flat JSON, Signal/ADT event subscriptions), a DuckDB/BigQuery healthcare analytics pipeline, and a React admin UI for the Management API. Use this for EHR integration, health data interoperability, and clinical analytics workflows.
 
 ## Documentation
 

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "particle-starter"
 version = "0.1.0"
-description = "Python starter template for Particle Health API integration"
+description = "Python SDK and workflows for Particle Health API — clinical data retrieval (CCDA, FHIR, flat JSON), patient registration, ADT Signal events, and EHR integration via the nationwide health information exchange"
 requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.28.0",

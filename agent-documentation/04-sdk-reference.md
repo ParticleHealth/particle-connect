@@ -20,8 +20,8 @@ src/particle/
     models.py       # PurposeOfUse, QueryStatus, QueryRequest, QueryResponse
     service.py      # QueryService (submit, poll, retrieve flat/ccda/fhir)
   document/
-    models.py       # DocumentSubmission, DocumentResponse, MimeType enum
-    service.py      # DocumentService.submit()
+    models.py       # DocumentSubmission, DocumentResponse, DocumentMetadata, MimeType enum
+    service.py      # DocumentService.submit(), get(), delete(), list_by_patient()
   signal/
     models.py       # SubscriptionType, WorkflowType, ADTEventType, webhook models
     service.py      # SignalService (subscribe, trigger, referrals, transitions)
@@ -97,14 +97,19 @@ Pydantic model with validators:
 ### PurposeOfUse enum
 `TREATMENT | PAYMENT | OPERATIONS` (required for HIPAA compliance)
 
-## Document Module
+## Document Module (Bi-Directionality)
 
 ### DocumentService (`document/service.py`)
-Single method: `submit(document: DocumentSubmission, file_content: bytes) -> DocumentResponse`
+Full document lifecycle for bi-directional data exchange:
 
-Sends multipart form with:
-- `metadata` field: JSON string of document metadata
-- `file` field: Binary file content with filename and MIME type
+- `submit(document: DocumentSubmission, file_content: bytes) -> DocumentResponse` — Upload a clinical document (multipart: metadata JSON + file bytes)
+- `get(document_id: str) -> DocumentMetadata` — Retrieve metadata for a submitted document (verify upload)
+- `delete(document_id: str) -> str` — Delete a document (returns "delete successful")
+- `list_by_patient(patient_id: str) -> list[DocumentMetadata]` — List all documents for a patient
+
+Uses `/api/v1/documents` endpoints (v1, not v2). The `patient_id` is your external ID, not the Particle UUID.
+
+See `13-bidirectionality.md` for complete documentation including code value sets and workflow diagrams.
 
 ## Signal Module
 
@@ -196,7 +201,8 @@ with ParticleHTTPClient(settings) as client:
 | `workflows/register_patient.py` | Register a single patient |
 | `workflows/submit_query.py` | Submit query + poll for completion |
 | `workflows/retrieve_data.py` | Retrieve flat/ccda data |
-| `workflows/submit_document.py` | Submit a clinical document |
+| `workflows/submit_document.py` | Submit a clinical document (CCDA or PDF) |
+| `workflows/manage_documents.py` | Get, list, or delete documents |
 | `workflows/signal_subscribe_patient.py` | Register patient + subscribe to MONITORING |
 | `workflows/signal_trigger_alert.py` | Register → subscribe → trigger ADMIT_TRANSITION_ALERT |
 | `workflows/signal_end_to_end.py` | Full lifecycle: register → subscribe → trigger → retrieve transitions |
@@ -212,6 +218,8 @@ Direct API calls without the SDK, useful for debugging:
 | Register | `quick-starts/curl/register_patient.sh` | `quick-starts/python/register_patient.py` |
 | Query | `quick-starts/curl/submit_query.sh` | `quick-starts/python/submit_query.py` |
 | Retrieve | `quick-starts/curl/retrieve_data.sh` | `quick-starts/python/retrieve_data.py` |
+| Submit Document | `quick-starts/curl/submit_document.sh` | `quick-starts/python/submit_document.py` |
+| Manage Documents | `quick-starts/curl/manage_documents.sh` | `quick-starts/python/manage_documents.py` |
 | Signal Subscribe | — | `quick-starts/python/signal_subscribe.py` |
 | Signal Trigger | — | `quick-starts/python/signal_trigger_alert.py` |
 | Signal Register Org | — | `quick-starts/python/signal_register_org.py` |

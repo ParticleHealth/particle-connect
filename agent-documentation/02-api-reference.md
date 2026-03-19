@@ -130,7 +130,7 @@ Response 200: FHIR R4 Bundle (JSON)
 
 **Sandbox limitation**: Returns 404. FHIR is production-only.
 
-### Submit Document
+### Submit Document (Bi-Directionality)
 ```
 POST /api/v1/documents
 Content-Type: multipart/form-data
@@ -146,24 +146,46 @@ Metadata fields:
   "type": "CLINICAL",
   "title": "filename.xml",
   "mime_type": "application/xml | application/pdf",
-  "creation_time": "ISO8601 datetime",
-  "format_code": "IHE format code",
-  "class_code": "LOINC class code",
-  "type_code": "LOINC type code",
+  "creation_time": "RFC3339 datetime (required)",
+  "format_code": "IHE format code (required)",
+  "class_code": "LOINC class code (required)",
+  "type_code": "LOINC type code (required)",
   "confidentiality_code": "N (Normal, default)",
-  "healthcare_facility_type_code": "SNOMED code",
-  "practice_setting_code": "SNOMED code"
+  "healthcare_facility_type_code": "SNOMED code (default: 394777002)",
+  "practice_setting_code": "SNOMED code (default: 394733009)",
+  "service_start_time": "RFC3339 datetime (optional)",
+  "service_stop_time": "RFC3339 datetime (optional)"
 }
 
-Response 200:
-{
-  "document_id": "...",
-  "patient_id": "...",
-  "status": "..."
-}
+Response 200: echoes full document metadata
 ```
 
-**Note**: Uses v1 endpoint (not v2). The `patient_id` is your external ID, not the Particle UUID.
+**Note**: Uses v1 endpoint (not v2). The `patient_id` is your external ID, not the Particle UUID. Patient must already exist in Particle's Master Patient Index.
+
+### Retrieve Document
+```
+GET /api/v1/documents/{document_id}
+
+Response 200: full document metadata (same structure as create response)
+```
+
+Use this to verify a document was successfully uploaded after submission.
+
+### Delete Document
+```
+DELETE /api/v1/documents/{document_id}
+
+Response 200: "delete successful" (plain text string)
+```
+
+### List Patient Documents
+```
+GET /api/v1/documents/patient/{patient_id}
+
+Response 200: array of document metadata objects
+```
+
+For complete bi-directionality documentation including code value sets, workflow diagrams, and SDK examples, see `13-bidirectionality.md`.
 
 ## Signal Endpoints
 
@@ -283,5 +305,5 @@ Source: `particle-api-quickstarts/src/particle/`
 - HTTP: `core/http.py` — ParticleHTTPClient (retry with tenacity)
 - Patient: `patient/service.py` — PatientService.register()
 - Query: `query/service.py` — QueryService.submit_query(), wait_for_query_complete(), get_flat(), get_ccda(), get_fhir()
-- Document: `document/service.py` — DocumentService.submit()
+- Document: `document/service.py` — DocumentService.submit(), get(), delete(), list_by_patient()
 - Signal: `signal/service.py` — SignalService.subscribe(), trigger_sandbox_workflow(), register_referral_organizations(), get_hl7v2_message(), get_flat_transitions()

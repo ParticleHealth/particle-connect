@@ -315,6 +315,34 @@ except ParticleValidationError as e:
 2. Patient was registered with the `patient_id` you're using
 3. File content is valid (well-formed XML for CCDA, valid PDF)
 
+## Document List Returns Null After Deletion
+
+**Symptom**: `GET /api/v1/documents/patient/{patient_id}` returns `null` instead of `[]` when a patient has no documents.
+
+**Cause**: The API returns a JSON `null` (not an empty array) when all documents for a patient have been deleted or none have been submitted.
+
+**Fix**: Always null-check the response before iterating or calling `len()`:
+```python
+documents = response.json()
+if documents is None:
+    documents = []
+```
+
+The SDK `DocumentService.list_by_patient()` handles this automatically.
+
+## Document Delete Response Is JSON, Not Plain Text
+
+**Symptom**: Parsing `DELETE /api/v1/documents/{document_id}` response as a plain string gives `{"message":"delete successful"}` instead of just `"delete successful"`.
+
+**Cause**: The API returns a JSON object `{"message": "delete successful"}`, not a raw text string as some documentation suggests.
+
+**Fix**: Parse the response as JSON if you need the message:
+```python
+result = response.json()  # {"message": "delete successful"}
+```
+
+Or just check the HTTP status code — a 200 means the delete succeeded regardless of body format.
+
 ## Connection and Timeout Errors
 
 **Symptom**: `httpx.ConnectError`, `httpx.ReadTimeout`, `httpx.WriteTimeout`, or `httpx.PoolTimeout` after all retries exhausted.

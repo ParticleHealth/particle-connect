@@ -78,12 +78,30 @@ Config: `str_strip_whitespace=True`
 | service_start_time | datetime | No | None |
 | service_stop_time | datetime | No | None |
 
-**DocumentResponse**:
+**DocumentResponse** (submission confirmation):
 | Field | Type |
 |-------|------|
 | document_id | str |
 | patient_id | str |
 | status | str (optional) |
+
+**DocumentMetadata** (full metadata from GET/LIST endpoints):
+| Field | Type | Required |
+|-------|------|----------|
+| patient_id | str | Yes |
+| document_id | str | Yes |
+| type | str | No |
+| title | str | No |
+| mime_type | str | No |
+| creation_time | str | No |
+| format_code | str | No |
+| confidentiality_code | str | No |
+| class_code | str | No |
+| type_code | str | No |
+| healthcare_facility_type_code | str | No |
+| practice_setting_code | str | No |
+| service_start_time | str | No |
+| service_stop_time | str | No |
 
 ### Signal Models (`particle-api-quickstarts/src/particle/signal/models.py`)
 

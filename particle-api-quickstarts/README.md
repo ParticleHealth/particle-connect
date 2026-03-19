@@ -184,6 +184,8 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | Register | `quick-starts/curl/register_patient.sh` | `quick-starts/python/register_patient.py` |
 | Query | `quick-starts/curl/submit_query.sh` | `quick-starts/python/submit_query.py` |
 | Retrieve | `quick-starts/curl/retrieve_data.sh` | `quick-starts/python/retrieve_data.py` |
+| Submit Document | `quick-starts/curl/submit_document.sh` | `quick-starts/python/submit_document.py` |
+| Manage Documents | `quick-starts/curl/manage_documents.sh` | `quick-starts/python/manage_documents.py` |
 
 ## Data Formats
 
@@ -209,6 +211,9 @@ python quick-starts/python/retrieve_data.py <particle_patient_id> flat
 | `/api/v2/patients/{id}/fhir` | GET | Get FHIR Bundle (production only) |
 | `/api/v2/patients/{id}/ccda` | GET | Get CCDA ZIP |
 | `/api/v1/documents` | POST | Submit a clinical document (multipart) |
+| `/api/v1/documents/{id}` | GET | Retrieve document metadata |
+| `/api/v1/documents/{id}` | DELETE | Delete a document |
+| `/api/v1/documents/patient/{id}` | GET | List all documents for a patient |
 
 ### Base URLs
 
@@ -279,6 +284,7 @@ particle-health-starters/
     submit_query.py             # Submit + poll a query
     retrieve_data.py            # Retrieve flat/ccda/fhir data
     submit_document.py          # Submit a clinical document
+    manage_documents.py         # Get, list, or delete documents
   quick-starts/               # No-SDK scripts (direct API calls)
     curl/                       # cURL scripts
     python/                     # httpx scripts

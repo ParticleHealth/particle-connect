@@ -26,11 +26,18 @@ Usage:
         print(f"Submitted: {response.document_id}")
 """
 
-from .models import DocumentResponse, DocumentSubmission, DocumentType, MimeType
+from .models import (
+    DocumentMetadata,
+    DocumentResponse,
+    DocumentSubmission,
+    DocumentType,
+    MimeType,
+)
 from .service import DocumentService
 
 __all__ = [
     "DocumentService",
+    "DocumentMetadata",
     "DocumentSubmission",
     "DocumentResponse",
     "DocumentType",

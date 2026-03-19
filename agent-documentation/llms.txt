@@ -16,6 +16,7 @@
 - [Environment Setup](10-environment-setup.md): Prerequisites, credentials, configuration variables, and verification
 - [Flat Data Contract](11-flat-data-contract.md): ODCS v3 data contract for flattened clinical data — 22 table schemas, column definitions, types, relationships, and provenance model
 - [Notification Data Contract](12-notification-data-contract.md): CloudEvents 1.0 webhook notification schemas — 7 notification types with payload definitions, examples, and signature verification
+- [Bi-Directionality](13-bidirectionality.md): Documents API for sending clinical data back to Particle — submit, retrieve, delete, and list documents (CCDA XML/PDF), code value sets, and workflow diagrams
 
 ## Instructions
 
@@ -24,6 +25,7 @@
 - Never use the FHIR endpoint in sandbox — it returns 404; use flat or CCDA instead
 - Never poll query status in a tight loop — always use exponential backoff (SDK handles this automatically)
 - Prefer flat format over CCDA for data analysis and pipeline work; use CCDA when you need original clinical documents
+- For bi-directional document submission (sending data back to Particle), see `13-bidirectionality.md` — uses v1 endpoint, requires external patient_id
 - The Management API uses a different base URL (`management.*` subdomain) than the Query Flow API
 - Auth is NOT OAuth2 — it's a custom flow with GET /auth and custom headers
 - Signal subscribe returns 400 when already subscribed — treat as success, not error

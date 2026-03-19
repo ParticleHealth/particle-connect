@@ -107,3 +107,44 @@ class DocumentResponse(BaseModel):
     status: str | None = None
 
     model_config = ConfigDict(extra="ignore")
+
+
+class DocumentMetadata(BaseModel):
+    """Full document metadata returned by GET endpoints.
+
+    Returned when retrieving a single document or listing patient documents.
+    Contains all metadata fields submitted during document creation.
+
+    Attributes:
+        patient_id: External patient ID
+        document_id: External document ID
+        type: Document type (e.g., CLINICAL)
+        title: Document filename
+        mime_type: Content MIME type
+        creation_time: Document creation timestamp
+        format_code: IHE/LOINC format code
+        confidentiality_code: Confidentiality level
+        class_code: Document class code
+        type_code: Document type code
+        healthcare_facility_type_code: SNOMED facility type code
+        practice_setting_code: SNOMED practice setting code
+        service_start_time: Service period start (optional)
+        service_stop_time: Service period end (optional)
+    """
+
+    patient_id: str
+    document_id: str
+    type: str | None = None
+    title: str | None = None
+    mime_type: str | None = None
+    creation_time: str | None = None
+    format_code: str | None = None
+    confidentiality_code: str | None = None
+    class_code: str | None = None
+    type_code: str | None = None
+    healthcare_facility_type_code: str | None = None
+    practice_setting_code: str | None = None
+    service_start_time: str | None = None
+    service_stop_time: str | None = None
+
+    model_config = ConfigDict(extra="ignore")

@@ -25,8 +25,8 @@ Response: JWT token as plain text string
 - Uses project-level credentials (from a service account with `project.owner` or `project.user` role)
 
 **SDK implementation** (`particle-api-quickstarts/src/particle/core/auth.py`):
-- `TokenManager`: Tracks JWT token and expiry (extracted from `exp` claim)
-- `ParticleAuth`: httpx.Auth subclass — proactive refresh 10 min before expiry, auto-retry on 401
+- `TokenManager` (`:21`): Tracks JWT token and expiry (extracted from `exp` claim)
+- `ParticleAuth` (`:85`): httpx.Auth subclass — proactive refresh 10 min before expiry, auto-retry on 401 via `auth_flow()` (`:105`)
 - Token refresh is transparent to calling code
 
 **Configuration**:
@@ -59,11 +59,11 @@ Response: URL-encoded form data OR JSON
 - Auth endpoint is on the standard URL; management API calls go to `management.*` subdomain
 
 **Implementation** (`management-ui/backend/app/services/particle_client.py`):
-- `ParticleClient`: Dataclass with async httpx client
+- `ParticleClient` (`:45`): Dataclass with async httpx client
 - `_TokenState`: Tracks token validity (5 min refresh buffer)
-- `connect()`: Authenticates using .env credentials
+- `connect()` (`:114`): Authenticates using .env credentials
 - `_ensure_token()`: Auto-refreshes before each management API request
-- `switch_environment()`: Recreates HTTP clients with new base URLs
+- `switch_environment()` (`:124`): Recreates HTTP clients with new base URLs
 
 **Configuration**:
 ```

@@ -21,7 +21,7 @@ Dockerized admin interface for the Particle Health Management API. Located in `m
 backend/
   app/
     main.py                      # FastAPI app, CORS, lifespan, router registration
-    config.py                    # Settings (BaseSettings from .env)
+    config.py                    # Settings (BaseSettings from .env) — Settings class at :15
     services/
       particle_client.py         # ParticleClient singleton — async HTTP + JWT management
     routers/
@@ -61,11 +61,13 @@ backend/
 | `/api/notifications/{id}/signaturekeys/{kid}` | GET | Get signature key |
 | `/api/notifications/{id}/signaturekeys/{kid}` | DELETE | Delete signature key |
 
-### ParticleClient (`services/particle_client.py`)
+### ParticleClient (`services/particle_client.py:45`)
 - Module-level singleton shared across all requests
-- Async httpx client with auto-reconnect on token expiry
+- `authenticate()` (`:77`) — Async httpx client with auto-reconnect on token expiry
+- `connect()` (`:114`) — Authenticates using .env credentials
+- `switch_environment()` (`:124`) — Recreates HTTP clients with new base URLs
+- `request()` (`:159`) — Makes authenticated requests to Particle API
 - Token refresh buffer: 5 minutes before expiry
-- Supports environment switching (sandbox ↔ production) with client recreation
 - Auth may return URL-encoded form data (not JSON) — parser handles both formats
 
 ## Frontend Structure

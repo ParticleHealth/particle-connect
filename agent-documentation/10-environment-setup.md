@@ -23,7 +23,7 @@ cp .env.example .env
 ```
 
 Edit `.env`:
-```
+```ini
 PARTICLE_CLIENT_ID=your-client-id
 PARTICLE_CLIENT_SECRET=your-client-secret
 PARTICLE_SCOPE_ID=projects/your-scope-id
@@ -47,7 +47,7 @@ python workflows/check_setup.py
 ```
 
 Expected output:
-```
+```text
 Checking Particle Health API setup...
 1. Checking environment variables... OK
 2. Testing authentication... OK
@@ -142,7 +142,7 @@ export PARTICLE_BASE_URL="https://api.particlehealth.com"
 
 ### Management UI
 Use the environment switch in the UI, or set in .env:
-```
+```ini
 PARTICLE_ENV=production
 ```
 

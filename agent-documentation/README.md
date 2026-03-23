@@ -38,6 +38,7 @@ agent-documentation/
   README.md                          # This file — strategy overview
   llms.txt                           # Entry point index (llms.txt standard)
   AGENTS.md                          # Universal agent instructions (cross-tool)
+  00-terminology.md                  # ID disambiguation, confusable terms — read first
   01-project-overview.md             # Repository structure and purpose
   02-api-reference.md                # Particle Health Query Flow API
   03-management-api-reference.md     # Particle Health Management API
@@ -50,6 +51,7 @@ agent-documentation/
   10-environment-setup.md            # Setup, configuration, and credentials
   11-flat-data-contract.md           # ODCS v3 flat data contract (22 table schemas)
   12-notification-data-contract.md   # Webhook notification schemas (7 notification types)
+  13-bidirectionality.md             # Documents API (submit/retrieve/delete clinical docs)
 ```
 
 ## How Agents Should Use This Folder

@@ -2,8 +2,19 @@
 
 > Python SDK, analytics pipeline, and admin UI for integrating with the Particle Health Platform — a nationwide health information exchange (HIE) for clinical data retrieval across thousands of EHR sources. Includes a Python SDK for the Query Flow API (patient registration, clinical records in CCDA/FHIR R4/flat JSON, Signal/ADT event subscriptions), a DuckDB/BigQuery healthcare analytics pipeline, and a React admin UI for the Management API. Use this for EHR integration, health data interoperability, and clinical analytics workflows.
 
+## Start Here Based on Your Task
+
+- **Building an integration?** → 00-terminology.md, 04-sdk-reference.md, 08-authentication.md, 10-environment-setup.md
+- **Debugging an error?** → 00-terminology.md, 09-troubleshooting.md
+- **Analyzing clinical data?** → 05-analytics-pipeline.md, 11-flat-data-contract.md
+- **Setting up webhooks / Signal?** → 02-api-reference.md (Signal section), 12-notification-data-contract.md
+- **Submitting documents to Particle?** → 13-bidirectionality.md, 02-api-reference.md (Document section)
+- **Managing projects / service accounts?** → 03-management-api-reference.md, 06-management-ui.md
+- **Understanding data models?** → 00-terminology.md, 07-data-models.md
+
 ## Documentation
 
+- [Terminology](00-terminology.md): Patient ID disambiguation, confusable field names, environment and credential definitions — READ FIRST if working with multiple ID types
 - [Project Overview](01-project-overview.md): Repository structure, three sub-projects, and how they relate
 - [API Reference — Query Flow](02-api-reference.md): Endpoints for patient registration, clinical data queries, data retrieval (flat/CCDA/FHIR), and Signal (subscriptions, ADT events, webhooks)
 - [API Reference — Management](03-management-api-reference.md): Endpoints for projects, service accounts, credentials, and IAM policies

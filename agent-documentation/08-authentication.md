@@ -6,7 +6,7 @@ Particle Health uses a custom JWT authentication flow (NOT standard OAuth2). The
 
 **Used by**: particle-api-quickstarts (Python SDK)
 
-```
+```http
 GET https://sandbox.particlehealth.com/auth
 Headers:
   client-id: <client_id>
@@ -30,7 +30,7 @@ Response: JWT token as plain text string
 - Token refresh is transparent to calling code
 
 **Configuration**:
-```
+```ini
 PARTICLE_CLIENT_ID=your-client-id
 PARTICLE_CLIENT_SECRET=your-client-secret
 PARTICLE_SCOPE_ID=projects/your-scope-id
@@ -40,7 +40,7 @@ PARTICLE_SCOPE_ID=projects/your-scope-id
 
 **Used by**: management-ui (FastAPI backend)
 
-```
+```http
 POST https://sandbox.particlehealth.com/auth
 Headers:
   client-id: <org_client_id>
@@ -66,7 +66,7 @@ Response: URL-encoded form data OR JSON
 - `switch_environment()` (`:124`): Recreates HTTP clients with new base URLs
 
 **Configuration**:
-```
+```ini
 PARTICLE_CLIENT_ID=your-org-client-id
 PARTICLE_CLIENT_SECRET=your-org-client-secret
 PARTICLE_ENV=sandbox

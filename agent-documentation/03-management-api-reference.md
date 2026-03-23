@@ -13,7 +13,7 @@ The Particle Health Management API manages organizational resources: projects, s
 
 ## Authentication
 
-```
+```http
 POST /auth
 Headers:
   client-id: <org-level-client-id>
@@ -29,7 +29,7 @@ Management API uses org-level credentials (not project-level). The response form
 ### Projects
 
 **List projects**
-```
+```http
 GET /v1/projects
 Authorization: Bearer <token>
 
@@ -37,7 +37,7 @@ Response: { "projects": [...] }
 ```
 
 **Create project**
-```
+```http
 POST /v1/projects
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -60,12 +60,12 @@ Body:
 ```
 
 **Get project**
-```
+```http
 GET /v1/projects/{project_id}
 ```
 
 **Update project**
-```
+```http
 PATCH /v1/projects/{project_id}
 Body: { fields to update }
 ```
@@ -73,12 +73,12 @@ Body: { fields to update }
 ### Service Accounts
 
 **List service accounts**
-```
+```http
 GET /v1/serviceaccounts
 ```
 
 **Create service account**
-```
+```http
 POST /v1/serviceaccounts
 Body:
 {
@@ -89,14 +89,14 @@ Body:
 ```
 
 **Get service account**
-```
+```http
 GET /v1/serviceaccounts/{account_id}
 ```
 
 ### IAM Policies
 
 **Set policy** (assign roles to projects)
-```
+```http
 POST /v1/serviceaccounts/{account_id}:setPolicy
 Body:
 {
@@ -110,14 +110,14 @@ Body:
 ```
 
 **Get policy**
-```
+```http
 GET /v1/serviceaccounts/{account_id}:getPolicy
 ```
 
 ### Credentials
 
 **Create credentials**
-```
+```http
 POST /v1/serviceaccounts/{account_id}/credentials
 Body (optional):
 {
@@ -130,13 +130,13 @@ Response: { "clientId": "...", "clientSecret": "..." }
 **Warning**: Client secret is returned only once. Copy immediately.
 
 **List credentials**
-```
+```http
 GET /v1/serviceaccounts/{account_id}/credentials
 ```
 Note: May not be supported in sandbox (returns 405/501).
 
 **Delete credential**
-```
+```http
 DELETE /v1/serviceaccounts/{account_id}/credentials/{credential_id}
 ```
 
@@ -151,14 +151,14 @@ DELETE /v1/serviceaccounts/{account_id}/credentials/{credential_id}
 ### Notifications (Webhooks)
 
 **List notifications**
-```
+```http
 GET /v1/notifications
 
 Response: { "notifications": [...] }
 ```
 
 **Create notification**
-```
+```http
 POST /v1/notifications
 Body:
 {
@@ -172,23 +172,23 @@ Body:
 ```
 
 **Get notification**
-```
+```http
 GET /v1/notifications/{notification_id}
 ```
 
 **Update notification**
-```
+```http
 PATCH /v1/notifications/{notification_id}
 Body: { "display_name": "...", "callback_url": "...", "active": true|false }
 ```
 
 **Delete notification**
-```
+```http
 DELETE /v1/notifications/{notification_id}
 ```
 
 **Create signature key** (for verifying webhook payloads)
-```
+```http
 POST /v1/notifications/{notification_id}/signaturekeys
 Body:
 {
@@ -199,7 +199,7 @@ Response: { "name": "...", "signature_key": "...", "create_time": "..." }
 ```
 
 **Get/Delete signature key**
-```
+```http
 GET /v1/notifications/{notification_id}/signaturekeys/{key_id}
 DELETE /v1/notifications/{notification_id}/signaturekeys/{key_id}
 ```

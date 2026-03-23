@@ -13,7 +13,7 @@ The Particle Health Query Flow API enables patient registration, clinical data q
 
 All endpoints (except `/auth`) require a Bearer JWT token in the `Authorization` header.
 
-```
+```http
 GET /auth
 Headers:
   client-id: <your-client-id>
@@ -29,7 +29,7 @@ This is NOT standard OAuth2. See `08-authentication.md` for details.
 ## Endpoints
 
 ### Register Patient
-```
+```http
 POST /api/v2/patients
 Content-Type: application/json
 
@@ -62,7 +62,7 @@ Response 200:
 **Idempotency**: Same `patient_id` + same demographics = updates existing. Same `patient_id` + different demographics = overlay error.
 
 ### Submit Query
-```
+```http
 POST /api/v2/patients/{particle_patient_id}/query
 Content-Type: application/json
 
@@ -81,7 +81,7 @@ Response 200:
 ```
 
 ### Check Query Status
-```
+```http
 GET /api/v2/patients/{particle_patient_id}/query
 
 Response 200:
@@ -100,7 +100,7 @@ Response 200:
 **Note**: Status endpoint may return 404 briefly after submission (propagation delay). The SDK handles this automatically.
 
 ### Retrieve Flat Data
-```
+```http
 GET /api/v2/patients/{particle_patient_id}/flat
 Accept: application/json
 
@@ -112,7 +112,7 @@ Particle's denormalized JSON format. Each resource type is a flat list of record
 **Sandbox limitation**: Flat data only returns results for seeded test patients (e.g., Elvira Valadez-Nucleus from `hello_particle.py`). Arbitrary patient demographics will query successfully but return empty data (`{}`).
 
 ### Retrieve CCDA
-```
+```http
 GET /api/v2/patients/{particle_patient_id}/ccda
 
 Response 200: ZIP file containing CCDA XML documents
@@ -121,7 +121,7 @@ Response 200: ZIP file containing CCDA XML documents
 Standard C-CDA XML clinical documents. Available in both sandbox and production.
 
 ### Retrieve FHIR
-```
+```http
 GET /api/v2/patients/{particle_patient_id}/fhir
 Accept: application/json
 
@@ -131,7 +131,7 @@ Response 200: FHIR R4 Bundle (JSON)
 **Sandbox limitation**: Returns 404. FHIR is production-only.
 
 ### Submit Document (Bi-Directionality)
-```
+```http
 POST /api/v1/documents
 Content-Type: multipart/form-data
 
@@ -163,7 +163,7 @@ Response 200: echoes full document metadata
 **Note**: Uses v1 endpoint (not v2). The `patient_id` is your external ID, not the Particle UUID. Patient must already exist in Particle's Master Patient Index.
 
 ### Retrieve Document
-```
+```http
 GET /api/v1/documents/{document_id}
 
 Response 200: full document metadata (same structure as create response)
@@ -172,14 +172,14 @@ Response 200: full document metadata (same structure as create response)
 Use this to verify a document was successfully uploaded after submission.
 
 ### Delete Document
-```
+```http
 DELETE /api/v1/documents/{document_id}
 
 Response 200: "delete successful" (plain text string)
 ```
 
 ### List Patient Documents
-```
+```http
 GET /api/v1/documents/patient/{patient_id}
 
 Response 200: array of document metadata objects
@@ -190,7 +190,7 @@ For complete bi-directionality documentation including code value sets, workflow
 ## Signal Endpoints
 
 ### Subscribe Patient to Monitoring
-```
+```http
 POST /api/v1/patients/{particle_patient_id}/subscriptions
 Content-Type: application/json
 
@@ -212,7 +212,7 @@ Response 200:
 **Gotcha**: Sandbox may return empty response body. Parse defensively.
 
 ### Trigger Sandbox Workflow
-```
+```http
 POST /api/v1/patients/{particle_patient_id}/subscriptions/trigger-sandbox-workflow
 Content-Type: application/json
 
@@ -230,7 +230,7 @@ Response 200: "success" (plain text, NOT JSON)
 **Gotcha**: Response is raw text `"success"`, not a JSON object.
 
 ### Register Referral Organizations
-```
+```http
 POST /api/v1/referrals/organizations/registered
 Content-Type: application/json
 
@@ -241,7 +241,7 @@ Body:
 ```
 
 ### Get HL7v2 Message
-```
+```http
 GET /hl7v2/{message_id}
 
 Response 200: HL7v2 message object (JSON)
@@ -250,7 +250,7 @@ Response 200: HL7v2 message object (JSON)
 **Note**: No `/api/v2` prefix — this endpoint is at the root path.
 
 ### Retrieve Flat Transitions
-```
+```http
 GET /api/v2/patients/{particle_patient_id}/flat?TRANSITIONS
 
 Response 200: JSON object with transition resource arrays

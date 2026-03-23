@@ -11,18 +11,18 @@ flat_data.json → parser → normalizer → schema discovery → DDL generation
 
 ### Source Modules (`src/observatory/`)
 
-| Module | Purpose |
-|--------|---------|
-| `cli.py` | Typer CLI entry point — `particle-pipeline` command |
-| `parser.py` | Parses flat_data.json into resource-type groups |
-| `normalizer.py` | Converts empty strings to None |
-| `schema.py` | Discovers columns per resource type from data |
-| `ddl.py` | Generates CREATE TABLE DDL (DuckDB, PostgreSQL, BigQuery) |
-| `loader.py` | DuckDB loader — idempotent per-patient (DELETE + INSERT) |
-| `bq_loader.py` | BigQuery loader — idempotent per-patient |
-| `quality.py` | Data quality analysis with Rich table output |
-| `config.py` | Settings from .env (FLAT_DATA_PATH, DUCKDB_PATH, BQ_*) |
-| `api_client.py` | HTTP client for fetching data from Particle API |
+| Module | Key Entry Point | Purpose |
+|--------|----------------|---------|
+| `cli.py` | `load()` at `:44` | Typer CLI entry point — `particle-pipeline` command |
+| `parser.py` | `load_flat_data()` at `:41` | Parses flat_data.json into resource-type groups |
+| `normalizer.py` | `normalize_resource()` at `:29` | Converts empty strings to None |
+| `schema.py` | `inspect_schema()` at `:53` | Discovers columns per resource type from data |
+| `ddl.py` | `generate_ddl()` at `:83` | Generates CREATE TABLE DDL (DuckDB, PostgreSQL, BigQuery) |
+| `loader.py` | `load_all()` at `:98` | DuckDB loader — idempotent per-patient (DELETE + INSERT) |
+| `bq_loader.py` | `load_all_bq()` at `:105` | BigQuery loader — idempotent per-patient |
+| `quality.py` | `analyze_quality()` at `:19` | Data quality analysis with Rich table output |
+| `config.py` | `load_settings()` at `:29` | Settings from .env (FLAT_DATA_PATH, DUCKDB_PATH, BQ_*) |
+| `api_client.py` | `ParticleAPIClient` at `:64` | HTTP client for fetching data from Particle API |
 
 ## CLI Commands
 

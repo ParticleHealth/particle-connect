@@ -301,9 +301,9 @@ Response 404: No transitions available yet (returns empty dict in SDK)
 ## SDK Implementation
 
 Source: `particle-api-quickstarts/src/particle/`
-- Auth: `core/auth.py` — ParticleAuth (httpx.Auth subclass with auto-refresh)
-- HTTP: `core/http.py` — ParticleHTTPClient (retry with tenacity)
-- Patient: `patient/service.py` — PatientService.register()
-- Query: `query/service.py` — QueryService.submit_query(), wait_for_query_complete(), get_flat(), get_ccda(), get_fhir()
-- Document: `document/service.py` — DocumentService.submit(), get(), delete(), list_by_patient()
-- Signal: `signal/service.py` — SignalService.subscribe(), trigger_sandbox_workflow(), register_referral_organizations(), get_hl7v2_message(), get_flat_transitions()
+- Auth: `core/auth.py:85` — ParticleAuth (httpx.Auth subclass with auto-refresh)
+- HTTP: `core/http.py:36` — ParticleHTTPClient (retry with tenacity)
+- Patient: `patient/service.py:44` — PatientService.register()
+- Query: `query/service.py:48` — QueryService.submit_query(), wait_for_query_complete(`:85`), get_flat(`:185`), get_ccda(`:139`), get_fhir(`:168`)
+- Document: `document/service.py:30` — DocumentService.submit(), get(`:65`), delete(`:85`), list_by_patient(`:106`)
+- Signal: `signal/service.py:54` — SignalService.subscribe(), trigger_sandbox_workflow(`:89`), register_referral_organizations(`:133`), get_hl7v2_message(`:160`), get_flat_transitions(`:174`)

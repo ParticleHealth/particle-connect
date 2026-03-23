@@ -29,7 +29,7 @@ src/particle/
 
 ## Core Module
 
-### ParticleSettings (`core/config.py`)
+### ParticleSettings (`core/config.py:9`)
 Loads configuration from environment variables or `.env` file.
 
 | Variable | Required | Default | Description |
@@ -40,13 +40,13 @@ Loads configuration from environment variables or `.env` file.
 | PARTICLE_BASE_URL | No | `https://sandbox.particlehealth.com` | API base URL |
 | PARTICLE_TIMEOUT | No | 30 | Request timeout (seconds) |
 
-### ParticleAuth (`core/auth.py`)
+### ParticleAuth (`core/auth.py:85`)
 httpx.Auth subclass that handles JWT lifecycle:
 - Proactive refresh 10 minutes before expiry (configurable via `token_refresh_buffer_seconds`)
 - Automatic retry on 401 (re-authenticates and replays request)
 - Decodes JWT expiry from `exp` claim without signature verification
 
-### ParticleHTTPClient (`core/http.py`)
+### ParticleHTTPClient (`core/http.py:36`)
 Wraps httpx.Client with:
 - Automatic authentication via ParticleAuth
 - Retry with exponential backoff + jitter (3 attempts, 1-60s wait)
@@ -54,25 +54,25 @@ Wraps httpx.Client with:
 - HTTP status → exception mapping (401→AuthError, 404→NotFoundError, 422→ValidationError, 429→RateLimitError)
 - Context manager support (`with ParticleHTTPClient(settings) as client:`)
 
-### PHI/PII Redaction (`core/logging.py`)
+### PHI/PII Redaction (`core/logging.py:88`)
 structlog processor that redacts sensitive health information from all logs for HIPAA compliance. Redacts: names, SSN, DOB, addresses, phone numbers, email addresses.
 
-### Exception Hierarchy (`core/exceptions.py`)
+### Exception Hierarchy (`core/exceptions.py:6-87`)
 ```
-ParticleError (base)
-├── ParticleAuthError (401, 403)
-├── ParticleAPIError (general, includes status_code + response_body)
-│   ├── ParticleNotFoundError (404)
-│   ├── ParticleValidationError (422, includes errors list)
-│   └── ParticleRateLimitError (429, includes retry_after)
-├── ParticleQueryTimeoutError (polling timeout)
-└── ParticleQueryFailedError (query status = FAILED)
+ParticleError (base)                                    :6
+├── ParticleAuthError (401, 403)                        :15
+├── ParticleAPIError (general, status_code + response_body) :22
+│   ├── ParticleNotFoundError (404)                     :57
+│   ├── ParticleValidationError (422, errors list)      :36
+│   └── ParticleRateLimitError (429, retry_after)       :44
+├── ParticleQueryTimeoutError (polling timeout)         :67
+└── ParticleQueryFailedError (query status = FAILED)    :77
 ```
 
 ## Patient Module
 
-### PatientService (`patient/service.py`)
-Single method: `register(patient: PatientRegistration) -> PatientResponse`
+### PatientService (`patient/service.py:33`)
+Single method: `register(patient: PatientRegistration) -> PatientResponse` (`:44`)
 
 ### PatientRegistration model
 Pydantic model with validators:
@@ -83,13 +83,13 @@ Pydantic model with validators:
 
 ## Query Module
 
-### QueryService (`query/service.py`)
-- `submit_query(patient_id, purpose_of_use=TREATMENT) -> QuerySubmitResponse`
-- `get_query_status(patient_id) -> QueryResponse`
-- `wait_for_query_complete(patient_id, timeout=300, poll_interval=5, max_interval=30) -> QueryResponse`
-- `get_flat(patient_id) -> dict`
-- `get_ccda(patient_id) -> bytes`
-- `get_fhir(patient_id) -> dict`
+### QueryService (`query/service.py:37`)
+- `submit_query(patient_id, purpose_of_use=TREATMENT) -> QuerySubmitResponse` (`:48`)
+- `get_query_status(patient_id) -> QueryResponse` (`:70`)
+- `wait_for_query_complete(patient_id, timeout=300, poll_interval=5, max_interval=30) -> QueryResponse` (`:85`)
+- `get_flat(patient_id) -> dict` (`:185`)
+- `get_ccda(patient_id) -> bytes` (`:139`)
+- `get_fhir(patient_id) -> dict` (`:168`)
 
 ### QueryStatus enum
 `PENDING → PROCESSING → COMPLETE | PARTIAL | FAILED`
@@ -99,13 +99,13 @@ Pydantic model with validators:
 
 ## Document Module (Bi-Directionality)
 
-### DocumentService (`document/service.py`)
+### DocumentService (`document/service.py:19`)
 Full document lifecycle for bi-directional data exchange:
 
-- `submit(document: DocumentSubmission, file_content: bytes) -> DocumentResponse` — Upload a clinical document (multipart: metadata JSON + file bytes)
-- `get(document_id: str) -> DocumentMetadata` — Retrieve metadata for a submitted document (verify upload)
-- `delete(document_id: str) -> str` — Delete a document (returns "delete successful")
-- `list_by_patient(patient_id: str) -> list[DocumentMetadata]` — List all documents for a patient
+- `submit(document: DocumentSubmission, file_content: bytes) -> DocumentResponse` (`:30`) — Upload a clinical document (multipart: metadata JSON + file bytes)
+- `get(document_id: str) -> DocumentMetadata` (`:65`) — Retrieve metadata for a submitted document (verify upload)
+- `delete(document_id: str) -> str` (`:85`) — Delete a document (returns "delete successful")
+- `list_by_patient(patient_id: str) -> list[DocumentMetadata]` (`:106`) — List all documents for a patient
 
 Uses `/api/v1/documents` endpoints (v1, not v2). The `patient_id` is your external ID, not the Particle UUID.
 
@@ -113,13 +113,13 @@ See `13-bidirectionality.md` for complete documentation including code value set
 
 ## Signal Module
 
-### SignalService (`signal/service.py`)
-- `subscribe(particle_patient_id, subscription_type=MONITORING) -> SubscribeResponse` — POST /api/v1/patients/{id}/subscriptions
-- `trigger_sandbox_workflow(particle_patient_id, workflow, callback_url, display_name="Test", event_type=None) -> dict` — POST /api/v1/patients/{id}/subscriptions/trigger-sandbox-workflow
-- `register_referral_organizations(organizations: list[ReferralOrganization]) -> dict` — POST /api/v1/referrals/organizations/registered
-- `get_hl7v2_message(message_id) -> dict` — GET /hl7v2/{id}
-- `get_flat_transitions(particle_patient_id) -> dict` — GET /api/v2/patients/{id}/flat?TRANSITIONS (returns `{}` on 404)
-- `parse_webhook_notification(payload) -> WebhookNotification` — Static method, validates CloudEvents payload
+### SignalService (`signal/service.py:43`)
+- `subscribe(particle_patient_id, subscription_type=MONITORING) -> SubscribeResponse` (`:54`) — POST /api/v1/patients/{id}/subscriptions
+- `trigger_sandbox_workflow(particle_patient_id, workflow, callback_url, display_name="Test", event_type=None) -> dict` (`:89`) — POST /api/v1/patients/{id}/subscriptions/trigger-sandbox-workflow
+- `register_referral_organizations(organizations: list[ReferralOrganization]) -> dict` (`:133`) — POST /api/v1/referrals/organizations/registered
+- `get_hl7v2_message(message_id) -> dict` (`:160`) — GET /hl7v2/{id}
+- `get_flat_transitions(particle_patient_id) -> dict` (`:174`) — GET /api/v2/patients/{id}/flat?TRANSITIONS (returns `{}` on 404)
+- `parse_webhook_notification(payload) -> WebhookNotification` (`:195`) — Static method, validates CloudEvents payload
 
 ### SubscriptionType enum
 `MONITORING`
@@ -136,60 +136,39 @@ See `13-bidirectionality.md` for complete documentation including code value set
 - `get_flat_transitions()` returns `{}` on 404 (no transitions yet)
 - Webhook notifications use **CloudEvents 1.0** format with `type: "com.particlehealth.api.v2.transitionalerts"`
 
-## Usage Pattern
+## Usage Patterns
 
+**End-to-end query flow** (register → query → poll → retrieve):
+See `particle-api-quickstarts/workflows/hello_particle.py:105` — `main()` function
+
+**Signal lifecycle** (register → subscribe → trigger → retrieve transitions):
+See `particle-api-quickstarts/workflows/signal_end_to_end.py:91` — `main()` function
+
+**Webhook receiver** (local HTTP server for CloudEvents):
+See `particle-api-quickstarts/workflows/signal_webhook_receiver.py:30` — `WebhookHandler` class
+
+**Document lifecycle** (submit → verify → list → delete):
+See `particle-api-quickstarts/workflows/manage_documents.py`
+
+**Minimal pattern** (no workflow scripts):
 ```python
 from particle.core import ParticleSettings, ParticleHTTPClient
 from particle.patient import PatientService, PatientRegistration, Gender
 from particle.query import QueryService
 
 settings = ParticleSettings()  # loads from .env
-
 with ParticleHTTPClient(settings) as client:
-    # Register patient
     patient_svc = PatientService(client)
     response = patient_svc.register(PatientRegistration(
-        given_name="Kam", family_name="Quark",
-        date_of_birth="1954-12-01", gender=Gender.MALE,
-        postal_code="11111", address_city="Brooklyn",
-        address_state="NY",
+        given_name="Jane", family_name="Doe",
+        date_of_birth="1980-01-15", gender=Gender.FEMALE,
+        postal_code="02215", address_city="Boston",
+        address_state="MA", patient_id="my-external-id",
     ))
-
-    # Query clinical data
     query_svc = QueryService(client)
     query_svc.submit_query(response.particle_patient_id)
     result = query_svc.wait_for_query_complete(response.particle_patient_id)
-
-    # Retrieve data
     flat_data = query_svc.get_flat(response.particle_patient_id)
-```
-
-### Signal Usage Pattern
-
-```python
-from particle.core import ParticleSettings, ParticleHTTPClient
-from particle.patient import PatientService, PatientRegistration, Gender
-from particle.signal import SignalService, WorkflowType
-
-settings = ParticleSettings()
-
-with ParticleHTTPClient(settings) as client:
-    # Register + subscribe
-    patient_svc = PatientService(client)
-    response = patient_svc.register(PatientRegistration(...))
-
-    signal_svc = SignalService(client)
-    sub = signal_svc.subscribe(response.particle_patient_id)
-
-    # Trigger sandbox alert
-    signal_svc.trigger_sandbox_workflow(
-        response.particle_patient_id,
-        workflow=WorkflowType.ADMIT_TRANSITION_ALERT,
-        callback_url="https://your-webhook.example.com/webhook",
-    )
-
-    # Retrieve transition data
-    transitions = signal_svc.get_flat_transitions(response.particle_patient_id)
 ```
 
 ## Workflow Scripts

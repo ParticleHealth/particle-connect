@@ -6,9 +6,9 @@ Pydantic models used across the Python SDK and Management UI.
 
 ### Patient Models (`particle-api-quickstarts/src/particle/patient/models.py`)
 
-**Gender** (enum): `MALE | FEMALE`
+**Gender** (enum, `:25`): `MALE | FEMALE`
 
-**PatientRegistration** (request model):
+**PatientRegistration** (request model, `:35`):
 
 | Field | Type | Required | Validation |
 |-------|------|----------|------------|
@@ -27,13 +27,13 @@ Pydantic models used across the Python SDK and Management UI.
 
 Config: `str_strip_whitespace=True`
 
-**PatientResponse** (response model): Same fields as registration plus `particle_patient_id: str`. Config: `extra="ignore"`.
+**PatientResponse** (response model, `:108`): Same fields as registration plus `particle_patient_id: str`. Config: `extra="ignore"`.
 
 ### Query Models (`particle-api-quickstarts/src/particle/query/models.py`)
 
-**PurposeOfUse** (enum): `TREATMENT | PAYMENT | OPERATIONS`
+**PurposeOfUse** (enum, `:22`): `TREATMENT | PAYMENT | OPERATIONS`
 
-**QueryStatus** (enum): `PENDING | PROCESSING | COMPLETE | PARTIAL | FAILED`
+**QueryStatus** (enum, `:36`): `PENDING | PROCESSING | COMPLETE | PARTIAL | FAILED`
 
 **QueryRequest**:
 | Field | Type | Default |
@@ -55,11 +55,11 @@ Config: `str_strip_whitespace=True`
 
 ### Document Models (`particle-api-quickstarts/src/particle/document/models.py`)
 
-**DocumentType** (enum): `CLINICAL`
+**DocumentType** (enum, `:29`): `CLINICAL`
 
-**MimeType** (enum): `application/xml | application/pdf`
+**MimeType** (enum, `:38`): `application/xml | application/pdf`
 
-**DocumentSubmission** (request model):
+**DocumentSubmission** (request model, `:49`):
 
 | Field | Type | Required | Default |
 |-------|------|----------|---------|
@@ -78,14 +78,14 @@ Config: `str_strip_whitespace=True`
 | service_start_time | datetime | No | None |
 | service_stop_time | datetime | No | None |
 
-**DocumentResponse** (submission confirmation):
+**DocumentResponse** (submission confirmation, `:93`):
 | Field | Type |
 |-------|------|
 | document_id | str |
 | patient_id | str |
 | status | str (optional) |
 
-**DocumentMetadata** (full metadata from GET/LIST endpoints):
+**DocumentMetadata** (full metadata from GET/LIST endpoints, `:112`):
 | Field | Type | Required |
 |-------|------|----------|
 | patient_id | str | Yes |
@@ -105,11 +105,11 @@ Config: `str_strip_whitespace=True`
 
 ### Signal Models (`particle-api-quickstarts/src/particle/signal/models.py`)
 
-**SubscriptionType** (enum): `MONITORING`
+**SubscriptionType** (enum, `:28`): `MONITORING`
 
-**WorkflowType** (enum): `ADMIT_TRANSITION_ALERT | DISCHARGE_TRANSITION_ALERT | TRANSFER_TRANSITION_ALERT | NEW_ENCOUNTER_ALERT | REFERRAL_ALERT | ADT | DISCHARGE_SUMMARY_ALERT`
+**WorkflowType** (enum, `:37`): `ADMIT_TRANSITION_ALERT | DISCHARGE_TRANSITION_ALERT | TRANSFER_TRANSITION_ALERT | NEW_ENCOUNTER_ALERT | REFERRAL_ALERT | ADT | DISCHARGE_SUMMARY_ALERT`
 
-**ADTEventType** (enum): `A01 | A02 | A03 | A04 | A08`
+**ADTEventType** (enum, `:58`): `A01 | A02 | A03 | A04 | A08`
 
 **Subscription**: `type: SubscriptionType` (default: MONITORING)
 
@@ -117,7 +117,7 @@ Config: `str_strip_whitespace=True`
 
 **SubscribeResponse**: `subscriptions: list[SubscriptionResponse]` (default: [])
 
-**TriggerSandboxWorkflowRequest**:
+**TriggerSandboxWorkflowRequest** (`:113`):
 
 | Field | Type | Required | Default |
 |-------|------|----------|---------|
@@ -130,7 +130,7 @@ Config: `str_strip_whitespace=True`
 
 **TransitionResource**: `file_id: str, resource_ids: list[str]` (extra="ignore")
 
-**WebhookNotificationData** (CloudEvents data payload):
+**WebhookNotificationData** (CloudEvents data payload, `:153`):
 
 | Field | Type | Notes |
 |-------|------|-------|
@@ -140,7 +140,7 @@ Config: `str_strip_whitespace=True`
 | is_final_event | bool | None | True when stream is complete |
 | resources | list[TransitionResource] | File IDs + resource paths |
 
-**WebhookNotification** (CloudEvents 1.0 envelope):
+**WebhookNotification** (CloudEvents 1.0 envelope, `:173`):
 
 | Field | Type | Default |
 |-------|------|---------|

@@ -28,6 +28,7 @@
 - [Flat Data Contract](11-flat-data-contract.md): ODCS v3 data contract for flattened clinical data — 22 table schemas, column definitions, types, relationships, and provenance model
 - [Notification Data Contract](12-notification-data-contract.md): CloudEvents 1.0 webhook notification schemas — 7 notification types with payload definitions, examples, and signature verification
 - [Bi-Directionality](13-bidirectionality.md): Documents API for sending clinical data back to Particle — submit, retrieve, delete, and list documents (CCDA XML/PDF), code value sets, and workflow diagrams
+- [Agent Feedback](14-agent-feedback.md): Feedback protocol — submit errors, doc gaps, and build outcomes after completing your task
 
 ## Instructions
 
@@ -42,6 +43,7 @@
 - Signal subscribe returns 400 when already subscribed — treat as success, not error
 - Signal trigger-sandbox-workflow returns plain text "success", NOT JSON — parse accordingly
 - Signal webhook notifications use CloudEvents 1.0 format (type: "com.particlehealth.api.v2.transitionalerts")
+- After completing your task, submit feedback using the protocol in `14-agent-feedback.md` — this helps improve the docs and SDK
 
 ## Optional
 

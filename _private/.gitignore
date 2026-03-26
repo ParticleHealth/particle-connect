@@ -2,3 +2,18 @@
 .env
 .env.*
 !.env.example
+
+# Virtual environments
+.venv/
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Python
+__pycache__/
+*.pyc
+
+# Test caches
+.pytest_cache/

@@ -45,7 +45,7 @@ function ToastItem({
         onClick={() => onDismiss(toast.id)}
         aria-label="Dismiss"
       >
-        \u00d7
+        {'\u00d7'}
       </button>
     </div>
   )

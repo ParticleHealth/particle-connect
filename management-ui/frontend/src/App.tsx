@@ -67,11 +67,12 @@ function App() {
         if (cancelled) return
         setEnvironment(result.environment)
         setConnected(true)
-      } catch {
+      } catch (err) {
         if (cancelled) return
+        const detail = err instanceof Error ? err.message : String(err)
         addToast({
           type: 'error',
-          text: 'Failed to connect — check PARTICLE_CLIENT_ID and PARTICLE_CLIENT_SECRET in .env',
+          text: `Failed to connect: ${detail}. Check the PARTICLE_*_CLIENT_ID / PARTICLE_*_CLIENT_SECRET pair for the active environment in .env.`,
         })
       }
     }
@@ -98,6 +99,7 @@ function App() {
         environment={environment}
         onNavigate={handleNavigate}
         onEnvironmentChange={handleEnvironmentChange}
+        onToast={addToast}
       />
       <main className={styles.main}>
         {view.page === 'dashboard' && (

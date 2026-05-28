@@ -13,8 +13,10 @@ ENVIRONMENTS = {
 
 
 class Settings(BaseSettings):
-    particle_client_id: str = ""
-    particle_client_secret: str = ""
+    particle_sandbox_client_id: str = ""
+    particle_sandbox_client_secret: str = ""
+    particle_prod_client_id: str = ""
+    particle_prod_client_secret: str = ""
     particle_env: str = "sandbox"
     particle_timeout: int = 30
     cors_origins: list[str] = [
@@ -23,6 +25,11 @@ class Settings(BaseSettings):
     ]
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+
+    def credentials_for(self, env: str) -> tuple[str, str]:
+        if env == "production":
+            return self.particle_prod_client_id, self.particle_prod_client_secret
+        return self.particle_sandbox_client_id, self.particle_sandbox_client_secret
 
     @property
     def particle_auth_url(self) -> str:

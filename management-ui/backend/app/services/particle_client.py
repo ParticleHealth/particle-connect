@@ -49,8 +49,6 @@ class ParticleClient:
     """
 
     _token: _TokenState = field(default_factory=_TokenState)
-    _client_id: str = ""
-    _client_secret: str = ""
     _environment: str = "sandbox"
     _http: httpx.AsyncClient = field(init=False)
     _auth_http: httpx.AsyncClient = field(init=False)
@@ -82,13 +80,14 @@ class ParticleClient:
             headers={"client-id": client_id, "client-secret": client_secret},
         )
         if resp.status_code != 200:
-            body = resp.text
+            body = resp.text.strip()
             logger.warning(
                 "Authentication failed: status=%d body=%s", resp.status_code, body
             )
-            raise ParticleAuthError(
-                f"Authentication failed ({resp.status_code}): {body}"
-            )
+            message = f"Authentication failed ({resp.status_code})"
+            if body:
+                message = f"{message}: {body}"
+            raise ParticleAuthError(message)
 
         # Particle returns URL-encoded form data, not JSON
         raw = resp.text
@@ -101,8 +100,6 @@ class ParticleClient:
         access_token = data.get("access_token", "")
         expires_in = int(data.get("expires_in", 3600))
 
-        self._client_id = client_id
-        self._client_secret = client_secret
         self._token = _TokenState(
             access_token=access_token,
             obtained_at=time.time(),
@@ -112,26 +109,36 @@ class ParticleClient:
         return {"access_token": access_token, "expires_in": expires_in}
 
     async def connect(self) -> dict:
-        """Authenticate using credentials from environment variables."""
-        if not settings.particle_client_id or not settings.particle_client_secret:
+        """Authenticate using credentials for the currently active environment."""
+        client_id, client_secret = settings.credentials_for(self._environment)
+        if not client_id or not client_secret:
             raise ParticleAuthError(
-                "PARTICLE_CLIENT_ID and PARTICLE_CLIENT_SECRET must be set in .env"
+                f"Missing credentials for {self._environment}: set "
+                f"PARTICLE_{'PROD' if self._environment == 'production' else 'SANDBOX'}_CLIENT_ID "
+                f"and _CLIENT_SECRET in .env"
             )
-        return await self.authenticate(
-            settings.particle_client_id, settings.particle_client_secret
-        )
+        return await self.authenticate(client_id, client_secret)
 
     async def switch_environment(self, env: str) -> dict:
-        """Switch between sandbox and production, then re-authenticate."""
+        """Switch between sandbox and production, then re-authenticate.
+
+        Atomic: if authentication against the new environment fails, the
+        previous environment, clients, and token are restored so the caller
+        is not left in a half-switched state.
+        """
         if env not in ENVIRONMENTS:
             raise ValueError(f"Unknown environment: {env}. Must be 'sandbox' or 'production'.")
 
+        if env == self._environment:
+            return await self.connect()
+
+        previous_env = self._environment
+        previous_http = self._http
+        previous_auth_http = self._auth_http
+        previous_token = self._token
+
         urls = ENVIRONMENTS[env]
         self._environment = env
-
-        # Close old clients and create new ones with updated base URLs
-        await self._http.aclose()
-        await self._auth_http.aclose()
         self._http = httpx.AsyncClient(
             base_url=urls["base_url"],
             timeout=httpx.Timeout(settings.particle_timeout),
@@ -140,21 +147,31 @@ class ParticleClient:
             base_url=urls["auth_url"],
             timeout=httpx.Timeout(settings.particle_timeout),
         )
-
-        # Clear existing token and re-authenticate
         self._token = _TokenState()
-        return await self.connect()
+
+        try:
+            result = await self.connect()
+        except Exception:
+            # Roll back to previous environment so state stays consistent
+            await self._http.aclose()
+            await self._auth_http.aclose()
+            self._environment = previous_env
+            self._http = previous_http
+            self._auth_http = previous_auth_http
+            self._token = previous_token
+            raise
+
+        # Switch committed — discard the old clients
+        await previous_http.aclose()
+        await previous_auth_http.aclose()
+        return result
 
     async def _ensure_token(self):
         """Re-authenticate if the token is expired or close to expiry."""
         if self._token.is_valid:
             return
-        if not self._client_id:
-            raise ParticleAuthError(
-                "Not authenticated. Call POST /api/auth/connect first."
-            )
         logger.info("Token expired or near expiry, re-authenticating")
-        await self.authenticate(self._client_id, self._client_secret)
+        await self.connect()
 
     async def request(
         self, method: str, path: str, *, json: dict | None = None
@@ -193,10 +210,8 @@ class ParticleClient:
         await self._auth_http.aclose()
 
     def clear_auth(self):
-        """Clear cached credentials and token."""
+        """Clear cached token (credentials remain available from settings)."""
         self._token = _TokenState()
-        self._client_id = ""
-        self._client_secret = ""
 
 
 # Module-level singleton shared across the app

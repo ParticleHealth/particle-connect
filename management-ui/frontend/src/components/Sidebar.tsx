@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { switchEnvironment } from '../api/client.ts'
 import type { Environment } from '../api/client.ts'
+import type { ToastMessage } from './Toast.tsx'
 import styles from './Sidebar.module.css'
 
 export type Page = 'dashboard' | 'projects' | 'service-accounts' | 'notifications'
@@ -10,6 +11,7 @@ interface Props {
   environment: Environment
   onNavigate: (page: Page) => void
   onEnvironmentChange: (env: Environment) => void
+  onToast: (toast: Omit<ToastMessage, 'id'>) => void
 }
 
 const NAV_ITEMS: { page: Page; label: string; icon: string }[] = [
@@ -19,7 +21,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: string }[] = [
   { page: 'notifications', label: 'Notifications', icon: '\u2709' },
 ]
 
-export default function Sidebar({ activePage, environment, onNavigate, onEnvironmentChange }: Props) {
+export default function Sidebar({ activePage, environment, onNavigate, onEnvironmentChange, onToast }: Props) {
   const [switching, setSwitching] = useState(false)
 
   async function handleSwitch(env: Environment) {
@@ -28,8 +30,12 @@ export default function Sidebar({ activePage, environment, onNavigate, onEnviron
     try {
       const result = await switchEnvironment(env)
       onEnvironmentChange(result.environment)
-    } catch {
-      // stay on current environment
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err)
+      onToast({
+        type: 'error',
+        text: `Could not switch to ${env}: ${detail}. Staying on ${environment}.`,
+      })
     } finally {
       setSwitching(false)
     }

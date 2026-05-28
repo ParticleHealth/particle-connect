@@ -26,15 +26,19 @@ async def lifespan(app: FastAPI):
         settings.cors_origins,
     )
 
-    # Auto-connect using .env credentials on startup
-    if settings.particle_client_id and settings.particle_client_secret:
+    # Auto-connect using .env credentials for the active environment
+    client_id, client_secret = settings.credentials_for(settings.particle_env)
+    if client_id and client_secret:
         try:
             await particle_client.connect()
             logger.info("Auto-connected to Particle (%s)", settings.particle_env)
         except Exception:
             logger.warning("Auto-connect failed — credentials may be invalid")
     else:
-        logger.info("No credentials in .env — skipping auto-connect")
+        logger.info(
+            "No credentials in .env for %s — skipping auto-connect",
+            settings.particle_env,
+        )
 
     yield
     logger.info("Shutting down management-ui backend")

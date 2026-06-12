@@ -4,3 +4,4 @@ httpx==0.27.0
 pydantic==2.9.0
 pydantic-settings==2.5.0
 python-dotenv==1.2.2
+anyascii>=0.3.0

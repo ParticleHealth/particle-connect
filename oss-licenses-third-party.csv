@@ -1,0 +1,284 @@
+package_name,version,license_type,source_project
+ai-trackdown-pytools,1.5.11,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+anyascii,0.3.2,ISC License (ISCL),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiofiles,25.1.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiohappyeyeballs,2.6.1,Python Software Foundation License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiohttp,3.13.2,Apache-2.0 AND MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiohttp-cors,0.7.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiosignal,1.4.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+aiosqlite,0.20.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+alembic,1.13.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+altair,6.0.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+annotated-doc,0.0.4,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+annotated-types,0.6.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+anthropic,0.75.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+anyio,4.12.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+appnope,0.1.4,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+apprise,1.7.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+asgi-lifespan,2.1.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+asttokens,2.4.1,Apache 2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+async-timeout,4.0.3,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+asyncpg,0.29.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+attrs,23.2.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Authlib,1.6.6,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+backoff,2.2.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+backports.tarfile,1.2.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+bcrypt,5.0.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+bidict,0.23.1,Mozilla Public License 2.0 (MPL 2.0),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+blinker,1.9.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+build,1.3.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+CacheControl,0.14.4,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+cachetools,5.3.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+certifi,2024.2.2,Mozilla Public License 2.0 (MPL 2.0),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+cffi,1.16.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+charset-normalizer,3.3.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+chromadb,1.4.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+cleo,2.1.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+click,8.1.7,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+click-didyoumean,0.3.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+cloudpickle,3.0.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+colorama,0.4.6,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+coloredlogs,15.0.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+comm,0.2.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+coolname,2.2.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+crashtest,0.4.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+croniter,2.0.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+cryptography,42.0.5,Apache Software License; BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+dateparser,1.2.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+debugpy,1.8.17,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+decorator,5.2.1,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+devtools,0.12.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+distlib,0.4.0,Python Software Foundation License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+distro,1.9.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+dnspython,2.6.1,ISC,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+docker,6.1.3,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+docstring_parser,0.17.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+dulwich,0.24.10,Apache-2.0 OR GPL-2.0-or-later,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+email_validator,2.1.1,The Unlicense (Unlicense),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+et_xmlfile,2.0.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+executing,2.0.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+fastapi,0.128.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+fastjsonschema,2.21.2,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+filelock,3.20.1,Unlicense,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+findpython,0.7.1,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Flask,3.1.2,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+flask-cors,6.0.2,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+flatbuffers,25.12.19,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+frozenlist,1.8.0,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+fsspec,2024.2.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+gitdb,4.0.12,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+GitPython,3.1.45,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-api-core,2.28.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-auth,2.28.2,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-appengine-logging,1.7.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-audit-log,0.4.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-bigquery,3.39.0,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-core,2.5.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-logging,3.13.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-monitoring,2.29.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-spanner,3.63.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-cloud-storage,3.7.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-crc32c,1.8.0,UNKNOWN,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+google-resumable-media,2.8.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+googleapis-common-protos,1.72.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+graphviz,0.20.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+greenlet,3.0.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+griffe,0.41.3,ISC,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+grpc-google-iam-v1,0.14.3,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+grpc-interceptor,0.15.4,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+grpcio,1.76.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+grpcio-status,1.76.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+h11,0.14.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+h2,4.1.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+hf-xet,1.2.0,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+hpack,4.0.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+httpcore,1.0.4,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+httptools,0.7.1,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+httpx,0.28.1,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+httpx-sse,0.4.3,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+huggingface-hub,0.36.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+humanfriendly,10.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+hyperframe,6.0.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+idna,3.6,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ijson,3.4.0.post0,BSD-3-Clause AND ISC,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+importlib_metadata,8.7.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+importlib_resources,6.5.2,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+iniconfig,2.0.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+installer,0.7.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ipykernel,7.1.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ipython,9.7.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ipython_pygments_lexers,1.1.1,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+itsdangerous,2.2.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jaraco.classes,3.4.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jaraco.context,6.0.2,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jaraco.functools,4.4.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jedi,0.19.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Jinja2,3.1.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jiter,0.12.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+joblib,1.5.3,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jsonpatch,1.33,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jsonpointer,2.4,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jsonschema,4.21.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jsonschema-specifications,2023.12.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jupyter_client,8.6.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+jupyter_core,5.9.1,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+keyring,25.7.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+kubernetes,29.0.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+kuzu,0.11.3,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+kuzu-memory,1.6.10,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+loguru,0.7.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+lxml,5.1.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Mako,1.3.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Markdown,3.5.2,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+markdown-it-py,3.0.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+MarkupSafe,2.1.5,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+matplotlib-inline,0.2.1,UNKNOWN,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mcp,1.25.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mcp-vector-search,1.1.22,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mdurl,0.1.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mistune,3.1.4,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mmh3,5.2.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+more-itertools,10.8.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+mpmath,1.3.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+msgpack,1.1.2,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+multidict,6.7.0,Apache License 2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+narwhals,2.14.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+nest-asyncio,1.6.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+networkx,3.6.1,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+numpy,2.3.5,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+oauthlib,3.2.2,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+onnxruntime,1.23.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+openpyxl,3.1.5,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-api,1.39.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-exporter-otlp-proto-common,1.39.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-exporter-otlp-proto-grpc,1.39.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-proto,1.39.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-resourcedetector-gcp,1.11.0a0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-sdk,1.39.1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+opentelemetry-semantic-conventions,0.60b1,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+orjson,3.9.15,Apache Software License; MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+overrides,7.7.0,"Apache License, Version 2.0",management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+packaging,25.0,Apache Software License; BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pandas,2.3.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+parso,0.8.5,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pathspec,0.12.1,Mozilla Public License 2.0 (MPL 2.0),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pbs-installer,2025.12.17,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pendulum,2.1.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pexpect,4.9.0,ISC License (ISCL),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pillow,12.0.0,MIT-CMU,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pkginfo,1.12.1.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+platformdirs,4.5.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pluggy,1.3.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+poetry,2.2.1,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+poetry-core,2.2.1,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+polars,1.36.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+polars-runtime-32,1.36.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+posthog,5.4.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+prefect,2.16.3,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+prompt_toolkit,3.0.52,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+propcache,0.4.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+proto-plus,1.27.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+protobuf,6.33.2,3-Clause BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+psutil,7.1.3,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ptyprocess,0.7.0,ISC License (ISCL),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pure_eval,0.2.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+py-mcp-installer,0.1.5,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+py4j,0.10.9.7,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyarrow,22.0.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyasn1,0.5.1,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyasn1-modules,0.3.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pybase64,1.4.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pycparser,2.21,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pydantic,2.12.5,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pydantic-settings,2.12.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pydantic_core,2.41.5,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pydeck,0.9.1,Apache License 2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyee,13.0.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Pygments,2.17.2,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+PyJWT,2.10.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+PyPika,0.50.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyproject_hooks,1.2.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyspark,3.5.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pytest,7.4.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-dateutil,2.9.0.post0,Apache Software License; BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-dotenv,1.2.1,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-engineio,4.12.3,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-frontmatter,1.1.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-multipart,0.0.9,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-slugify,8.0.4,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+python-socketio,5.15.1,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pytz,2024.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pytzdata,2020.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+PyYAML,6.0.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+pyzmq,27.1.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+questionary,2.1.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+RapidFuzz,3.14.3,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+react,19.2.4,MIT,management-ui/frontend
+react-dom,19.2.4,MIT,management-ui/frontend
+readchar,4.0.5,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+referencing,0.33.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+regex,2023.12.25,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+requests,2.31.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+requests-oauthlib,1.3.1,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+requests-toolbelt,1.0.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+rfc3339-validator,0.1.4,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+rich,13.7.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+rpds-py,0.18.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+rsa,4.9,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ruamel.yaml,0.18.6,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ruamel.yaml.clib,0.2.8,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+safetensors,0.7.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+scheduler,0.27.0,MIT,management-ui/frontend
+scikit-learn,1.8.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+scipy,1.17.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+sentence-transformers,5.2.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+shellingham,1.5.4,ISC License (ISCL),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+simple-websocket,1.1.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+six,1.16.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+smmap,5.0.2,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+sniffio,1.3.1,Apache Software License; MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+SQLAlchemy,2.0.28,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+sqlparse,0.5.5,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+sse-starlette,3.0.4,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+stack-data,0.6.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+starlette,0.50.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+streamlit,1.52.1,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+sympy,1.14.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tabulate2,1.10.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tenacity,9.1.2,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+threadpoolctl,3.6.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tokenizers,0.22.2,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+toml,0.10.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tomli_w,1.2.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tomlkit,0.13.3,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+torch,2.9.1,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tornado,6.5.2,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tqdm,4.67.1,MIT License; Mozilla Public License 2.0 (MPL 2.0),management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+traitlets,5.14.3,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+transformers,4.57.6,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tree-sitter,0.25.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tree-sitter-c-sharp,0.23.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tree-sitter-embedded-template,0.25.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tree-sitter-language-pack,0.13.0,MIT OR Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tree-sitter-yaml,0.7.2,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+trove-classifiers,2025.12.1.14,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+typer,0.9.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+typing-inspection,0.4.2,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+typing_extensions,4.15.0,PSF-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tzdata,2025.3,Apache-2.0,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+tzlocal,5.2,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+ujson,5.9.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+urllib3,2.6.2,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+uvicorn,0.40.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+uvloop,0.22.1,Apache Software License; MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+virtualenv,20.35.4,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+watchdog,6.0.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+watchfiles,1.1.1,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+websocket-client,1.7.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+websockets,12.0,BSD License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+Werkzeug,3.1.4,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+wsproto,1.2.0,MIT License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+xattr,1.3.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+yarl,1.22.0,Apache Software License,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+zipp,3.23.0,MIT,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts
+zstandard,0.25.0,BSD-3-Clause,management-ui/backend; particle-analytics-quickstarts; particle-api-quickstarts

@@ -12,6 +12,7 @@ dependencies = [
     "rich>=13.0.0",
     "typer>=0.21.0",
     "python-dotenv>=1.0.0",
+    "anyascii>=0.3.0",
 ]
 
 [project.scripts]

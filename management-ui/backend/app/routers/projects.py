@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -76,7 +77,9 @@ async def create_project(body: CreateProjectRequest):
 async def get_project(project_id: str):
     """Get project details."""
     try:
-        return await particle_client.request("GET", f"/v1/projects/{project_id}")
+        return await particle_client.request(
+            "GET", f"/v1/projects/{quote(project_id, safe='')}"
+        )
     except Exception as exc:
         _handle_error(exc)
 
@@ -89,7 +92,7 @@ async def update_project(project_id: str, body: UpdateProjectRequest):
         payload["address"] = body.address.model_dump(exclude_none=True)
     try:
         return await particle_client.request(
-            "PATCH", f"/v1/projects/{project_id}", json=payload
+            "PATCH", f"/v1/projects/{quote(project_id, safe='')}", json=payload
         )
     except Exception as exc:
         _handle_error(exc)

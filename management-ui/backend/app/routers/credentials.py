@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -38,7 +39,7 @@ async def create_credential(account_id: str, body: CreateCredentialRequest | Non
     try:
         return await particle_client.request(
             "POST",
-            f"/v1/serviceaccounts/{account_id}/credentials",
+            f"/v1/serviceaccounts/{quote(account_id, safe='')}/credentials",
             json=payload,
         )
     except Exception as exc:
@@ -50,7 +51,7 @@ async def list_credentials(account_id: str):
     """List credentials for a service account."""
     try:
         return await particle_client.request(
-            "GET", f"/v1/serviceaccounts/{account_id}/credentials"
+            "GET", f"/v1/serviceaccounts/{quote(account_id, safe='')}/credentials"
         )
     except ParticleAPIError as exc:
         if exc.status_code in (405, 501):
@@ -67,7 +68,8 @@ async def delete_credential(account_id: str, credential_id: str):
     try:
         await particle_client.request(
             "DELETE",
-            f"/v1/serviceaccounts/{account_id}/credentials/{credential_id}",
+            f"/v1/serviceaccounts/{quote(account_id, safe='')}"
+            f"/credentials/{quote(credential_id, safe='')}",
         )
     except Exception as exc:
         _handle_error(exc)

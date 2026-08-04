@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -63,7 +64,7 @@ async def get_service_account(account_id: str):
     """Get service account details."""
     try:
         return await particle_client.request(
-            "GET", f"/v1/serviceaccounts/{account_id}"
+            "GET", f"/v1/serviceaccounts/{quote(account_id, safe='')}"
         )
     except Exception as exc:
         _handle_error(exc)
@@ -78,7 +79,7 @@ async def set_policy(account_id: str, body: SetPolicyRequest):
     try:
         return await particle_client.request(
             "POST",
-            f"/v1/serviceaccounts/{account_id}:setPolicy",
+            f"/v1/serviceaccounts/{quote(account_id, safe='')}:setPolicy",
             json=payload,
         )
     except Exception as exc:
@@ -90,7 +91,7 @@ async def get_policy(account_id: str):
     """Get IAM policy for a service account."""
     try:
         return await particle_client.request(
-            "GET", f"/v1/serviceaccounts/{account_id}:getPolicy"
+            "GET", f"/v1/serviceaccounts/{quote(account_id, safe='')}:getPolicy"
         )
     except Exception as exc:
         _handle_error(exc)

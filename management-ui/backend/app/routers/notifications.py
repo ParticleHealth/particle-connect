@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -49,7 +50,7 @@ async def get_notification(notification_id: str):
     """Get a single notification."""
     try:
         return await particle_client.request(
-            "GET", f"/v1/notifications/{notification_id}"
+            "GET", f"/v1/notifications/{quote(notification_id, safe='')}"
         )
     except Exception as exc:
         _handle_error(exc)
@@ -81,7 +82,8 @@ async def update_notification(notification_id: str, body: UpdateNotificationRequ
     try:
         return await particle_client.request(
             "PATCH",
-            f"/v1/notifications/{notification_id}?update_mask={update_mask}",
+            f"/v1/notifications/{quote(notification_id, safe='')}",
+            params={"update_mask": update_mask},
             json=payload,
         )
     except Exception as exc:
@@ -93,7 +95,7 @@ async def delete_notification(notification_id: str):
     """Delete a notification config."""
     try:
         await particle_client.request(
-            "DELETE", f"/v1/notifications/{notification_id}"
+            "DELETE", f"/v1/notifications/{quote(notification_id, safe='')}"
         )
     except Exception as exc:
         _handle_error(exc)
@@ -112,7 +114,7 @@ async def create_signature_key(notification_id: str, body: CreateSignatureKeyReq
     try:
         return await particle_client.request(
             "POST",
-            f"/v1/notifications/{notification_id}/signaturekeys",
+            f"/v1/notifications/{quote(notification_id, safe='')}/signaturekeys",
             json={"signature_key": {"signature_key": body.signature_key}},
         )
     except Exception as exc:
@@ -125,7 +127,8 @@ async def get_signature_key(notification_id: str, key_id: str):
     try:
         return await particle_client.request(
             "GET",
-            f"/v1/notifications/{notification_id}/signaturekeys/{key_id}",
+            f"/v1/notifications/{quote(notification_id, safe='')}"
+            f"/signaturekeys/{quote(key_id, safe='')}",
         )
     except Exception as exc:
         _handle_error(exc)
@@ -137,7 +140,8 @@ async def delete_signature_key(notification_id: str, key_id: str):
     try:
         return await particle_client.request(
             "DELETE",
-            f"/v1/notifications/{notification_id}/signaturekeys/{key_id}",
+            f"/v1/notifications/{quote(notification_id, safe='')}"
+            f"/signaturekeys/{quote(key_id, safe='')}",
         )
     except Exception as exc:
         _handle_error(exc)

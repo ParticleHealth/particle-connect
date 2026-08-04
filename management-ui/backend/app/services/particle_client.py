@@ -174,7 +174,12 @@ class ParticleClient:
         await self.connect()
 
     async def request(
-        self, method: str, path: str, *, json: dict | None = None
+        self,
+        method: str,
+        path: str,
+        *,
+        json: dict | None = None,
+        params: dict | None = None,
     ) -> dict | list:
         """Make an authenticated request to the Particle Management API."""
         await self._ensure_token()
@@ -183,7 +188,9 @@ class ParticleClient:
         logger.info("Particle API %s %s", method.upper(), path)
         start = time.time()
 
-        resp = await self._http.request(method, path, headers=headers, json=json)
+        resp = await self._http.request(
+            method, path, headers=headers, json=json, params=params
+        )
         latency_ms = (time.time() - start) * 1000
         logger.info(
             "Particle API response: status=%d latency=%.0fms path=%s",

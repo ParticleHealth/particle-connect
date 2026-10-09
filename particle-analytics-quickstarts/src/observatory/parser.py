@@ -1,7 +1,7 @@
 """JSON parser for Particle flat data files.
 
 Loads flat_data.json, validates structure, applies normalization,
-and returns a dict of resource_type -> list[dict] for all 21 resource types.
+and returns a dict of resource_type -> list[dict] for all 22 resource types.
 """
 
 import json
@@ -12,7 +12,7 @@ from observatory.normalizer import normalize_resource
 
 logger = logging.getLogger(__name__)
 
-# All 21 resource type keys in the order they appear in the Particle API response.
+# All 22 resource type keys in the order they appear in the Particle API response.
 EXPECTED_RESOURCE_TYPES: list[str] = [
     "aICitations",
     "aIOutputs",
@@ -24,6 +24,7 @@ EXPECTED_RESOURCE_TYPES: list[str] = [
     "immunizations",
     "labs",
     "locations",
+    "medicationFills",
     "medications",
     "organizations",
     "patients",
@@ -41,7 +42,7 @@ EXPECTED_RESOURCE_TYPES: list[str] = [
 def load_flat_data(path: str | Path, normalize: bool = True) -> dict[str, list[dict]]:
     """Load Particle flat data JSON and return a dict of resource_type -> records.
 
-    Always returns exactly 21 keys (one per expected resource type). Resource types
+    Always returns exactly 22 keys (one per expected resource type). Resource types
     missing from the file are included with empty lists. Unknown resource types in
     the file are logged as warnings and skipped.
 
@@ -50,7 +51,7 @@ def load_flat_data(path: str | Path, normalize: bool = True) -> dict[str, list[d
         normalize: If True (default), convert empty strings to None in all records.
 
     Returns:
-        Dict mapping each of the 21 resource type keys to a list of record dicts.
+        Dict mapping each of the 22 resource type keys to a list of record dicts.
 
     Raises:
         FileNotFoundError: If the file does not exist.

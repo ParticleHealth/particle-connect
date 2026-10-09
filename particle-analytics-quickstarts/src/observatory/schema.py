@@ -105,3 +105,8 @@ def inspect_schema(data: dict[str, list[dict]]) -> list[ResourceSchema]:
     )
 
     return schemas
+
+
+def patient_key(columns: list[str]) -> str:
+    """Column that identifies the patient in a table (AICitations only has particle_patient_id)."""
+    return "patient_id" if "patient_id" in columns else "particle_patient_id"

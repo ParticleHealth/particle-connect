@@ -141,7 +141,7 @@ The sample data contains 1,187 records across 16 resource types:
 
 | Resource Type | Table Name | Records | Columns |
 |---|---|---|---|
-| aICitations | ai_citations | 542 | 7 |
+| aICitations | ai_citations | 542 | 6 |
 | recordSources | record_sources | 307 | 5 |
 | vitalSigns | vital_signs | 116 | 12 |
 | labs | labs | 111 | 22 |
@@ -158,7 +158,7 @@ The sample data contains 1,187 records across 16 resource types:
 | locations | locations | 1 | 11 |
 | patients | patients | 1 | 15 |
 
-Five resource types are empty in the sample data (no records): allergies, coverages, familyMemberHistories, immunizations, and socialHistories. Their tables are not created until data is available.
+Six resource types are empty in the sample data (no records): allergies, coverages, familyMemberHistories, immunizations, medicationFills, and socialHistories. Their tables are still created and stay empty until data is loaded.
 
 ## Analytics Queries
 
@@ -224,7 +224,7 @@ For production, `terraform/iam.tf` can create a dedicated service account (`obse
 
 ### 3. Provision infrastructure with Terraform
 
-Terraform creates 1 BigQuery dataset and 21 tables.
+Terraform creates 1 BigQuery dataset and 22 tables.
 
 ```bash
 cd terraform/
@@ -243,7 +243,7 @@ Then initialize and apply:
 
 ```bash
 terraform init
-terraform plan    # Review: 1 dataset, 21 tables
+terraform plan    # Review: 1 dataset, 22 tables
 terraform apply
 ```
 

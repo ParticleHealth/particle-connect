@@ -276,3 +276,28 @@ class TestLoadAll:
         # First execute call should be the CREATE TABLE from ensure_table
         first_sql = conn.execute.call_args_list[0][0][0]
         assert "CREATE TABLE IF NOT EXISTS" in first_sql
+
+
+class TestLoadAllPatientColumn:
+    """AICitations has particle_patient_id and no patient_id."""
+
+    def test_loads_table_keyed_on_particle_patient_id(self):
+        import duckdb
+
+        conn = duckdb.connect(":memory:")
+        schema = ResourceSchema(
+            resource_type="aICitations",
+            table_name="ai_citations",
+            columns=["citation_id", "particle_patient_id", "text_snippet"],
+            record_count=2,
+            is_empty=False,
+        )
+        data = {"aICitations": [
+            {"citation_id": "1", "particle_patient_id": "p1", "text_snippet": "a"},
+            {"citation_id": "2", "particle_patient_id": "p1", "text_snippet": "b"},
+        ]}
+
+        assert load_all(conn, data, [schema]) == {"ai_citations": 2}
+        # Reloading is idempotent per patient.
+        assert load_all(conn, data, [schema]) == {"ai_citations": 2}
+        assert conn.execute("SELECT COUNT(*) FROM ai_citations").fetchone()[0] == 2

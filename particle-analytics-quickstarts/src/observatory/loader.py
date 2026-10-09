@@ -10,7 +10,7 @@ import os
 
 import duckdb
 
-from observatory.schema import ResourceSchema
+from observatory.schema import ResourceSchema, patient_key
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ def ensure_table(conn: duckdb.DuckDBPyConnection, schema: ResourceSchema) -> Non
 
 def load_resource(conn: duckdb.DuckDBPyConnection, table_name: str,
                   columns: list[str], records: list[dict],
-                  patient_id: str) -> int:
+                  patient_id: str, patient_column: str = "patient_id") -> int:
     """Load records for a single resource type and patient into DuckDB.
 
     Uses idempotent delete+insert within a single transaction: first deletes
@@ -59,7 +59,8 @@ def load_resource(conn: duckdb.DuckDBPyConnection, table_name: str,
         table_name: The snake_case SQL table name.
         columns: Ordered list of column names (from ResourceSchema.columns).
         records: List of record dicts to insert.
-        patient_id: The patient_id to scope the delete+insert.
+        patient_id: The patient id to scope the delete+insert.
+        patient_column: Column holding the patient id (see patient_key).
 
     Returns:
         Number of records inserted (0 if records was empty).
@@ -72,7 +73,7 @@ def load_resource(conn: duckdb.DuckDBPyConnection, table_name: str,
     quoted_cols = ", ".join(f'"{col}"' for col in columns)
     placeholders = ", ".join("?" for _ in columns)
 
-    delete_sql = f'DELETE FROM {table_name} WHERE "patient_id" = ?'
+    delete_sql = f'DELETE FROM {table_name} WHERE "{patient_column}" = ?'
     insert_sql = f'INSERT INTO {table_name} ({quoted_cols}) VALUES ({placeholders})'
 
     # Extract row tuples in column order, using .get() for missing keys (returns None)
@@ -129,9 +130,10 @@ def load_all(conn: duckdb.DuckDBPyConnection, data: dict[str, list[dict]],
         ensure_table(conn, schema)
 
         # Group records by patient_id for per-patient idempotent loading
+        patient_column = patient_key(schema.columns)
         patients: dict[str, list[dict]] = {}
         for record in records:
-            pid = record.get("patient_id", "")
+            pid = record.get(patient_column, "")
             if pid not in patients:
                 patients[pid] = []
             patients[pid].append(record)
@@ -144,6 +146,7 @@ def load_all(conn: duckdb.DuckDBPyConnection, data: dict[str, list[dict]],
                 columns=schema.columns,
                 records=patient_records,
                 patient_id=pid,
+                patient_column=patient_column,
             )
             table_total += count
 

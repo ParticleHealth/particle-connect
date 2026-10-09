@@ -15,7 +15,7 @@ SAMPLE_DATA = Path(__file__).resolve().parent.parent / "sample-data" / "flat_dat
 class TestLoadFlatData:
     def test_load_sample_data(self):
         data = load_flat_data(SAMPLE_DATA)
-        assert len(data) == 21
+        assert len(data) == 22
         assert set(data.keys()) == set(EXPECTED_RESOURCE_TYPES)
 
     def test_load_normalizes_empty_strings(self):
@@ -61,7 +61,7 @@ class TestLoadFlatData:
             json.dump({"patients": [{"patient_id": "1"}]}, f)
             f.flush()
             data = load_flat_data(f.name)
-            assert len(data) == 21
+            assert len(data) == 22
             assert data["patients"] == [{"patient_id": "1"}]
             assert data["allergies"] == []
 
@@ -71,11 +71,11 @@ class TestLoadFlatData:
             json.dump({"unknownType": [{"id": "1"}], "patients": []}, f)
             f.flush()
             data = load_flat_data(f.name)
-            assert len(data) == 21
+            assert len(data) == 22
             assert "unknownType" not in data
 
     def test_expected_resource_types_count(self):
-        assert len(EXPECTED_RESOURCE_TYPES) == 21
+        assert len(EXPECTED_RESOURCE_TYPES) == 22
 
     def test_empty_resource_types_in_sample(self):
         """Known empty resource types in sample data should have 0 records."""
@@ -100,6 +100,7 @@ class TestCamelToSnake:
             ("immunizations", "immunizations"),
             ("labs", "labs"),
             ("locations", "locations"),
+            ("medicationFills", "medication_fills"),
             ("medications", "medications"),
             ("organizations", "organizations"),
             ("patients", "patients"),
@@ -116,7 +117,7 @@ class TestCamelToSnake:
     def test_camel_to_snake(self, camel, expected):
         assert camel_to_snake(camel) == expected
 
-    def test_all_21_resource_types(self):
+    def test_all_22_resource_types(self):
         """Every expected resource type converts without error."""
         for rtype in EXPECTED_RESOURCE_TYPES:
             result = camel_to_snake(rtype)
@@ -128,7 +129,7 @@ class TestInspectSchema:
     def test_inspect_schema_sample_data(self):
         data = load_flat_data(SAMPLE_DATA)
         schemas = inspect_schema(data)
-        assert len(schemas) == 21
+        assert len(schemas) == 22
         # All schemas should be ResourceSchema instances
         for s in schemas:
             assert isinstance(s, ResourceSchema)

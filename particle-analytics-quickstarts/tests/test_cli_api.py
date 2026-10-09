@@ -32,7 +32,7 @@ PARTICLE_ENV = {
 
 
 def _make_api_response(**resource_overrides: list[dict]) -> dict[str, list[dict]]:
-    """Build a minimal API response dict with empty defaults for all 21 types."""
+    """Build a minimal API response dict with empty defaults for all 22 types."""
     from observatory.parser import EXPECTED_RESOURCE_TYPES
 
     data = {key: [] for key in EXPECTED_RESOURCE_TYPES}

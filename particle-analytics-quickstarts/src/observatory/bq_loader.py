@@ -12,7 +12,7 @@ try:
 except ImportError:
     bigquery = None  # type: ignore[assignment]
 
-from observatory.schema import ResourceSchema
+from observatory.schema import ResourceSchema, patient_key
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ def get_bq_client() -> tuple:
 
 def load_resource_bq(client, dataset_id: str, table_name: str,
                      columns: list[str], records: list[dict],
-                     patient_id: str) -> int:
+                     patient_id: str, patient_column: str = "patient_id") -> int:
     """Load records for a single resource type and patient into BigQuery.
 
     Uses idempotent delete+insert: first deletes all existing rows for the
@@ -80,7 +80,7 @@ def load_resource_bq(client, dataset_id: str, table_name: str,
     table_ref_api = f"{client.project}.{dataset_id}.{table_name}"
 
     # Step 1: DELETE existing rows for this patient
-    delete_query = f"DELETE FROM {table_ref_sql} WHERE `patient_id` = @patient_id"
+    delete_query = f"DELETE FROM {table_ref_sql} WHERE `{patient_column}` = @patient_id"
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
             bigquery.ScalarQueryParameter("patient_id", "STRING", patient_id),
@@ -133,9 +133,10 @@ def load_all_bq(client, dataset_id: str, data: dict[str, list[dict]],
             continue
 
         # Group records by patient_id for per-patient idempotent loading
+        patient_column = patient_key(schema.columns)
         patients: dict[str, list[dict]] = {}
         for record in records:
-            pid = record.get("patient_id", "")
+            pid = record.get(patient_column, "")
             if pid not in patients:
                 patients[pid] = []
             patients[pid].append(record)
@@ -149,6 +150,7 @@ def load_all_bq(client, dataset_id: str, data: dict[str, list[dict]],
                 columns=schema.columns,
                 records=patient_records,
                 patient_id=pid,
+                patient_column=patient_column,
             )
             table_total += count
 

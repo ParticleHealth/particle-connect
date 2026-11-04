@@ -177,9 +177,12 @@ class ParticleHTTPClient:
         # Rate limit
         if response.status_code == 429:
             retry_after = response.headers.get("Retry-After")
-            raise ParticleRateLimitError(
-                retry_after=int(retry_after) if retry_after else None
-            )
+            try:
+                retry_after_seconds = int(retry_after) if retry_after else None
+            except ValueError:
+                # Retry-After may also be an HTTP-date; treat it as absent.
+                retry_after_seconds = None
+            raise ParticleRateLimitError(retry_after=retry_after_seconds)
 
         # Server errors (5xx) - these should have been retried
         if response.status_code >= 500:

@@ -8,7 +8,7 @@ Takes a `flat_data.json` response from the Particle Health API, normalizes it in
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.14+
 - pip
 
 ### 1. Install the package
@@ -182,7 +182,7 @@ Load the same flat data into Google BigQuery for cloud-scale analytics. Terrafor
 
 ### Prerequisites
 
-- Everything from the local Quick Start (Python 3.11+, pip)
+- Everything from the local Quick Start (Python 3.14+, pip)
 - Google Cloud account with a project and billing enabled
 - [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.0
 - [gcloud CLI](https://cloud.google.com/sdk/docs/install) installed

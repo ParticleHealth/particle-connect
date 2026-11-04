@@ -20,7 +20,7 @@ Particle Connect is a monorepo of tools for integrating with the Particle Health
 - `sample-data/` — Sample flat_data.json and CCDA ZIP
 - `tests/` — Unit tests (pytest)
 
-**Tech stack**: Python 3.11+, httpx, Pydantic, PyJWT, structlog, tenacity
+**Tech stack**: Python 3.14+, httpx, Pydantic, PyJWT, structlog, tenacity
 
 ### 2. particle-analytics-quickstarts (Data Pipeline)
 **Purpose**: Load Particle flat data into DuckDB (local) or BigQuery (cloud) for SQL analytics.
@@ -39,7 +39,7 @@ Particle Connect is a monorepo of tools for integrating with the Particle Health
 - `terraform/` — BigQuery infrastructure provisioning
 - `sample-data/flat_data.json` — Sample data (1,187 records, 16 resource types)
 
-**Tech stack**: Python 3.11+, DuckDB, Typer, Rich, google-cloud-bigquery (optional), Terraform
+**Tech stack**: Python 3.14+, DuckDB, Typer, Rich, google-cloud-bigquery (optional), Terraform
 
 ### 3. management-ui (Admin Interface)
 **Purpose**: Dockerized admin UI for the Particle Health Management API. Create projects, manage service accounts, rotate credentials.

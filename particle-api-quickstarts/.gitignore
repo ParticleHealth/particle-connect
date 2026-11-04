@@ -67,3 +67,6 @@ uv.lock
 ccda_data.zip
 *_data.json
 *.zip
+
+# Bulk registration output (contain patient IDs)
+bulk_*.csv

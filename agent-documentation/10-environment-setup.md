@@ -4,7 +4,7 @@ Prerequisites and configuration for all three sub-projects.
 
 ## Global Prerequisites
 
-- Python 3.11+
+- Python 3.14+
 - Git
 
 ## particle-api-quickstarts Setup

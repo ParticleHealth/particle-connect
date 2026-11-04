@@ -63,7 +63,7 @@ class PatientRegistration(BaseModel):
     address_state: str = Field(..., min_length=1)
 
     # Required — API returns 400 if missing
-    patient_id: str
+    patient_id: str = Field(..., min_length=1)
     address_lines: list[str] | None = None
     ssn: str | None = None
     telephone: str | None = None

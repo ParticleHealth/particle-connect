@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "particle-flat-observatory"
 version = "0.1.0"
 description = "Healthcare analytics pipeline for Particle Health flat data — loads clinical records into DuckDB or BigQuery with 15 pre-built SQL queries for labs, medications, encounters, problems, vital signs, and care team analysis"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = [
     "duckdb>=1.0.0",
     "rich>=13.0.0",
@@ -32,7 +32,7 @@ packages = ["src/observatory"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py314"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W"]

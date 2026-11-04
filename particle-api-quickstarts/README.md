@@ -4,7 +4,7 @@ A Python toolkit for the [Particle Health](https://www.particlehealth.com/) API 
 
 ## Prerequisites
 
-- **Python 3.11+**
+- **Python 3.14+**
 - **Particle Health credentials** — you need a `client_id`, `client_secret`, and `scope_id` from your [Particle Health dashboard](https://www.particlehealth.com/)
 
 ## Getting Started
@@ -118,6 +118,8 @@ You can also pass a JSON file or inline JSON:
 python workflows/register_patient.py patient.json
 python workflows/register_patient.py '{"given_name": "John", ...}'
 ```
+
+To register many patients from a CSV, see [Bulk Patient Registration](docs/bulk-register-patients.md).
 
 **Submit a query**
 
@@ -281,6 +283,7 @@ particle-health-starters/
     hello_particle.py           # End-to-end demo (start here)
     check_setup.py              # Validate credentials
     register_patient.py         # Register a patient
+    bulk_register_patients.py   # Register many patients from a CSV
     submit_query.py             # Submit + poll a query
     retrieve_data.py            # Retrieve flat/ccda/fhir data
     submit_document.py          # Submit a clinical document

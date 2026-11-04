@@ -446,3 +446,58 @@ class TestMockIntegrationFlow:
             assert flat_data["medications"][0]["medication_name"] == "Aspirin"
 
         client.close()
+
+
+class TestBulkLoadSupport:
+    """SDK behavior the bulk registration workflow relies on."""
+
+    def test_retry_after_http_date_is_treated_as_absent(self):
+        import httpx
+
+        client = ParticleHTTPClient(ParticleSettings())
+        response = httpx.Response(429, headers={"Retry-After": "Wed, 21 Oct 2026 07:28:00 GMT"})
+        with pytest.raises(ParticleRateLimitError) as ei:
+            client._handle_response(response)
+        assert ei.value.retry_after is None
+
+    def test_retry_after_seconds_is_parsed(self):
+        import httpx
+
+        client = ParticleHTTPClient(ParticleSettings())
+        with pytest.raises(ParticleRateLimitError) as ei:
+            client._handle_response(httpx.Response(429, headers={"Retry-After": "7"}))
+        assert ei.value.retry_after == 7
+
+    def test_blank_patient_id_is_rejected(self):
+        with pytest.raises(ValidationError):
+            PatientRegistration(
+                given_name="A",
+                family_name="B",
+                date_of_birth="1970-01-01",
+                gender="MALE",
+                postal_code="12345",
+                address_city="X",
+                address_state="NY",
+                patient_id="  ",
+            )
+
+    def test_patient_service_get_reads_back_by_particle_id(self):
+        from unittest.mock import MagicMock
+
+        from particle.patient import PatientService
+
+        client = MagicMock()
+        client.request.return_value = {
+            "particle_patient_id": "pp-1",
+            "given_name": "A",
+            "family_name": "B",
+            "date_of_birth": "1970-01-01",
+            "gender": "MALE",
+            "postal_code": "12345",
+            "address_city": "X",
+            "address_state": "NY",
+            "patient_id": "ext-1",
+        }
+        got = PatientService(client).get("pp-1")
+        client.request.assert_called_once_with("GET", "/api/v2/patients/pp-1")
+        assert got.particle_patient_id == "pp-1" and got.patient_id == "ext-1"

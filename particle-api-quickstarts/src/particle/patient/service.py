@@ -62,3 +62,15 @@ class PatientService:
         payload = patient.model_dump(mode="json", exclude_none=True)
         response = self._client.request("POST", "/api/v2/patients", json=payload)
         return PatientResponse.model_validate(response)
+
+    def get(self, particle_patient_id: str) -> PatientResponse:
+        """Read a registered patient back by Particle patient ID.
+
+        Returns the stored demographics (the customer-supplied record when present).
+
+        Raises:
+            ParticleNotFoundError: If no such patient exists in the authenticated project
+            ParticleAPIError: For other API errors
+        """
+        response = self._client.request("GET", f"/api/v2/patients/{particle_patient_id}")
+        return PatientResponse.model_validate(response)
